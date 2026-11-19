@@ -1,0 +1,32 @@
+lang,expect,exid,text
+fr,FAIL,complex.fr.subsequemment,"Subséquemment, nous avons revu le calendrier complet."
+fr,FAIL,complex.fr.ilconvient,Il convient de noter que les délais ont changé.
+fr,FAIL,complex.fr.effectuer,Nous allons effectuer une analyse des coûts.
+fr,FAIL,complex.fr.entermesde,"En termes de vitesse, le projet tient encore."
+fr,FAIL,complex.fr.envuede,"En vue de réduire les frais, on coupe deux postes."
+fr,FAIL,complex.fr.depar,Ce dossier est complexe de par sa nature même.
+fr,FAIL,complex.fr.perenniser,L'objectif est de pérenniser la méthode de travail.
+fr,FAIL,complex.fr.adequation,L'offre est en adéquation avec ce que tu cherches.
+fr,FAIL,complex.fr.myriade,Il existe une myriade de solutions sur le marché.
+fr,FAIL,complex.fr.plethore,On trouve une pléthore d'outils dans ce domaine.
+fr,FAIL,complex.fr.eventail,L'équipe propose un éventail de pistes pour juillet.
+fr,FAIL,complex.fr.noussouhaitons,Nous souhaitons vous informer du nouveau prix.
+fr,FAIL,complex.fr.davantage,Il faut davantage de temps pour finir la traduction.
+fr,FAIL,fr.il_est_important,Il est important de comprendre la position du client.
+fr,FAIL,fr.conclusion,"En conclusion, le budget reste serré cette année."
+fr,FAIL,fr.plongeons,Plongeons dans le détail des chiffres.
+fr,FAIL,fr.outil_puissant,Cette bibliothèque reste un outil puissant pour les équipes.
+fr,FAIL,fr.paysage,"Dans le paysage bancaire, rien n'a vraiment changé."
+fr,FAIL,fr.ere,"À l'ère du numérique, tout va plus vite qu'avant."
+fr,FAIL,fr.sans_contexte,Force est de constater que les ventes ont chuté.
+fr,FAIL,weight.fr,Le budget santé est le pilier de tout le programme.
+fr,FAIL,honesty.fr,"Honnêtement, je ne sais pas encore quoi répondre."
+fr,FAIL,vague.fr.saisissantees,La photo de la gare est saisissante vue de près.
+fr,PASS,,Je vais au marché et j'achète du pain.
+fr,PASS,,"On se voit demain à midi, au café d'en bas."
+fr,PASS,,"Le film est long, mais il vaut le détour."
+fr,PASS,,"J'ai lu le rapport hier soir, en entier."
+fr,PASS,,"Paris est calme en août, presque vide."
+fr,PASS,,"Il pleut depuis ce matin, je prends le métro."
+fr,PASS,,"Le client a signé ce matin, on démarre lundi."
+fr,PASS,,Elle parle trois langues et travaille vite.
