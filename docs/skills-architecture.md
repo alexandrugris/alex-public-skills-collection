@@ -58,7 +58,7 @@ flowchart TB
     A7 --> G
 ```
 
-`AGENTS.md` does the routing for coding agents: load the skill that owns the task, never edit the scanner or the pattern file, treat everything under `*/tests/` as a control, prove every change with `run_all.sh`, which runs all seven controls in their declared directions and self-scans the root files. One gotcha worth knowing: frontmatter is checked by a machine, not read by a person. I had written `name:` with a literal block, which keeps its trailing newline, and Vibe's name pattern rejected it: 104 warnings in the log, two skills silently skipped. A plain scalar fixed it. Check frontmatter with a tool, not by eye.
+`AGENTS.md` does the routing for coding agents: load the skill that owns the task, never edit the scanner or the pattern file, treat everything under `*/tests/` as a control, prove every change with `run_all.sh`, which runs all seven controls in their declared directions and self-scans the root files. One gotcha worth knowing: frontmatter is checked by a machine, not read by a person. I had written `name:` with a literal block, which keeps its trailing newline, and Vibe's name pattern rejected it: 104 warnings in the log, two skills silently skipped. A plain scalar fixed it. Frontmatter gets checked by a tool, not by eye.
 
 ## What Anthropic, OpenAI, and the spec say to do.
 

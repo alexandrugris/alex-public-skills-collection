@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Skills that ship tests beat skills that ship prose — Alexandru Gris</title>
+<link rel="stylesheet" href="TOKENS_PATH">
+<style>
+  @page { size: A4; margin: 20mm 22mm 18mm; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { background: #FBFAF7; margin: 0; }
+  .doc { background: #FBFAF7; color: #30332F; font-family: Georgia, "Gelasio", "Times New Roman", serif; font-size: 10.5pt; line-height: 1.58; }
+  .doc .kicker { font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 7.5pt; font-weight: 500; letter-spacing: .13em; text-transform: uppercase; color: #8D2829; }
+  .display-xl.doc-title { font-family: Georgia, "Gelasio", "Times New Roman", serif; font-size: 30pt; font-weight: 400; line-height: 1.02; letter-spacing: -0.04em; color: #292B28; margin-top: 10px; }
+  .doc .lede { font-family: Georgia, "Gelasio", serif; font-size: 12pt; line-height: 1.5; color: #53574F; max-width: 51ch; margin-top: 12px; }
+  .doc-meta-line { display: flex; flex-wrap: wrap; gap: 0 16px; align-items: baseline; margin-top: 18px; padding-top: 12px; border-top: 1px solid #D8D4CA; }
+  .doc-meta-line span { font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 7.5pt; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: #85857C; }
+  .doc-meta-line span + span::before { content: "·"; margin-right: 16px; color: #BBB7AE; }
+  .sec-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin: 24px 0 12px; padding-bottom: 9px; border-bottom: 1px solid #D8D4CA; break-after: avoid; }
+  .h2 { font-family: Georgia, "Gelasio", "Times New Roman", serif; color: #292B28; font-size: 17pt; font-weight: 400; line-height: 1.15; letter-spacing: -0.02em; }
+  .meta { font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 7.5pt; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: #85857C; flex: none; }
+  .doc .body { font-size: 10.5pt; line-height: 1.58; max-width: none; }
+  .doc .body + .body { margin-top: .85em; }
+  .body strong { font-weight: 700; color: #292B28; }
+  .doc .figure { background: #F7F4ED; border: 1px solid #D8D4CA; padding: 14px 16px 12px; margin: 14px 0; break-inside: avoid; }
+  .figure svg { display: block; width: 100%; height: auto; }
+  .figure__caption { margin-top: 10px; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 6.8pt; letter-spacing: .08em; text-transform: uppercase; color: #85857C; }
+  .doc .table { width: 100%; border-collapse: collapse; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 8.5pt; color: #30332F; margin: 12px 0; }
+  .doc .table thead th { background: #F2EEE4; text-align: left; font-weight: 600; font-size: 7pt; letter-spacing: .1em; text-transform: uppercase; color: #85857C; padding: 7px 10px 7px 0; border-bottom: 1px solid #BBB7AE; }
+  .doc .table td { padding: 8px 10px 8px 0; border-bottom: 1px solid #D8D4CA; vertical-align: top; line-height: 1.45; }
+  .doc .table tr:last-child td { border-bottom: 1px solid #BBB7AE; }
+  thead { display: table-header-group; }
+  tr { break-inside: avoid; }
+  .doc .list-clean { list-style: none; margin: 10px 0 0; padding: 0; }
+  .doc .list-clean > li { padding: 10px 0; border-top: 1px solid #D8D4CA; }
+  .doc .list-clean > li:last-child { border-bottom: 1px solid #D8D4CA; }
+  .doc .chip { font-family: "IBM Plex Mono", Menlo, Consolas, monospace; font-size: 8.5pt; background: #F7FAFB; border: 1px solid #E3EDF3; border-radius: 4px; padding: 0 4px; }
+  .doc .code { font-family: "IBM Plex Mono", Menlo, Consolas, monospace; font-size: 8pt; line-height: 1.55; background: #2B2B2B; color: #A9B7C6; border-radius: 5px; padding: 10px 12px; white-space: pre; overflow: hidden; margin: 12px 0; break-inside: avoid; }
+  .doc a { color: #8D2829; text-decoration: none; }
+  .colophon { margin-top: 24px; padding-top: 12px; border-top: 1px solid #D8D4CA; }
+  .colophon p { font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 7.5pt; letter-spacing: .05em; color: #85857C; line-height: 1.6; }
+  @media print {
+    .sec-head { break-after: avoid; }
+    .figure { break-inside: avoid; }
+  }
+</style>
+</head>
+<body class="doc">
+<article>
+  <header>
+    <div class="kicker">From the trenches · Agent skills · 2026-11-19</div>
+    <h1 class="display-xl doc-title">Skills that ship tests beat skills that ship prose.</h1>
+    <p class="lede">At 17:37 on 2026-11-19 I made the 46th commit of the day and ran the gate one last time: ALL GREEN, 7 of 7. Earlier that day my agent had told me the blog-writer skill does not exist. I had built all three skills myself, with Mistral Large running in Vibe. The cause turned out to be two lines of YAML, and it is a good door into the rest of this post: the why, then the machinery, then the mapping against what the field says to do.</p>
+    <div class="doc-meta-line">
+      <span>Alexandru Gris</span>
+      <span>Engineering leader</span>
+      <span>2026-11-19</span>
+      <span>12 min read</span>
+    </div>
+  </header>
+
+  <div class="sec-head"><h2 class="h2">I wanted to share what I read, not what a model invents.</h2><span class="meta">Why</span></div>
+  <p class="body">For years I have kept a reading list: every entry has a headline, a priority line, and a paragraph on why it mattered. When I want to share those recommendations, I do not want to paste a model's summary of them. I hated what AI writing looked like by then: the same metaphors, the same inflated verbs, the same closing moral. Every draft read like someone else's notes on a book neither of us had read.</p>
+  <p class="body">The last two months showed me the other side of the same coin. I have been listening almost exclusively to podcasts I made for myself, because I wanted content customized to what I am working on this week, not a generic episode. That felt like the future: high-quality content, extremely customized, produced on demand. I believe that future is real and it is a bright one. But customization only works if the agent writes in your voice and follows your rules. Taste has to be packaged, not re-explained in every chat. That is the problem these three skills solve.</p>
+  <p class="body">So each skill does one job. <code class="chip">anti-ai</code> keeps prose human: my measured voice as 473 regex patterns plus house rules, run as code, not as a prompt. <code class="chip">blog-writer</code> is the pipeline that produced this post: research with real links, structure, voice, lint, fact-check, and a gate that waits for my approval. <code class="chip">alexandru-style</code> is my site's design system as 18 tokens and templates, so anything rendered looks like alexandrugris.ro instead of a default theme.</p>
+
+  <div class="sec-head"><h2 class="h2">Each skill is one folder: a manifest, references, code, and controls.</h2><span class="meta">Architecture</span></div>
+  <p class="body">The layout repeats three times. A <code class="chip">SKILL.md</code> manifest carries the frontmatter (a <code class="chip">name</code>, and a <code class="chip">description</code> written as a trigger: "use when ...") plus the instructions. A <code class="chip">references/</code> directory holds the detail, which the agent reads on demand. Code does the mechanical work. A <code class="chip">tests/</code> directory holds controls in both directions: cases that must pass and cases that must fail.</p>
+
+  <figure class="figure">
+    <svg viewBox="0 0 640 270" role="img" aria-label="One skill unpacked: manifest, references, code, tests">
+      <defs>
+        <marker id="arr1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#BBB7AE"/>
+        </marker>
+      </defs>
+      <text x="0" y="12" font-family="Inter, sans-serif" font-size="9" letter-spacing="1.5" fill="#85857C">ONE SKILL, UNPACKED</text>
+      <line x1="0" y1="22" x2="640" y2="22" stroke="#D8D4CA" stroke-width="1"/>
+      <rect x="16" y="96" width="168" height="58" fill="#FBFAF7" stroke="#D8D4CA"/>
+      <text x="30" y="122" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#292B28">SKILL.md</text>
+      <text x="30" y="140" font-family="Inter, sans-serif" font-size="8.5" fill="#686B64">frontmatter + instructions</text>
+      <rect x="256" y="36" width="180" height="40" fill="#FBFAF7" stroke="#D8D4CA"/>
+      <text x="270" y="53" font-family="Inter, sans-serif" font-size="8.5" fill="#30332F">agent routes by</text>
+      <text x="270" y="67" font-family="Inter, sans-serif" font-size="8.5" fill="#30332F">description</text>
+      <rect x="256" y="96" width="180" height="40" fill="#FBFAF7" stroke="#D8D4CA"/>
+      <text x="270" y="113" font-family="Inter, sans-serif" font-size="8.5" fill="#30332F">references/</text>
+      <text x="270" y="127" font-family="Inter, sans-serif" font-size="8.5" fill="#686B64">loaded on demand</text>
+      <rect x="256" y="156" width="180" height="40" fill="#FBFAF7" stroke="#D8D4CA"/>
+      <text x="270" y="173" font-family="Inter, sans-serif" font-size="8.5" fill="#30332F">code</text>
+      <text x="270" y="187" font-family="Inter, sans-serif" font-size="8.5" fill="#686B64">scanner, checkers, scripts</text>
+      <rect x="256" y="216" width="180" height="40" fill="#FBFAF7" stroke="#D8D4CA"/>
+      <text x="270" y="233" font-family="Inter, sans-serif" font-size="8.5" fill="#30332F">tests/</text>
+      <text x="270" y="247" font-family="Inter, sans-serif" font-size="8.5" fill="#686B64">controls in both directions</text>
+      <rect x="492" y="216" width="132" height="40" fill="#FBFAF7" stroke="#8D2829"/>
+      <text x="506" y="233" font-family="Inter, sans-serif" font-size="8.5" font-weight="600" fill="#8D2829">run_all.sh</text>
+      <text x="506" y="247" font-family="Inter, sans-serif" font-size="8.5" fill="#686B64">the gate</text>
+      <line x1="184" y1="110" x2="252" y2="56" stroke="#BBB7AE" stroke-width="1" marker-end="url(#arr1)"/>
+      <text x="196" y="76" font-family="Inter, sans-serif" font-size="8" fill="#8D2829">always in context</text>
+      <line x1="184" y1="118" x2="252" y2="116" stroke="#BBB7AE" stroke-width="1" marker-end="url(#arr1)"/>
+      <line x1="184" y1="128" x2="252" y2="176" stroke="#BBB7AE" stroke-width="1" marker-end="url(#arr1)"/>
+      <line x1="184" y1="140" x2="252" y2="236" stroke="#BBB7AE" stroke-width="1" marker-end="url(#arr1)"/>
+      <line x1="436" y1="236" x2="488" y2="236" stroke="#BBB7AE" stroke-width="1" marker-end="url(#arr1)"/>
+    </svg>
+    <figcaption class="figure__caption">Fig. 1 — The manifest routes; references load on demand; code and tests do the work.</figcaption>
+  </figure>
+
+  <p class="body"><code class="chip">anti-ai</code> is <code class="chip">check_tells.py</code> (548 lines) loading <code class="chip">patterns.json</code> (473 versioned patterns; 58 high, 245 medium, 170 low severity; English, Romanian, French) and printing every hit with line, severity, and a fix. Verdicts: FAIL on any HIGH, REVIEW on MEDIUM only, PASS otherwise. Quotes and literal contexts are exempt, and the exemption is reported, not dropped. The house rules measure rhythm: sentence-length bands, an em-dash budget, word length. The hard rules live in <code class="chip">AGENTS.md</code>: fix the text, never the detector; when a metaphor goes, expand it into the concrete mechanism (rule 1b); the fixtures keep their declared direction. Today that means 59 MUST-FAIL rows all firing and 24 MUST-PASS rows all clean, across 83 CSV rows in three languages. The scanner also self-scans the skill's own docs: 0 HIGH, 0 MEDIUM.</p>
+  <p class="body"><code class="chip">blog-writer</code> runs six passes in order: brief; research, where every external claim gets a URL opened in the session and open gaps stay flagged; a structural pass that picks a Diataxis archetype instead of defaulting to a listicle; a prose pass that writes in voice, then runs <code class="chip">../anti-ai/check_tells.py</code> on the draft and blocks on HIGH hits; a fact-check loop of at most 2 rounds, where blocking findings are contradictions, dead links, and fabrications, and the fix for an unverifiable claim is to delete or recast it, never to invent a replacement source; and a review gate that presents sources, findings, and gaps, and waits for approval. The machine gate is <code class="chip">tests/validate_draft.py</code>; its controls are a clean draft that passes, plus a tell-laced seed and a planted-fabrication draft that must fail.</p>
+  <p class="body"><code class="chip">alexandru-style</code> is <code class="chip">design-system.md</code>, 120 lines and 18 color tokens distilled from the CSS of alexandrugris.ro: paper <code class="chip">#FBFAF7</code> never pure white, ink <code class="chip">#30332F</code>, one burgundy accent <code class="chip">#8D2829</code> per visual block, Georgia for voice, Inter in uppercase for labels, IBM Plex Mono for code, 1px hairlines, ragged-right text. <code class="chip">brand/</code> holds the full toolkit: the canonical <code class="chip">tokens.css</code>, the written spec, two templates, eight render scripts, the sample gallery, the font licenses, and the base64 binaries archive. The bar is <code class="chip">tests/check_styled.py</code>: the sample page passes; the anti-sample (white ground, gradient headline, text shadow, dashed rules, centred copy, emoji) must fail.</p>
+  <p class="body">The wiring between them:</p>
+
+  <figure class="figure">
+    <svg viewBox="0 0 640 200" role="img" aria-label="blog-writer pipeline: brief, research, pass 1, pass 2, lint, fact-check, review gate">
+      <defs>
+        <marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#BBB7AE"/>
+        </marker>
+      </defs>
+      <text x="0" y="12" font-family="Inter, sans-serif" font-size="9" letter-spacing="1.5" fill="#85857C">BLOG-WRITER PIPELINE</text>
+      <line x1="0" y1="22" x2="640" y2="22" stroke="#D8D4CA" stroke-width="1"/>
+      <rect x="8" y="40" width="120" height="44" fill="#FBFAF7" stroke="#D8D4CA"/>
+      <text x="22" y="58" font-family="Inter, sans-serif" font-size="9" font-weight="600" fill="#292B28">Brief</text>
+      <rect x="148" y="40" width="130" height="44" fill="#FBFAF7" stroke="#D8D4CA"/>
+      <text x="162" y="58" font-family="Inter, sans-serif" font-size="9" font-weight="600" fill="#292B28">Research</text>
+      <text x="162" y="72" font-family="Inter, sans-serif" font-size="7.5" fill="#686B64">sources + gaps</text>
+      <rect x="298" y="40" width="120" height="44" fill="#FBFAF7" stroke="#D8D4CA"/>
+      <text x="312" y="58" font-family="Inter, sans-serif" font-size="9" font-weight="600" fill="#292B28">Pass 1</text>
+      <text x="312" y="72" font-family="Inter, sans-serif" font-size="7.5" fill="#686B64">structure</text>
+      <rect x="438" y="40" width="120" height="44" fill="#FBFAF7" stroke="#D8D4CA"/>
+      <text x="452" y="58" font-family="Inter, sans-serif" font-size="9" font-weight="600" fill="#292B28">Pass 2</text>
+      <text x="452" y="72" font-family="Inter, sans-serif" font-size="7.5" fill="#686B64">prose in voice</text>
+      <rect x="8" y="120" width="140" height="44" fill="#FBFAF7" stroke="#D8D4CA"/>
+      <text x="22" y="138" font-family="Inter, sans-serif" font-size="9" font-weight="600" fill="#292B28">anti-ai lint</text>
+      <text x="22" y="152" font-family="Inter, sans-serif" font-size="7.5" fill="#686B64">check_tells.py</text>
+      <rect x="168" y="120" width="130" height="44" fill="#FBFAF7" stroke="#D8D4CA"/>
+      <text x="182" y="138" font-family="Inter, sans-serif" font-size="9" font-weight="600" fill="#292B28">Fact-check</text>
+      <text x="182" y="152" font-family="Inter, sans-serif" font-size="7.5" fill="#686B64">max 2 rounds</text>
+      <rect x="318" y="120" width="150" height="44" fill="#FBFAF7" stroke="#D8D4CA"/>
+      <text x="332" y="138" font-family="Inter, sans-serif" font-size="9" font-weight="600" fill="#292B28">Review gate</text>
+      <text x="332" y="152" font-family="Inter, sans-serif" font-size="7.5" fill="#686B64">waits for approval</text>
+      <line x1="128" y1="62" x2="144" y2="62" stroke="#BBB7AE" stroke-width="1" marker-end="url(#arr2)"/>
+      <line x1="278" y1="62" x2="294" y2="62" stroke="#BBB7AE" stroke-width="1" marker-end="url(#arr2)"/>
+      <line x1="418" y1="62" x2="434" y2="62" stroke="#BBB7AE" stroke-width="1" marker-end="url(#arr2)"/>
+      <path d="M 498 84 L 498 102 L 78 102 L 78 116" fill="none" stroke="#BBB7AE" stroke-width="1" marker-end="url(#arr2)"/>
+      <line x1="148" y1="142" x2="164" y2="142" stroke="#BBB7AE" stroke-width="1" marker-end="url(#arr2)"/>
+      <line x1="298" y1="142" x2="314" y2="142" stroke="#BBB7AE" stroke-width="1" marker-end="url(#arr2)"/>
+      <path d="M 78 164 L 78 182 L 498 182 L 498 88" fill="none" stroke="#BBB7AE" stroke-width="1" marker-end="url(#arr2)"/>
+      <text x="240" y="178" font-family="Inter, sans-serif" font-size="8" fill="#8D2829">HIGH hits block</text>
+    </svg>
+    <figcaption class="figure__caption">Fig. 2 — Six passes; the lint feeds HIGH hits back into the prose pass.</figcaption>
+  </figure>
+
+  <figure class="figure">
+    <svg viewBox="0 0 640 330" role="img" aria-label="run_all.sh runs seven controls, all feeding ALL GREEN">
+      <defs>
+        <marker id="arr3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#BBB7AE"/>
+        </marker>
+      </defs>
+      <text x="0" y="12" font-family="Inter, sans-serif" font-size="9" letter-spacing="1.5" fill="#85857C">THE GATE</text>
+      <line x1="0" y1="22" x2="640" y2="22" stroke="#D8D4CA" stroke-width="1"/>
+      <rect x="250" y="34" width="140" height="36" fill="#FBFAF7" stroke="#D8D4CA"/>
+      <text x="264" y="56" font-family="Inter, sans-serif" font-size="9" font-weight="600" fill="#292B28">bash run_all.sh</text>
+      <rect x="18" y="100" width="142" height="54" fill="#FBFAF7" stroke="#D8D4CA"/>
+      <text x="32" y="122" font-family="Inter, sans-serif" font-size="8" fill="#30332F">anti-ai fixtures</text>
+      <text x="32" y="136" font-family="Inter, sans-serif" font-size="8" fill="#686B64">+ self-scan</text>
+      <rect x="172" y="100" width="142" height="54" fill="#FBFAF7" stroke="#D8D4CA"/>
+      <text x="186" y="122" font-family="Inter, sans-serif" font-size="8" fill="#30332F">clean draft</text>
+      <text x="186" y="136" font-family="Inter, sans-serif" font-size="8" fill="#686B64">passes</text>
+      <rect x="326" y="100" width="142" height="54" fill="#FBFAF7" stroke="#D8D4CA"/>
+      <text x="340" y="122" font-family="Inter, sans-serif" font-size="8" fill="#30332F">seed-tell draft</text>
+      <text x="340" y="136" font-family="Inter, sans-serif" font-size="8" fill="#686B64">must FAIL</text>
+      <rect x="480" y="100" width="142" height="54" fill="#FBFAF7" stroke="#D8D4CA"/>
+      <text x="494" y="122" font-family="Inter, sans-serif" font-size="8" fill="#30332F">planted fabrication</text>
+      <text x="494" y="136" font-family="Inter, sans-serif" font-size="8" fill="#686B64">must FAIL</text>
+      <rect x="95" y="182" width="142" height="54" fill="#FBFAF7" stroke="#D8D4CA"/>
+      <text x="109" y="204" font-family="Inter, sans-serif" font-size="8" fill="#30332F">style sample</text>
+      <text x="109" y="218" font-family="Inter, sans-serif" font-size="8" fill="#686B64">passes</text>
+      <rect x="249" y="182" width="142" height="54" fill="#FBFAF7" stroke="#D8D4CA"/>
+      <text x="263" y="204" font-family="Inter, sans-serif" font-size="8" fill="#30332F">style anti-sample</text>
+      <text x="263" y="218" font-family="Inter, sans-serif" font-size="8" fill="#686B64">must FAIL</text>
+      <rect x="403" y="182" width="142" height="54" fill="#FBFAF7" stroke="#D8D4CA"/>
+      <text x="417" y="204" font-family="Inter, sans-serif" font-size="8" fill="#30332F">root self-scan</text>
+      <text x="417" y="218" font-family="Inter, sans-serif" font-size="8" fill="#686B64">0 HIGH/MEDIUM</text>
+      <rect x="250" y="276" width="140" height="36" fill="#FBFAF7" stroke="#8D2829"/>
+      <text x="264" y="298" font-family="Inter, sans-serif" font-size="9" font-weight="600" fill="#8D2829">exit 0: ALL GREEN</text>
+      <line x1="320" y1="70" x2="89" y2="96" stroke="#D8D4CA" stroke-width="1" marker-end="url(#arr3)"/>
+      <line x1="320" y1="70" x2="243" y2="96" stroke="#D8D4CA" stroke-width="1" marker-end="url(#arr3)"/>
+      <line x1="320" y1="70" x2="397" y2="96" stroke="#D8D4CA" stroke-width="1" marker-end="url(#arr3)"/>
+      <line x1="320" y1="70" x2="551" y2="96" stroke="#D8D4CA" stroke-width="1" marker-end="url(#arr3)"/>
+      <line x1="320" y1="70" x2="166" y2="178" stroke="#D8D4CA" stroke-width="1" marker-end="url(#arr3)"/>
+      <line x1="320" y1="70" x2="320" y2="178" stroke="#D8D4CA" stroke-width="1" marker-end="url(#arr3)"/>
+      <line x1="320" y1="70" x2="474" y2="178" stroke="#D8D4CA" stroke-width="1" marker-end="url(#arr3)"/>
+      <line x1="89" y1="154" x2="320" y2="272" stroke="#D8D4CA" stroke-width="1" marker-end="url(#arr3)"/>
+      <line x1="243" y1="154" x2="320" y2="272" stroke="#D8D4CA" stroke-width="1" marker-end="url(#arr3)"/>
+      <line x1="397" y1="154" x2="320" y2="272" stroke="#D8D4CA" stroke-width="1" marker-end="url(#arr3)"/>
+      <line x1="551" y1="154" x2="320" y2="272" stroke="#D8D4CA" stroke-width="1" marker-end="url(#arr3)"/>
+      <line x1="166" y1="236" x2="320" y2="272" stroke="#D8D4CA" stroke-width="1" marker-end="url(#arr3)"/>
+      <line x1="320" y1="236" x2="320" y2="272" stroke="#D8D4CA" stroke-width="1" marker-end="url(#arr3)"/>
+      <line x1="474" y1="236" x2="320" y2="272" stroke="#D8D4CA" stroke-width="1" marker-end="url(#arr3)"/>
+    </svg>
+    <figcaption class="figure__caption">Fig. 3 — Seven controls, each in its declared direction; exit 0 prints ALL GREEN.</figcaption>
+  </figure>
+
+  <p class="body"><code class="chip">AGENTS.md</code> does the routing for coding agents: load the skill that owns the task, never edit the scanner or the pattern file, treat everything under <code class="chip">*/tests/</code> as a control, prove every change with <code class="chip">run_all.sh</code>, which runs all seven controls in their declared directions and self-scans the root files. One gotcha worth knowing: frontmatter is checked by a machine, not read by a person. I had written the name with a literal block:</p>
+  <pre class="code">name: |
+  blog-writer</pre>
+  <p class="body">A literal block keeps its trailing newline, and Vibe's name pattern rejected it: 104 warnings in the log, two skills silently skipped. A plain scalar, <code class="chip">name: blog-writer</code>, fixed it. Frontmatter gets checked by a tool, not by eye.</p>
+
+  <div class="sec-head"><h2 class="h2">What Anthropic, OpenAI, and the spec say to do.</h2><span class="meta">Field guide</span></div>
+  <ul class="list-clean">
+    <li><strong>The Agent Skills spec.</strong> A directory with a required <code class="chip">SKILL.md</code> (frontmatter plus instructions) and optional <code class="chip">scripts/</code>, <code class="chip">references/</code>, <code class="chip">assets/</code>; frontmatter always in context, the rest on demand (progressive disclosure); keep <code class="chip">SKILL.md</code> under 500 lines; relative paths one level deep; check with <code class="chip">skills-ref validate</code>. <a href="https://agentskills.io/specification">agentskills.io/specification</a></li>
+    <li><strong>Anthropic's engineering post.</strong> The format became an open standard in December 2025; skills are folders of instructions, scripts, and resources; bundled code executes without entering the model's context, so it stays deterministic and repeatable. <a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills">anthropic.com/engineering</a></li>
+    <li><strong>Anthropic, Building effective agents.</strong> The systems that worked used simple composable patterns, not frameworks; routing exists for separation of concerns; start with plain workflows, add agents only where the task needs them. <a href="https://www.anthropic.com/research/building-effective-agents">anthropic.com/research</a></li>
+    <li><strong>Claude skill-authoring best practices.</strong> The <code class="chip">description</code> field picks the right skill among 100 or more, so write specific triggers; test the skill on every model you plan to run; match the degree of freedom you give the agent to how hazardous the task is. <a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices">platform.claude.com/docs</a></li>
+    <li><strong>OpenAI's guide to evals for skills.</strong> An eval is prompt, captured run, checks, score; 10 to 20 prompts per skill catch regressions; start from a small CSV and grow it; include negative controls (<code class="chip">should_trigger=false</code>); deterministic graders first. <a href="https://developers.openai.com/blog/eval-skills">developers.openai.com/blog</a></li>
+    <li><strong>Mistral Vibe docs.</strong> Vibe follows the same spec, so skills are portable; discovery from <code class="chip">~/.vibe/skills/</code>, <code class="chip">.vibe/skills/</code>, <code class="chip">.agents/skills/</code>; review any skill that can call write-capable tools before enabling it; keep project skills in <code class="chip">.vibe/skills/</code> for code review; pin a commit for reproducible output. <a href="https://docs.mistral.ai/vibe/code/cli/skills">docs.mistral.ai/vibe</a></li>
+    <li><strong>Diataxis.</strong> Pick the documentation archetype on purpose (tutorial, how-to, reference, explanation); the compass is action versus cognition and study versus work. <a href="https://diataxis.fr/start-here/">diataxis.fr</a></li>
+    <li><strong>Steve Kinney's skeptical take.</strong> Skills are context management, not "smarter prompts"; verification skills pay off most; build the evals before the skill, with a baseline run without it. <a href="https://stevekinney.com/writing/agent-skills">stevekinney.com/writing</a></li>
+  </ul>
+
+  <div class="sec-head"><h2 class="h2">My three skills against that advice.</h2><span class="meta">Mapping</span></div>
+  <table class="table">
+    <thead>
+      <tr><th>Best practice (source)</th><th>anti-ai</th><th>blog-writer</th><th>alexandru-style</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Small <code class="chip">SKILL.md</code>, progressive disclosure (<a href="https://agentskills.io/specification">spec</a>)</td><td>manifest plus 7 reference docs loaded on demand</td><td>manifest plus 4 pass files</td><td>120-line spec plus <code class="chip">brand/</code> references</td></tr>
+      <tr><td><code class="chip">description</code> as trigger text (<a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices">Claude</a>)</td><td>"use when prose must read as human"</td><td>"load when asked to write or revise an article"</td><td>"load for any styled deliverable"</td></tr>
+      <tr><td>Deterministic code for the mechanical work (<a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills">Anthropic</a>)</td><td><code class="chip">check_tells.py</code> over <code class="chip">patterns.json</code></td><td><code class="chip">validate_draft.py</code> calls the scanner</td><td><code class="chip">check_styled.py</code> plus 8 render scripts</td></tr>
+      <tr><td>Controls in both directions, CSV, negative cases (<a href="https://developers.openai.com/blog/eval-skills">OpenAI</a>)</td><td>83 fixture rows: 59 MUST-FAIL, 24 MUST-PASS</td><td>clean draft passes; seed and planted-fabrication fail</td><td>sample passes; anti-sample fails</td></tr>
+      <tr><td>Test on every model you run (<a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices">Claude</a>)</td><td>patterns are model-agnostic regex</td><td>pipeline is model-agnostic; voice lives in references</td><td>tokens are model-agnostic</td></tr>
+      <tr><td>Freedom matched to hazard (<a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices">Claude</a>)</td><td>scanner advises; it never edits text</td><td>review gate waits for approval; escalation routes to Pass 1</td><td>checker advises; a human renders</td></tr>
+      <tr><td>One concern per folder (<a href="https://www.anthropic.com/research/building-effective-agents">Building effective agents</a>)</td><td>linter only</td><td>pipeline only</td><td>style only</td></tr>
+      <tr><td>Doc archetypes (<a href="https://diataxis.fr/start-here/">Diataxis</a>)</td><td>references are reference-type docs</td><td>Pass 1 picks the article archetype</td><td>per-medium recipes in the manifest</td></tr>
+      <tr><td>Reviewable in code review, pin a commit (<a href="https://docs.mistral.ai/vibe/code/cli/skills">Vibe</a>)</td><td>one repo, one gate script</td><td>same repo, same gate</td><td>same repo, same gate</td></tr>
+      <tr><td>Frontmatter checked by a tool (<a href="https://agentskills.io/specification">spec</a>)</td><td>the literal-block <code class="chip">name</code> newline bug; plain scalar fixed it</td><td>same fix</td><td>same fix</td></tr>
+    </tbody>
+  </table>
+  <p class="body">What the mapping buys: the mechanical parts run the same on every machine and every model, and a control that stops firing tells me the detector rotted. What it costs: maintenance. Every pattern bump is a version bump with fixtures to keep green, and the regex linter overreaches by design, so REVIEW stays a human call.</p>
+
+  <div class="sec-head"><h2 class="h2">Calibrating the linter by arguing with my own agent.</h2><span class="meta">Method</span></div>
+  <p class="body">The calibration was trial and error with traces, not a one-shot list. I ran the scanner on model drafts, read every hit in the trace, and fed the agent feedback until the rules matched what I object to. When a rule was wrong, I fixed the rule and versioned it: v0.12.0 repaired a dead conjunction guard (stray 0x08 bytes) and added the parallel-pair heuristic; v0.12.1 added the mirrored-summary heuristic and the clean-scan sign-off. When the text was wrong, I fixed the text. That split is the whole method.</p>
+  <p class="body">The measuring stick was human text, not more AI output. My blog gave the house rules: two eras, and the current one runs about 15 words per sentence, addresses the reader directly, and contains one em-dash in 55,700 words. Against the same blocklist, an internal memo and an unedited work doc scored 0 HIGH, while a model draft scored 3 HIGH in about a thousand words. Density, not the single hit, is the tell. That is why there are three verdicts: FAIL, REVIEW, PASS, and why REVIEW is where good human writing lives.</p>
+  <p class="body">Multilingual came from the same method: Romanian and French got their own annexes and their own fixture rows, with a recipe to recalibrate the word-length numbers, which are English-calibrated. Today no language can silently rot, because the fixtures enforce it.</p>
+
+  <div class="sec-head"><h2 class="h2">The day broke things. I was the one steering.</h2><span class="meta">Incidents</span></div>
+  <p class="body">I pushed to the wrong path at 13:25 and clobbered the root README; the gate flagged it and I cleaned up twelve commits' worth of stray copies by 14:09. A binary test came back corrupted (a 48,223-byte PNG returned as 71,444 bytes), so I measured the bytes, concluded the connector writes text only, and archived the brand snapshot as base64 in 11 parts with a SHA-256 restore. When our own docs tripped the scanner, I humanized the docs by quoting the example phrases, not by editing the detector. Every time, the human at the keyboard decided, and the gate made sure the fix stuck: <code class="chip">run_all.sh</code> went in at 15:45 and has printed ALL GREEN since.</p>
+
+  <div class="sec-head"><h2 class="h2">What good editing means, in rules you can run.</h2><span class="meta">Principles</span></div>
+  <p class="body">From the sources, the principles behind these skills:</p>
+  <ul class="list-clean">
+    <li><strong>Edit what you can measure.</strong> Voice becomes numbers (sentence length, em-dash count, word length), then a scanner checks them. Vibes in a prompt drift; a regex does not. Deterministic graders first, rubric grading after. (<a href="https://developers.openai.com/blog/eval-skills">OpenAI evals guide</a>)</li>
+    <li><strong>Check the mechanical parts with tools, not eyes.</strong> The spec ships <code class="chip">skills-ref validate</code> for exactly the newline bug I hit. (<a href="https://agentskills.io/specification">spec</a>)</li>
+    <li><strong>Give the agent only what it needs now.</strong> The manifest routes, the references load on demand. (<a href="https://agentskills.io/specification">spec</a>)</li>
+    <li><strong>Define good before you polish.</strong> Evals and controls first, with a baseline run and negative cases. (<a href="https://developers.openai.com/blog/eval-skills">OpenAI</a>, <a href="https://stevekinney.com/writing/agent-skills">Kinney</a>)</li>
+    <li><strong>Route feedback to the pass that owns it.</strong> Structure goes back to the structural pass, wording to the copy pass, facts to research. (<a href="https://www.anthropic.com/research/building-effective-agents">Building effective agents</a>)</li>
+    <li><strong>Every external claim carries a link that was opened.</strong> If a claim cannot be verified, delete it or recast it; never invent a source.</li>
+    <li><strong>Separate the mechanical from the judgment.</strong> Code decides what it can (FAIL), the human keeps the REVIEW call, and PASS is the floor, not the goal.</li>
+  </ul>
+
+  <div class="sec-head"><h2 class="h2">Where it stands now.</h2><span class="meta">Status</span></div>
+  <p class="body"><code class="chip">bash run_all.sh</code> prints ALL GREEN, 7 of 7 controls in their declared direction. A fresh session loads all three skills after the frontmatter fix. The collection is MIT-licensed, runs offline with plain Python, no accounts, no telemetry. This post lives in the repo at <code class="chip">docs/skills-architecture.md</code>.</p>
+  <div class="colophon">
+    <p>Colophon: these three skills were designed, built, and iterated with Mistral Large as the model, running in Vibe, across 46 commits on 2026-11-19. The patterns, gates, and numbers are mine; the format belongs to the open standard. · alexandrugris.ro · typography set in Georgia (Gelasio), Inter, and IBM Plex Mono.</p>
+  </div>
+
+  <div class="sec-head"><h2 class="h2">Sources</h2><span class="meta">Links</span></div>
+  <ul class="list-clean">
+    <li><a href="https://agentskills.io/specification">Agent Skills specification</a></li>
+    <li><a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills">Anthropic Engineering: Equipping agents for the real world with Agent Skills</a></li>
+    <li><a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices">Claude Platform Docs: Skill authoring best practices</a></li>
+    <li><a href="https://www.anthropic.com/research/building-effective-agents">Anthropic Research: Building effective agents</a></li>
+    <li><a href="https://developers.openai.com/blog/eval-skills">OpenAI Developers: Testing agent skills systematically with evals</a></li>
+    <li><a href="https://diataxis.fr/start-here/">Diataxis: Start here</a></li>
+    <li><a href="https://docs.mistral.ai/vibe/code/cli/skills">Mistral Vibe docs: Skills</a></li>
+    <li><a href="https://stevekinney.com/writing/agent-skills">Steve Kinney: Agent skills, stripped of hype</a></li>
+  </ul>
+</article>
+</body>
+</html>
