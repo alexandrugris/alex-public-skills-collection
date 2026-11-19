@@ -16,6 +16,21 @@ must be replaced by the concrete thing. No acceptable figure of speech.
 Quotations are exempt: a quoted metaphor stays, but it must be marked as a quotation and
 attributed.
 
+**1b. When a metaphor goes, expand it into the concrete mechanism — do not just delete it.**
+A deleted metaphor leaves a hole the reader fills with a cliché. Replace it with who does
+what, and what changes as a result:
+- "care widens the room people have to think and act" -> "care means people can decide,
+  disagree and act without you in the room" (the room stays literal)
+- a punchy metaphorical title ("...still landed as a threat") -> a declarative sentence about
+  what actually happened ("Silence at the all-hands was not agreement.")
+- a filler transition ("The levels move together.") -> deleted, or rewritten as the concrete
+  consequence ("A change of task is also a change of feeling and of reward.")
+- twin frames ("X asks what... / Y asks what...") -> break the parallelism by varying sentence
+  length and shape (10 / 32 / 35 words), not by keeping both frames identical
+Scanner patterns covering these shapes (blocklist v0.12.0): metaphor.room, metaphor.landed,
+metaphor.slide_into, inflated.on_paper, structure.filler_declarative, and the heuristic
+list.parallel_pair_long for adjacent 18-30-word "First Last ..." pairs.
+
 **2. Spoken register, in every language. Write the sentence the way you would say it out loud, then edit.**
 If you would not say it to a friend in the room, rewrite it. The Latinism is the usual giveaway:
 the formal verb or connector that speech never uses. One or two syllable words, literal

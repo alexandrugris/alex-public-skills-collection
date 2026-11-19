@@ -34,7 +34,10 @@ cuvinte) si 2014-2025 (eseuri, ~10.400 cuvinte). Vocea curenta = era recenta:
     "grants", "fosters", "fuels", "earns its".
 11. Fiecare cuvant are sens literal. Nicio metafora: daca sensul de dictionar nu rezista
     in context, cuvantul se rescrie concret. Excepție: citatele, pastrate ca citate, cu
-    atribuire explicita.
+    atribuire explicita. Cand tai o metafora, expandeaz-o in mecanismul concret, nu doar o
+    sterge (regula 1b din anti-ai-prompt.md): "room to think and act" -> "can decide,
+    disagree and act without you in the room"; "The levels move together." -> sters, iar
+    consecinta concreta intra in propozitia urmatoare.
 12. Engleza simpla (cu atat mai mult daca engleza nu e prima ta limba): cuvinte de 1-2
     silabe, sens literal, propozitii de 12-22 de cuvinte; media de litere pe cuvant sub
     4.8; cuvintele de 10+ litere, sub 12%; fara latinisme care nu se traduc bine.

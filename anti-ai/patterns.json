@@ -1,5 +1,5 @@
 {
-  "version": "0.11.5",
+  "version": "0.12.0",
   "updated": "2026-11-19",
   "categories": {
     "chat": "Resturi de chatbot",
@@ -10320,6 +10320,51 @@
       "regex": "\\bdavantage\\b",
       "label": "davantage -> plus",
       "fix": "dire: plus"
+    },
+    {
+      "id": "metaphor.room",
+      "cat": "metaphor",
+      "lang": "any",
+      "severity": "high",
+      "regex": "\\broom\\b[^.]{0,25}\\bto (?:think|act|breathe|move|decide)\\b",
+      "label": "room (spatiu metaforic)",
+      "fix": "Spune concret cine ce poate face fara tine: can decide, disagree and act without you in the room."
+    },
+    {
+      "id": "metaphor.landed",
+      "cat": "metaphor",
+      "lang": "any",
+      "severity": "high",
+      "regex": "\\blanded as\\b|\\blands as\\b|\\blanded on\\b",
+      "label": "landed (metafora de impact)",
+      "fix": "Spune ce s-a intamplat concret, fara metafora de impact."
+    },
+    {
+      "id": "metaphor.slide_into",
+      "cat": "metaphor",
+      "lang": "any",
+      "severity": "medium",
+      "regex": "\\bslide into\\b",
+      "label": "slide into",
+      "fix": "Spune patternul concret: fall into old patterns."
+    },
+    {
+      "id": "inflated.on_paper",
+      "cat": "inflated",
+      "lang": "any",
+      "severity": "medium",
+      "regex": "\\bon paper\\b",
+      "label": "on paper",
+      "fix": "Spune: in the plan, in the numbers, in the deck."
+    },
+    {
+      "id": "structure.filler_declarative",
+      "cat": "structure",
+      "lang": "any",
+      "severity": "medium",
+      "regex": "(?m)^The [a-z]+ (?:move|stand|matter|exist|remain|change|shift)s?(?: together| still| alone)?\\.(?=\\s|$)",
+      "label": "filler declarativ scurt",
+      "fix": "Taie linia sau rescrie cu consecinta concreta (cine, ce se schimba)."
     }
   ]
 }

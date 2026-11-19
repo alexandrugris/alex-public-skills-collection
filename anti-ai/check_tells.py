@@ -240,7 +240,7 @@ def parallel_list_notes(text, path):
             continue
         if not all(re.match(r"^(?:[A-Z][\w'-]*|The [A-Z][\w'-]*|Each [a-z]+|One [a-z]+)", s) for s in trio):
             continue
-        if any(re.search(r"(?:and|but|or|while|whereas|though)", s.lower()) for s in trio):
+        if any(re.search(r"\b(?:and|but|or|while|whereas|though)\b", s.lower()) for s in trio):
             continue
         notes.append({
             "id": "list.parallel_prose",
@@ -248,6 +248,26 @@ def parallel_list_notes(text, path):
             "severity": "medium",
             "label": "lista mascata in proza: 3 propozitii paralele",
             "fix": "Daca sunt elemente de lista, fa-i bullet points. Daca sunt o idee, uneste-le intr-o propozitie.",
+            "line": 1,
+        })
+        break
+    # long parallel pairs (the "X asks... / Y asks..." shape): 18-30 words each,
+    # similar length, both starting with a name-like "First Last" token
+    for i in range(len(sents) - 1):
+        pair = sents[i:i + 2]
+        lens = [len(s.split()) for s in pair]
+        if not all(18 <= l <= 30 for l in lens):
+            continue
+        if abs(lens[0] - lens[1]) > 4:
+            continue
+        if not all(re.match(r"^[A-Z][a-z]+ [A-Z][a-z]+", s) for s in pair):
+            continue
+        notes.append({
+            "id": "list.parallel_pair_long",
+            "cat": "list",
+            "severity": "medium",
+            "label": "2 propozitii paralele lungi (tip 'X asks / Y asks')",
+            "fix": "Sparge paralelismul: variaza lungimea si forma, nu pastra ambele cadre identice.",
             "line": 1,
         })
         break
