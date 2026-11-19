@@ -33,7 +33,7 @@ apoi un paragraf care spune DE CE. Asa arata lista lui.
 
 ## Ce nu apare niciodata pe blog
 
-lead-inuri de umplutura, hedge-uri grupate, moralitati de inchidere, triade paralele
+lead-inuri de umpluturare, hedge-uri grupate, moralitati de inchidere, triade paralele
 fara bullet, "a mere X", "it genuinely earns its complexity", em-dash ca semn de pauza.
 
 Verificare: python3 check_tells.py fisier.txt (scannerul sta in rădăcina anti-ai/,
@@ -42,7 +42,7 @@ langă references/).
 ## Vocabular masurat - blogul complet (19 nov 2026)
 
 Corpus: 90 de posturi blog.alexandrugris.ro (2008-2025), 55.700 cuvinte, extractie din
-post-body. Textul extractat (feed-ul blogului, 55.700 cuvinte) nu e publicat; regenerabil oricând
+post-body. Textul extractat (feed-ul blogului, 55.700 cuvinte) nu e publicat; regenerabil oricand
 din arhiva blog.alexandrugris.ro. Doua ere care nu se amesteca in profile: 2008-2013
 (jurnal, 45.200 cuv) si 2014-2025 (eseuri, 10.400 cuv). Proba recenta e VOCEA CURENTA.
 
@@ -85,7 +85,6 @@ Postul 2025 e FAIL doar pe "looking under the hood honestly" - regula 9 face exa
 ## Regula 11 - fiecare cuvant are sens literal
 
 Nicio metafora. "weapons" despre strategie e interzis: cuvantul nu are sens in propozitie.
-
 Proba: dicționar, in context. Daca sensul nu rezista, cuvantul se rescrie concret.
 Excepție: citatele intre ghilimele, pastrate ca citate, cu atribuire explicita.
 
