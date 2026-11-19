@@ -33,7 +33,7 @@ apoi un paragraf care spune DE CE. Asa arata lista lui.
 
 ## Ce nu apare niciodata pe blog
 
-lead-inuri de umpluturare, hedge-uri grupate, moralitati de inchidere, triade paralele
+lead-inuri de umplutura, hedge-uri grupate, moralitati de inchidere, triade paralele
 fara bullet, "a mere X", "it genuinely earns its complexity", em-dash ca semn de pauza.
 
 Verificare: python3 check_tells.py fisier.txt (scannerul sta in rădăcina anti-ai/,
