@@ -11,7 +11,7 @@ author's edited voice, measured from his published blog and essays.
 **1. Every word must have literal meaning in the sentence it sits in.**
 If the dictionary sense of a word does not survive in this context, the word is a metaphor and
 must be replaced by the concrete thing. No acceptable figure of speech.
-- He brought heavy artillery to the negotiation -> He brought two lawyers and a 40-page contract
+- The weapons he describes are all subtractions -> Everything he describes is a subtraction
 - weapons is allowed only when the sentence is actually about weapons.
 Quotations are exempt: a quoted metaphor stays, but it must be marked as a quotation and
 attributed.
@@ -299,7 +299,7 @@ sentence that carries no information.
 
 ### Metaphors with no literal meaning (HIGH)
 
-- `weapons (metaforic)` -> Doar daca e arma reala. Altfel numeste obiectul concret al conflictului sau al strategiei.
+- `weapons (metaforic)` -> Doar daca e arma reala. Altfel spune ce e: Everything he describes is a subtraction.
 - `arsenal / ammunition` -> Cate lucruri concrete, nu arsenal.
 - `battlefield` -> Numește subiectul conflictului concret.
 - `double-edged sword` -> Spune ce avantaj are si ce cost.

@@ -26,6 +26,8 @@ goal; densitatea e discriminatorul, nu aparitia izolata.
 - Zero cuvinte din blocklist in toata pagina: niciunul dintre delves, crucial, pivotal,
   robust, seamless, leverage, foster, journey, landscape, navigate, unlock, harness,
   elevate, empower, moreover, furthermore, stakeholder, synergy nu apare.
+- Intensificatorii simpli sunt firesti, nu hedge: "very" x13, "really" x8.
+- ALL-CAPS pentru accent si 3 smileys in 5.100 de cuvinte: om care scrie lejer, nu asistent.
 - Scanner: REVIEW (0 HIGH, 29 MEDIUM, 35 LOW).
 - Ce calibreaza: (1) "genuinely" despre PERSOANE e permis (extensia logica a exceptiei
   de la "honest"); (2) calificativele emotionale sunt CASTIGATE daca clauza urmatoare
