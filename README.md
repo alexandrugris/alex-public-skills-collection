@@ -31,9 +31,11 @@ writing, judge by hand), `PASS`. The full calibration story behind those verdict
 [anti-ai/references/human-benchmarks.md](./anti-ai/references/human-benchmarks.md).
 
 The brand toolkit in [alexandru-style/brand/](./alexandru-style/brand/) migrated from its
-own repository (ag-personal-brand) on 2026-11-19. See
-[alexandru-style/brand/TRANSFER-NOTES.md](./alexandru-style/brand/TRANSFER-NOTES.md) for
-what crosses over as text and where the open-font binaries come from.
+own repository (ag-personal-brand) on 2026-11-19. The complete source snapshot, including
+every binary (fonts, reference PDFs, sample deck, screenshots), is preserved and
+byte-verified in
+[alexandru-style/brand/binaries-archive/](./alexandru-style/brand/binaries-archive/);
+see its README for the one-command restore.
 
 ## License
 
