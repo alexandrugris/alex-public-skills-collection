@@ -21,3 +21,11 @@ en,FAIL,metaphor.slide_into,Leaders slide into old habits under pressure.
 en,PASS,,The plan was sound and the room went quiet.
 en,PASS,,"Care means people can decide, disagree and act without you in the room."
 en,PASS,,Any hard decision can be read on three levels at once.
+en,FAIL,structure.leading_negation,Holding is not soothing.
+en,FAIL,structure.negated_tail,"Gianpiero Petriglieri starts from the person, not the org chart."
+en,FAIL,style.imperative_start,Ask which level is failing before you fix the slide deck.
+en,FAIL,style.count_fragment,"Four feelings, four readings."
+en,PASS,,Holding means staying with a hard reality.
+en,PASS,,Gianpiero Petriglieri starts from the person.
+en,PASS,,"If you put two researchers in that room, the silence changes meaning."
+en,PASS,,"For example, anger can signal an injustice or a wish for control."

@@ -1,6 +1,6 @@
 ---
 name: anti-ai
-description: Detect and remove AI tells from English (and Romanian/French) prose: metaphors without literal meaning, weight verbs, self-certified honesty, empty emotional adjectives, crime-novel register, lists disguised as prose, hedge clusters, filler openers, inflated vocabulary, complex words with simple equivalents, closing morals. Use when writing or revising prose that must read as human, or when asked to humanize, de-AI, or audit a draft.
+description: Detect and remove AI tells from English (and Romanian/French) prose: metaphors without literal meaning, weight verbs, self-certified honesty, empty emotional adjectives, crime-novel register, lists disguised as prose, hedge clusters, filler openers, inflated vocabulary, complex words with simple equivalents, closing morals. Loads when writing or revising prose that must read as human, or when asked to humanize, de-AI, or audit a draft.
 ---
 
 # anti-ai
@@ -35,8 +35,7 @@ sentence is about the physical thing).
 ## Write
 
 Apply the rules while drafting, not after. Then run the scanner and fix what it reports.
-House rhythm: a sentence built as an enumeration (2+ items, or a semicolon series) may
-run long, the clause stays 12-22 words, and it must not become every sentence.
+House rhythm: a sentence built as an enumeration (2+ items, or a semicolon series) may run long, the clause stays 12-22 words, and it must not become every sentence.
 Keep facts, numbers and quotations unchanged.
 FAIL = heavy tells, almost surely AI-drafted. REVIEW can be good human writing: read
 the benchmarks file before you cut a flagged sentence.

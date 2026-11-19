@@ -110,13 +110,25 @@ never on an aphorism. If the last sentence could go on a poster, it is too much.
 **11. Rhythm.**
 Sentences with a 12-22 word core. Enumerations are house style and may run long, but their
 clauses stay 12-22 words and they must not become every sentence. Vary them: a short sentence after a long one, a fragment, a
-parenthetical aside. No sentence metronome (all sentences 12-20 words). Use a colon
-or two sentences instead of an em-dash, anywhere in the text. Headings are declarative
+parenthetical aside. No sentence metronome (all sentences 12-20 words). A colon or two sentences
+replace an em-dash, anywhere in the text. Headings are declarative
 sentences that end with a period.
 
 **12. No metaphors, no weight, no filler, in that order.**
-Check each noun against a dictionary in context, then check each adjective, then cut the
-sentence that carries no information.
+Each noun gets checked against a dictionary in context, then each adjective, then the
+sentence that carries no information gets cut.
+
+**13. Say what it is, not what it is not.** A sentence opening with "X is not Y" makes the
+reader guess the positive: state the positive and the reason. Same for negated tails that
+duplicate the positive: "starts from the person, not the org chart" -> "starts from the
+person". A negation that carries real information ("an interpreter, not a judge") is fine.
+
+**14. Advice reads as conditional, not as an order.** "Put two researchers in that room"
+-> "If you put two researchers in that room, the silence changes meaning." Imperatives
+survive only inside checklists. No count fragments ("Four feelings, four readings."):
+open with the example ("Anger can signal an injustice."). Explain mechanisms plainly, no
+ceremonial verbs ("gave him the word" -> "the term comes from Winnicott, via Petriglieri").
+Every transition sentence carries a concrete detail or a condition, nothing else.
 
 ## 2. House style, measured from the author's published pages
 

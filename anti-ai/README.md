@@ -60,7 +60,7 @@ detection). The shipped `references/house-style.md` and `references/alex-style.m
 are the real thing, not a toy example: Alexandru's voice as measured on his blog
 (90 posts, 2008-2025), including the two-era voice drift and the
 hard confirmations (one true em-dash in 55,700 words; "term - description" lines are
-list syntax, not pauses). Use it as a template: measure your own corpus, replace the
+list syntax, not pauses). It works as a template: measure your own corpus, replace the
 numbers.
 
 ## Calibration evidence

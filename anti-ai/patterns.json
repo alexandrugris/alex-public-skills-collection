@@ -1,5 +1,5 @@
 {
-  "version": "0.12.0",
+  "version": "0.13.0",
   "updated": "2026-11-19",
   "categories": {
     "chat": "Resturi de chatbot",
@@ -10365,6 +10365,42 @@
       "regex": "(?m)^The [a-z]+ (?:move|stand|matter|exist|remain|change|shift)s?(?: together| still| alone)?\\.(?=\\s|$)",
       "label": "filler declarativ scurt",
       "fix": "Taie linia sau rescrie cu consecinta concreta (cine, ce se schimba)."
+    },
+    {
+      "id": "structure.leading_negation",
+      "cat": "structure",
+      "lang": "any",
+      "severity": "medium",
+      "regex": "(?m)^(?!But |And |So |Or |Yet )[A-Z][\\w' -]{2,40} is not [^.]{3,60}\\.$",
+      "label": "lead cu 'X is not Y'",
+      "fix": "Spune ce ESTE si de ce. Negatia izolata doar roaga cititorul sa ghiceasca pozitivul."
+    },
+    {
+      "id": "structure.negated_tail",
+      "cat": "structure",
+      "lang": "any",
+      "severity": "medium",
+      "regex": "(?:starts?|begins?|comes|goes|works?) (?:from|with|at) [^,.]{2,40}, not [^,.]{2,40}\\.$",
+      "label": "'not X' duplicat la coada propozitiei",
+      "fix": "Taie coada cu 'not': partea pozitiva spune deja unde/cu ce."
+    },
+    {
+      "id": "style.imperative_start",
+      "cat": "structure",
+      "lang": "any",
+      "severity": "medium",
+      "regex": "(?m)(?:^|[.!?] )(?:Put|Ask|Run|Check|Fix|Read|Build|Hold|Use|Start|Turn|Make|See|Look|Print|Tick|Follow|Test|Protect|Notice|Try|Tell|Show|Give|Take|Wait) [a-z][^.;!?]{24,}",
+      "label": "imperativ la inceput de propozitie",
+      "fix": "Conditie in loc de ordin: 'if you...', 'when...'. Imperativ doar in checklist-uri."
+    },
+    {
+      "id": "style.count_fragment",
+      "cat": "structure",
+      "lang": "any",
+      "severity": "medium",
+      "regex": "(?m)^(?:One|Two|Three|Four|Five|Six|Seven|Eight|Nine|Ten|Several|Many) [a-z]+, [a-z]+ [a-z]+\\.$",
+      "label": "fragment de numar ('Four feelings, four readings.')",
+      "fix": "Incepe cu exemplul concret: 'Anger can signal...'. Nu numara lucrurile din fraza."
     }
   ]
 }
