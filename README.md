@@ -9,6 +9,8 @@ Everything runs offline with plain Python. No accounts, no telemetry.
 | Skill | What it does |
 |---|---|
 | [anti-ai](./anti-ai/) | A regex linter that detects AI tells in prose: 442 patterns (EN/RO/FR), house-style calibration, and benchmarks from real human corpora |
+| [blog-writer](./blog-writer/) | Multi-pass article pipeline: brief, sourced research, developmental edit, copy edit in the author's voice, fact-check loop, review gate. Lints its own drafts with anti-ai |
+| [alexandru-style](./alexandru-style/) | AG Style v1.0: the design system distilled from alexandrugris.ro. Georgia serif, uppercase Inter labels, IBM Plex Mono, burgundy on paper; per-medium recipes for HTML, Marp slides, PDFs and tables |
 
 ## Layout
 

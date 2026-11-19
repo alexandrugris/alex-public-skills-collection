@@ -1,8 +1,10 @@
 # House style - masurat pe un corpus personal (blog, 2008-2025)
 
-Acest fisier e UN exemplu de house style calibrat pe o voce reala (corpus propriu,
-90 de posturi, 2008-2025, ~55.700 cuvinte). Nu e un standard universal: copiaza-l,
-masoara-ti propriul text si inlocuieste numerele cu ale tale.
+Acest fisier e UN exemplu de house style calibrat pe vocea lui Alexandru Gris
+(blog.alexandrugris.ro si alexandrugris.ro, 90 de posturi, 2008-2025, ~55.700 cuvinte;
+profilul complet, cu masuratorile pe pagina si pe vocabular: `alex-style.md`).
+Nu e un standard universal: copiaza-l, masoara-ti propriul text si inlocuieste
+numerele cu ale tale.
 
 Doua ere, doua voci (nu le amesteca in profil): 2008-2013 (jurnal personal, ~45.200
 cuvinte) si 2014-2025 (eseuri, ~10.400 cuvinte). Vocea curenta = era recenta:

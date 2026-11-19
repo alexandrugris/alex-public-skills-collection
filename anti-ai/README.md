@@ -1,8 +1,10 @@
 # anti-ai
 
 A regex-based linter that detects AI tells in prose: the phrases, structures and
-registers that give machine-written text away. Built and calibrated against real
-human corpora, not just against AI output.
+registers that give machine-written text away. Built by Alexandru Gris
+([alexandrugris.ro](https://alexandrugris.ro)), calibrated against real human
+corpora, not just against AI output. My voice, my rules; take them, replace the
+numbers with yours.
 
 ## Why
 
@@ -46,8 +48,9 @@ and the code adapts to new patterns without changes.
 
 `house` is a different animal: not AI tells, but *your* personal rhythm, measured on
 *your* clean writing (sentence length bands, em-dash budget, word length, metronome
-detection). The shipped `references/house-style.md` is one real example, calibrated on
-a personal blog corpus (90 posts, 2008-2025), including the two-era voice drift and the
+detection). The shipped `references/house-style.md` and `references/alex-style.md`
+are the real thing, not a toy example: Alexandru's voice as measured on his blog
+(90 posts, 2008-2025), including the two-era voice drift and the
 hard confirmations (one true em-dash in 55,700 words; "term - description" lines are
 list syntax, not pauses). Use it as a template: measure your own corpus, replace the
 numbers.
@@ -81,4 +84,4 @@ register (memos, design docs) the `complex` category fires as register noise: LO
 
 ## License
 
-TBD by the author.
+MIT — see the `LICENSE` file at the repo root. Copyright (c) 2026 Alexandru Gris.

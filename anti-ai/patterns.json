@@ -1,5 +1,5 @@
 {
-  "version": "0.11.2",
+  "version": "0.11.3",
   "updated": "2026-11-19",
   "categories": {
     "chat": "Resturi de chatbot",
@@ -12,7 +12,7 @@
     "weight": "Familia verbelor de greutate - metaforeze care spun 'greu' in loc de 'bine'",
     "honesty": "Auto-certificarea sinceritatii - 'honest answer', 'to be honest' (interzis, exceptand referinta la o persoana)",
     "list": "Liste mascate in proza - bullet points fara bullet points",
-    "house": "Reguli de casa (ale tale: calibreaza-le pe propria voce)",
+    "house": "Reguli de casa Alex (blog)",
     "metaphor": "Metafore uzuale - cuvinte fara sens literal in context",
     "complex": "Engleza complexa - cuvinte care au un echivalent simplu",
     "vague": "Calificative emotionale vide - uncomfortable, striking, fascinating, troubling",
@@ -1497,7 +1497,8 @@
       "lang": "any",
       "severity": "high",
       "regex": "\\bweapons?\\b",
-      "label": "weapons (metaforic)",      "fix": "Doar daca e arma reala. Altfel numeste obiectul concret al conflictului sau al strategiei.",
+      "label": "weapons (metaforic)",
+      "fix": "Doar daca e arma reala. Altfel numeste obiectul concret al conflictului sau al strategiei.",
       "literal": [
         "war",
         "army",
@@ -2996,7 +2997,8 @@
         "wound",
         "bruise",
         "floor",
-        "car",        "train",
+        "car",
+        "train",
         "plane",
         "room",
         "clothes",
@@ -4495,7 +4497,8 @@
         "train",
         "plane",
         "room",
-        "clothes",        "shoe",
+        "clothes",
+        "shoe",
         "shirt",
         "collar",
         "chair"
@@ -5994,7 +5997,8 @@
         "shoe",
         "shirt",
         "collar",
-        "chair"      ]
+        "chair"
+      ]
     },
     {
       "id": "vague.elegantly",
@@ -7493,7 +7497,8 @@
       ]
     },
     {
-      "id": "vague.revealing",      "cat": "vague",
+      "id": "vague.revealing",
+      "cat": "vague",
       "lang": "any",
       "severity": "medium",
       "regex": "\\brevealing\\b",
@@ -8992,7 +8997,8 @@
       "cat": "vague",
       "lang": "fr",
       "severity": "medium",
-      "regex": "\\bmalaise\\b",      "label": "malaise",
+      "regex": "\\bmalaise\\b",
+      "label": "malaise",
       "fix": "spune faptul: ce anume e neplacut / impresionant",
       "literal": [
         "pain",

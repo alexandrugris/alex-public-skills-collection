@@ -8,8 +8,12 @@ description: Detect and remove AI tells from English (and Romanian/French) prose
 Full rule set, portable for other AIs: `references/anti-ai-prompt.md` (and the short
 version `references/anti-ai-short.md`).
 Blocklist (canonical, versioned): `patterns.json`, next to the scanner.
-House rules example (calibrate your own): `references/house-style.md`.
-Calibration benchmarks (human corpora, anonymized): `references/human-benchmarks.md`.
+House rules, calibrated on Alexandru's own blog voice (use as a template, then calibrate
+your own): `references/house-style.md`.
+Voice profile (Alex, measured on alexandrugris.ro and on 90 posts spanning 2008-2025):
+`references/alex-style.md`.
+Calibration benchmarks (human corpora; third-party sources anonymized):
+`references/human-benchmarks.md`.
 
 ## Audit (fast)
 
