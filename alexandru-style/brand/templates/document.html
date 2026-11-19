@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Long View — Alexandru Gris</title>
+<link rel="stylesheet" href="TOKENS_PATH">
+<style>
+
+</style>
+<style>
+  @page { size: A4; margin: 0; }
+  html, body { background: var(--paper); }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  .page {
+    position: relative;
+    width: 210mm; height: 297mm;
+    padding: 20mm 22mm 22mm;
+    background: var(--paper);
+    overflow: hidden;
+    break-after: page;
+  }
+  .page:last-of-type { break-after: auto; }
+
+  .page-footer {
+    position: absolute; left: 22mm; right: 22mm; bottom: 9mm;
+    border-top: 1px solid var(--rule); padding-top: 7px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--font-sans); font-size: 7.4pt; font-weight: 500;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--muted-light);
+  }
+  .page-footer .pg { color: var(--burgundy); }
+
+  .doc-title { margin-top: 9px; }
+  .doc-meta-line {
+    display: flex; flex-wrap: wrap; gap: 0 18px; align-items: baseline;
+    margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--rule);
+  }
+  .doc-meta-line span { font-family: var(--font-sans); font-size: 8pt; font-weight: 500;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--muted-light); }
+  .doc-meta-line span + span::before { content: "·"; margin-right: 18px; color: var(--rule-strong); }
+
+  .sec-head { display: flex; justify-content: space-between; align-items: baseline;
+    gap: 16px; margin: 22px 0 13px; padding-bottom: 9px; border-bottom: 1px solid var(--rule); }
+  .sec-head .h2 { margin: 0; }
+  .sec-head .meta { flex: none; }
+
+  .doc .body { margin-top: 0.95em; }
+  .doc .quote { margin-top: 20px; }
+  .doc .quote + .body { margin-top: 1.25em; }
+
+  .principles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+  .principle p { margin-top: 8px; font-family: var(--font-sans); font-size: 8.4pt;
+    line-height: 1.5; color: var(--muted); }
+
+  .figure { margin-top: 12px; padding: 11px 13px 10px; }
+  .figure svg { display: block; width: 100%; height: auto; }
+
+  table.signals { margin-top: 14px; }
+  table.signals td { padding-top: 8px; padding-bottom: 8px; }
+  table.signals td:first-child { font-family: var(--font-sans); font-size: 8.4pt;
+    font-weight: 600; color: var(--ink-deep); width: 26%; }
+
+  .cuts { margin-top: 2px; }
+  .cuts li { display: flex; gap: 18px; align-items: baseline; padding: 8px 0; }
+  .cuts b { font-family: var(--font-sans); font-size: 8.4pt; font-weight: 600;
+    letter-spacing: .09em; text-transform: uppercase; color: var(--burgundy);
+    width: 26%; flex: none; }
+  .cuts span { font-family: var(--font-serif); font-size: 10pt; line-height: 1.5; }
+
+  .deflist dd { margin-bottom: 14px; }
+  .note { margin-top: 18px; }
+  .note .code { margin-top: 9px; line-height: 1.5; }
+
+  .colophon { margin-top: 22px; padding-top: 12px; border-top: 1px solid var(--rule); }
+  .colophon p { font-family: var(--font-sans); font-size: 8pt; letter-spacing: .06em;
+    color: var(--muted-light); }
+</style>
+</head>
+<body class="doc">
+
+<!-- ============================================================
+     PAGE 1
+     ============================================================ -->
+<article class="page">
+  <div class="kicker">Essay · Engineering Leadership · 2026</div>
+  <h1 class="display-xl doc-title">The Long View</h1>
+  <p class="lede" style="margin-top:12px">Most engineering decisions outlive the teams that
+    make them. The teams that survive are the ones that learn to see that far — and to keep
+    the habit of writing down why they decided.</p>
+  <div class="doc-meta-line">
+    <span>Alexandru Gris</span>
+    <span>Engineering Leader</span>
+    <span>Munich</span>
+    <span>9 min read</span>
+  </div>
+
+  <p class="body" style="margin-top:18px">Every team I have joined has been solving a version of the same
+    problem: not the one written in the roadmap, but the one underneath it. The roadmap says
+    <em>ship the feature</em>. The real problem is almost always about how the work is organised —
+    who decides, what gets measured, and what happens when two good engineers disagree.</p>
+
+  <p class="body">I have spent my career building software, products, and teams across countries and
+    industries. The technology changed constantly. The pattern did not. Teams that treat engineering
+    as a delivery problem produce more code and learn less; teams that treat it as a learning
+    problem produce less code, sooner, and understand why.</p>
+
+  <blockquote class="quote quote--accent">
+    The work that matters is the work that is still true in two years.
+    <span class="quote__source">Notes from a review, 2024</span>
+  </blockquote>
+
+  <p class="body">This is not an argument for slowness. It is an argument for choosing the work that
+    compounds: a codebase a team understands gets faster every quarter.</p>
+
+  <div class="sec-head">
+    <h2 class="h2">Where the time goes</h2>
+    <span class="meta">Observation</span>
+  </div>
+
+  <p class="body">Ask a team where its engineering time goes and you will get three different answers
+    in one meeting. None of them are wrong. What is missing is the bottom of the distribution — the
+    slice of time that keeps a team from merely repeating itself.</p>
+
+  <figure class="figure">
+    <svg viewBox="0 0 520 168" role="img" aria-label="Bar chart of where engineering time goes">
+      <text x="0" y="10" font-family="Inter" font-size="9" letter-spacing="1.2" fill="#85857C">ENGINEERING TIME, WHERE IT ACTUALLY GOES</text>
+      <line x1="0" y1="20" x2="520" y2="20" stroke="#D8D4CA" stroke-width="1"/>
+
+      <g font-family="Georgia" font-size="11.5" fill="#30332F">
+        <text x="0" y="37">Feature work</text>
+        <text x="0" y="63">Review &amp; rework</text>
+        <text x="0" y="89">Maintenance &amp; ops</text>
+        <text x="0" y="115">Meetings &amp; status</text>
+        <text x="0" y="141">Learning &amp; exploration</text>
+      </g>
+
+      <g>
+        <rect x="150" y="28"  width="186" height="11" fill="#A7A095"/>
+        <rect x="150" y="54"  width="93"  height="11" fill="#A7A095"/>
+        <rect x="150" y="80"  width="75"  height="11" fill="#A7A095"/>
+        <rect x="150" y="106" width="53"  height="11" fill="#A7A095"/>
+        <rect x="150" y="132" width="36"  height="11" fill="#8D2829"/>
+      </g>
+
+      <g font-family="Inter" font-size="10" fill="#686B64" text-anchor="end">
+        <text x="520" y="37">42%</text>
+        <text x="520" y="63">21%</text>
+        <text x="520" y="89">17%</text>
+        <text x="520" y="115">12%</text>
+        <text x="520" y="141" fill="#8D2829">8%</text>
+      </g>
+
+      <line x1="150" y1="152" x2="520" y2="152" stroke="#D8D4CA" stroke-width="1"/>
+      <text x="150" y="164" font-family="Inter" font-size="9" fill="#85857C">0%</text>
+      <text x="520" y="164" font-family="Inter" font-size="9" fill="#85857C" text-anchor="end">50%</text>
+    </svg>
+    <figcaption class="figure__caption">Illustrative distribution — replace with your own measurements</figcaption>
+  </figure>
+
+  <div class="page-footer">
+    <span>From The Trenches — Alexandru Gris</span>
+    <span class="pg">1 / 3</span>
+  </div>
+</article>
+
+<!-- ============================================================
+     PAGE 2
+     ============================================================ -->
+<article class="page">
+  <div class="sec-head">
+    <h2 class="h2">Four principles, still standing</h2>
+    <span class="meta">Management · 2025</span>
+  </div>
+
+  <div class="principles">
+    <div class="principle">
+      <span class="num">01</span>
+      <span>Disagree — and then commit.</span>
+      <p>Open disagreement is the cheapest quality control there is. Once the call is made, the
+        team moves as one.</p>
+    </div>
+    <div class="principle">
+      <span class="num">02</span>
+      <span>Authority is not an argument.</span>
+      <p>Seniority decides who is accountable, not who is right. Bring evidence and expect it
+        weighed the same way.</p>
+    </div>
+    <div class="principle">
+      <span class="num">03</span>
+      <span>Move fast, focused, and deep.</span>
+      <p>Speed without focus is churn. Speed with depth compounds: the team gets faster at what
+        it already knows.</p>
+    </div>
+    <div class="principle">
+      <span class="num">04</span>
+      <span>Measure learning and process.</span>
+      <p>Output metrics reward the wrong behaviour. Measure how the team learns and how the work
+        flows.</p>
+    </div>
+  </div>
+
+  <p class="body" style="margin-top:18px">None of these are new, and none of them are clever. That is the
+    point: principles earn their place by surviving contact with reality.</p>
+
+  <div class="sec-head">
+    <h2 class="h2">What measurement is actually for</h2>
+    <span class="meta">Method</span>
+  </div>
+
+  <p class="body">Most engineering metrics were built to be reported upward, not acted upon. The
+    honest ones are narrow and slightly uncomfortable.</p>
+
+  <table class="table signals">
+    <thead>
+      <tr><th>Signal</th><th>What it tells you</th><th>What it does not tell you</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Deployment frequency</td><td>How fast changes land</td><td>Whether the changes were right</td></tr>
+      <tr><td>Review turnaround</td><td>Where the queue actually sits</td><td>That review quality is good</td></tr>
+      <tr><td>Defect escape rate</td><td>Where quality leaks out</td><td>That the system is well designed</td></tr>
+      <tr><td>Learning hours</td><td>Whether the team is still growing</td><td>That growth happened</td></tr>
+    </tbody>
+  </table>
+
+  <blockquote class="quote">
+    A metric you cannot act on is decoration. A metric you act on weekly is culture.
+  </blockquote>
+
+  <div class="sec-head">
+    <h2 class="h2">What we stopped measuring</h2>
+    <span class="meta">Cuts</span>
+  </div>
+
+  <ul class="list-clean cuts">
+    <li><b>Sprint velocity</b><span>A planning aid until it becomes a target — and then it stops
+      describing the work.</span></li>
+    <li><b>Lines of code</b><span>Volume is not difficulty. Counting it rewards the wrong code and
+      hides the hard parts.</span></li>
+    <li><b>Hours worked</b><span>It measures presence instead of progress, and it quietly punishes
+      people who think best alone.</span></li>
+  </ul>
+
+  <div class="page-footer">
+    <span>From The Trenches — Alexandru Gris</span>
+    <span class="pg">2 / 3</span>
+  </div>
+</article>
+
+<!-- ============================================================
+     PAGE 3
+     ============================================================ -->
+<article class="page">
+  <div class="sec-head">
+    <h2 class="h2">A note on disagreement</h2>
+    <span class="meta">Practice</span>
+  </div>
+
+  <p class="body">Most teams do not fail from too little disagreement. They fail from disagreement
+    that leaks — into hallways, into status meetings, into late-night pull requests that nobody
+    wanted to write. The fix is not more harmony. It is a container for the argument.</p>
+
+  <dl class="deflist" style="margin-top:14px">
+    <dt>Separate the person from the position</dt>
+    <dd>Nobody is defending their ego when the question is framed as evidence. Say what the
+      evidence is, and say what would change your mind.</dd>
+
+    <dt>Argue about the work, not the rank</dt>
+    <dd>Authority decides who is accountable for the call. It does not decide who is correct.
+      Write the reasoning down so the next person can check it.</dd>
+
+    <dt>Commit in public, once</dt>
+    <dd>After the call, the team moves as one. Reopening the decision is legitimate when new
+      evidence appears — not because someone did not win the room.</dd>
+  </dl>
+
+  <div class="note">
+    <span class="meta meta--accent">Decision record — the smallest useful artefact</span>
+    <pre class="code">decision: 2026-03-11 — split the ingestion service
+context:  single pipeline became the bottleneck at 3x traffic
+options:  scale the pipeline | split by source | queue + batch
+choice:   split by source
+because:  smallest change that removes the shared bottleneck
+owner:    platform team — review in 90 days
+revise_if: p95 latency exceeds 400ms after the split</pre>
+  </div>
+
+  <p class="body" style="margin-top:16px">The last line is the one that matters. A decision without a
+    condition for revisiting is a decision that will quietly rot. Writing one down costs five
+    minutes and buys the team a shared memory it would otherwise rebuild from scratch.</p>
+
+  <div class="sec-head">
+    <h2 class="h2">The short version</h2>
+    <span class="meta">Summary</span>
+  </div>
+
+  <p class="body">Write the decision down. Name the condition that would make you revisit it. Keep a
+    slice of the team's time for learning, and defend it. Do the disagreeing in the room, where it
+    is cheap, rather than in the hallway, where it is expensive.</p>
+
+  <p class="body">None of this is slow. It is the difference between a team that ships more each
+    quarter and a team that is still standing in the same place next year.</p>
+
+  <div class="colophon">
+    <p>From The Trenches — written in Munich, 2026. &nbsp;·&nbsp; alexandrugris.ro &nbsp;·&nbsp;
+      Typography set in Georgia and Inter.</p>
+  </div>
+
+  <div class="page-footer">
+    <span>From The Trenches — Alexandru Gris</span>
+    <span class="pg">3 / 3</span>
+  </div>
+</article>
+
+</body>
+</html>

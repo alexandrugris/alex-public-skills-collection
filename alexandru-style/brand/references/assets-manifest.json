@@ -1,0 +1,264 @@
+{
+  "files": [
+    {
+      "path": "fonts/Gelasio-Bold.ttf",
+      "bytes": 107964,
+      "sha256": "592981fe61f82d316c8edbe45efe68d3f63a474286d52ef98cfc3aff4ae6fe12"
+    },
+    {
+      "path": "fonts/Gelasio-BoldItalic.ttf",
+      "bytes": 108124,
+      "sha256": "04aa1ee947674742fcbdc96485e303dda6fd4970e116b8e2b47d295b51eded48"
+    },
+    {
+      "path": "fonts/Gelasio-Medium.ttf",
+      "bytes": 107984,
+      "sha256": "59e30298a21ff5f3059052f36994875369d2afbf105ef2c93bf2290e84e84db1"
+    },
+    {
+      "path": "fonts/Gelasio-MediumItalic.ttf",
+      "bytes": 108348,
+      "sha256": "4fac58f042f2cd9facc3e9db17ea31d602af14937eb7360327f023222ba8018f"
+    },
+    {
+      "path": "fonts/Gelasio-Regular.ttf",
+      "bytes": 107720,
+      "sha256": "3691ba89882cf2bfc6907e73315ed178e09bf080b2752e59ac6343cbd63704c2"
+    },
+    {
+      "path": "fonts/Gelasio-RegularItalic.ttf",
+      "bytes": 108120,
+      "sha256": "be5d23c5c2bb6764637a06890e87ef807359dc0753d308bfc3eed84e5d0b050e"
+    },
+    {
+      "path": "fonts/Gelasio-SemiBold.ttf",
+      "bytes": 108096,
+      "sha256": "93fc843463bb89acfb6b531a6ba1058d91a45112abf9637a6a1dd0393577e334"
+    },
+    {
+      "path": "fonts/Gelasio-SemiBoldItalic.ttf",
+      "bytes": 108404,
+      "sha256": "b3c5540784ac879b1175ddd7fd497e041b54509e12ad4b681192871cfb7874b2"
+    },
+    {
+      "path": "fonts/IBMPlexMono-Regular.ttf",
+      "bytes": 135580,
+      "sha256": "6a3412f058c7d8dfd9170c41e85ade48e5156ecb89356110ca57a0a27734af46"
+    },
+    {
+      "path": "fonts/Inter-Bold.ttf",
+      "bytes": 343200,
+      "sha256": "5efd95331668c8e054235b920d1671db90c4444b6157e1816c206c3e55235486"
+    },
+    {
+      "path": "fonts/Inter-BoldItalic.ttf",
+      "bytes": 346816,
+      "sha256": "52a4d192e8b1d9c71507eff2140eeec17fca3b42a594f75eb1347a8539367291"
+    },
+    {
+      "path": "fonts/Inter-Medium.ttf",
+      "bytes": 342092,
+      "sha256": "a769cc0d61bf73ef9c41f390138aec6c9d6518e60234d0cf15b8df885a16fda0"
+    },
+    {
+      "path": "fonts/Inter-MediumItalic.ttf",
+      "bytes": 345516,
+      "sha256": "31a74a47e1df020cb334d108f9cf29c381dc6ff18915c4352290f90e5f72edff"
+    },
+    {
+      "path": "fonts/Inter-Regular.ttf",
+      "bytes": 341528,
+      "sha256": "85c82266d51f8aae5be7ec91d4fe5d66d948039a4983ac7d564df80ff1b6c728"
+    },
+    {
+      "path": "fonts/Inter-RegularItalic.ttf",
+      "bytes": 344996,
+      "sha256": "bca864cd8a0493cdb5e96712eb0d4fff2f30a8af027bd0b87335b120b13f51ef"
+    },
+    {
+      "path": "fonts/Inter-SemiBold.ttf",
+      "bytes": 342780,
+      "sha256": "dc9bb6403156533832eea5fb04152748058f8fe95514f91812949fe99bc92269"
+    },
+    {
+      "path": "fonts/Inter-SemiBoldItalic.ttf",
+      "bytes": 346292,
+      "sha256": "391fe2960b4f6b0237a5edcfba4c2af3feec9440e71cf1d3ef21da87f6dd7e83"
+    },
+    {
+      "path": "samples/original/AG-Style-Guide-2.png",
+      "bytes": 194274,
+      "sha256": "307fd35f992da6c1964a6b1d3027568fd4621019b20940f690c7ede20f859907"
+    },
+    {
+      "path": "samples/original/AG-Style-Guide.pdf",
+      "bytes": 131365,
+      "sha256": "9973d423632911aedb0ff88890d0dacb034d96ee687f5ce2bde8294f5800c759"
+    },
+    {
+      "path": "samples/original/ag-trenches-style-kit.zip",
+      "bytes": 33046,
+      "sha256": "4018e9b3b762babb0dfbe3efef2c37baa007a27c15c1a1d668af2b3972cf3a4c"
+    },
+    {
+      "path": "samples/original/overview.png",
+      "bytes": 1064319,
+      "sha256": "8d4bba734ed76033850546ab77c9d370f42e091d7474cbc3f2ff36f1da35927a"
+    },
+    {
+      "path": "samples/original/page-full.png",
+      "bytes": 1043047,
+      "sha256": "678a8f50b98596aa9e38c873e97fd77b6e841d5b1f129e2628044100ef142182"
+    },
+    {
+      "path": "samples/original/sample-deck.pdf",
+      "bytes": 43929,
+      "sha256": "191464036ad86154878ab90b03d6707a3b4e88dcdfc4ce9558becad81ad83446"
+    },
+    {
+      "path": "samples/original/sample-deck.pptx",
+      "bytes": 45339,
+      "sha256": "8755ba941a0f28d7c21d785656aee719b3fede8e62005f08bc657e19c86860e6"
+    },
+    {
+      "path": "samples/original/sample-document-1.png",
+      "bytes": 218512,
+      "sha256": "b3f49b6540a618ccd1b255d01404e520d12738975078cf75629820b797c003c7"
+    },
+    {
+      "path": "samples/original/sample-document-2.png",
+      "bytes": 212888,
+      "sha256": "a661287083f9ccc22f718f3670181cfcdabef198638af5be7cb47436108fbd88"
+    },
+    {
+      "path": "samples/original/sample-document-3.png",
+      "bytes": 235653,
+      "sha256": "387be5c2483e258c1a58d864b23a3b1947a611cd1e3fa730992b49717e4e0594"
+    },
+    {
+      "path": "samples/original/sample-document.html",
+      "bytes": 26606,
+      "sha256": "26aef9c8795ff3c906fda97f941631a84388d70fe21f838794f5dd267b5e7a22"
+    },
+    {
+      "path": "samples/original/sample-document.pdf",
+      "bytes": 81230,
+      "sha256": "558b6353bbbeeb87d9108544554b944b585a973c3aee5add46bcfc96912c5cfa"
+    },
+    {
+      "path": "samples/original/sample-page.html",
+      "bytes": 20114,
+      "sha256": "996010c0a00841d71904362ff185a2fbdfcb90f131ccc2d65324c624e7847bfd"
+    },
+    {
+      "path": "samples/original/slide-1.png",
+      "bytes": 76534,
+      "sha256": "367fdcf02d9fd27acfb147f48e8e68f1e7e00d99a1944bfaaf755f024835042c"
+    },
+    {
+      "path": "samples/original/slide-3.png",
+      "bytes": 93675,
+      "sha256": "fa7e1c65e067f65054cdd3a7cff00e9940738567a2b23c0c0b6980a689a96b36"
+    },
+    {
+      "path": "samples/original/slide-4.png",
+      "bytes": 81414,
+      "sha256": "fe3612d4a7338e6cc5fcde77ad437c1412861f0891f0af476e2d06b83593f988"
+    },
+    {
+      "path": "samples/original/slide-5.png",
+      "bytes": 61748,
+      "sha256": "3e81e4cb170f35dbf4f5dd7e714ad37afb9cb688cae5ba6e698b829db07c5897"
+    },
+    {
+      "path": "samples/original/slide-6.png",
+      "bytes": 41462,
+      "sha256": "59d5dee3a84f7420ff3c3e37d91405b676b23437d74bef3ebcd9178384cf4374"
+    },
+    {
+      "path": "samples/original/slide-9.png",
+      "bytes": 48494,
+      "sha256": "077a19a3cd2c2635f6571de81df2f5f03a04c535afe28263bc6c72bf58677bfe"
+    },
+    {
+      "path": "samples/regenerated/deck.pptx",
+      "bytes": 43622,
+      "sha256": "d794c6c6ed686b3df04912e6c4f132d1ef3239eca3d1bc11e79e47f3a2eb5387"
+    },
+    {
+      "path": "samples/regenerated/document/document-1.png",
+      "bytes": 224238,
+      "sha256": "dae0e733544c01d155950313c4b6e0c2c7b43e33b03adbeb9da192be48738e59"
+    },
+    {
+      "path": "samples/regenerated/document/document-2.png",
+      "bytes": 218400,
+      "sha256": "56547017cb70e7275b77c88e18b838a72f5b096033bf002c94471071d82498fe"
+    },
+    {
+      "path": "samples/regenerated/document/document-3.png",
+      "bytes": 235358,
+      "sha256": "485ea756e54237ea9a85a9669d407736b326d295f5fcf9fe4bfe6b3f8457e96f"
+    },
+    {
+      "path": "samples/regenerated/document.pdf",
+      "bytes": 69021,
+      "sha256": "0571a49f869d2626c17816e4cb63b25c6a23b2d5deec30f3de7310eb98da6cc2"
+    },
+    {
+      "path": "samples/regenerated/page.png",
+      "bytes": 315546,
+      "sha256": "bcec8657e3463cebf3c424789bd3fce939ee2596ad2e9df236de76a4bfcbbd4c"
+    },
+    {
+      "path": "samples/regenerated/slides/deck-1.png",
+      "bytes": 74456,
+      "sha256": "9fb27220ee4f2cb7110f29b7f691f7e2af3d0fc7325673302a211e0c733ecd97"
+    },
+    {
+      "path": "samples/regenerated/slides/deck-2.png",
+      "bytes": 71787,
+      "sha256": "a79acba9b49e647584ef1c27dca4c923c32ac4f072e09489597683fdd5f062c5"
+    },
+    {
+      "path": "samples/regenerated/slides/deck-3.png",
+      "bytes": 91941,
+      "sha256": "b3d1de4f7e3880107a528b971b7267cea898a2120a5d0379ba3f25ea2cd8258a"
+    },
+    {
+      "path": "samples/regenerated/slides/deck-4.png",
+      "bytes": 77236,
+      "sha256": "9e3038482f81f10c1d62e892aa4ad5ae3dc88482ca1cd0e57a0b05598fd0d785"
+    },
+    {
+      "path": "samples/regenerated/slides/deck-5.png",
+      "bytes": 59978,
+      "sha256": "3e7db68d11b20f89c55cc7ed8b7d382459c684afcfeaefb0e3956c9b6940a395"
+    },
+    {
+      "path": "samples/regenerated/slides/deck-6.png",
+      "bytes": 41418,
+      "sha256": "1dd254938a2d24d14e57de58785dbc19b8e95cb0d3dc00bdc749713fa73663bf"
+    },
+    {
+      "path": "samples/regenerated/slides/deck-7.png",
+      "bytes": 114487,
+      "sha256": "84bdfe9d7d43ee182c25a4e73131184ef43b38101621bd74c26d5e797e41b57a"
+    },
+    {
+      "path": "samples/regenerated/slides/deck-8.png",
+      "bytes": 86696,
+      "sha256": "feb0c6166d8d5900b9d380112eb2408a8e96f077f6d56347317bc2552346ae97"
+    },
+    {
+      "path": "samples/regenerated/slides/deck-9.png",
+      "bytes": 48223,
+      "sha256": "0dc802f2d314d8daeb37cd24c42ac9a8aab2f49d94c3ac2ce0d1f548568a5ea0"
+    },
+    {
+      "path": "samples/regenerated/slides/deck.pdf",
+      "bytes": 147343,
+      "sha256": "cd1d6a19bc7c6bdb94818fc16c31bf7f614a096f269097381b1f4e197ec3843d"
+    }
+  ]
+}

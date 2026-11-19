@@ -1,0 +1,101 @@
+{
+  "source": "https://share.mcode.io/share/QpS1NFOUNzw86kqPPwt-6g",
+  "retrieved": "2026-11-17",
+  "files": [
+    {
+      "path": "original/AG-Style-Guide-2.png",
+      "sha256": "307fd35f992da6c1964a6b1d3027568fd4621019b20940f690c7ede20f859907",
+      "bytes": 194274
+    },
+    {
+      "path": "original/AG-Style-Guide.pdf",
+      "sha256": "9973d423632911aedb0ff88890d0dacb034d96ee687f5ce2bde8294f5800c759",
+      "bytes": 131365
+    },
+    {
+      "path": "original/overview.png",
+      "sha256": "8d4bba734ed76033850546ab77c9d370f42e091d7474cbc3f2ff36f1da35927a",
+      "bytes": 1064319
+    },
+    {
+      "path": "original/page-full.png",
+      "sha256": "678a8f50b98596aa9e38c873e97fd77b6e841d5b1f129e2628044100ef142182",
+      "bytes": 1043047
+    },
+    {
+      "path": "original/sample-deck.pdf",
+      "sha256": "191464036ad86154878ab90b03d6707a3b4e88dcdfc4ce9558becad81ad83446",
+      "bytes": 43929
+    },
+    {
+      "path": "original/sample-deck.pptx",
+      "sha256": "8755ba941a0f28d7c21d785656aee719b3fede8e62005f08bc657e19c86860e6",
+      "bytes": 45339
+    },
+    {
+      "path": "original/sample-document-1.png",
+      "sha256": "b3f49b6540a618ccd1b255d01404e520d12738975078cf75629820b797c003c7",
+      "bytes": 218512
+    },
+    {
+      "path": "original/sample-document-2.png",
+      "sha256": "a661287083f9ccc22f718f3670181cfcdabef198638af5be7cb47436108fbd88",
+      "bytes": 212888
+    },
+    {
+      "path": "original/sample-document-3.png",
+      "sha256": "387be5c2483e258c1a58d864b23a3b1947a611cd1e3fa730992b49717e4e0594",
+      "bytes": 235653
+    },
+    {
+      "path": "original/sample-document.html",
+      "sha256": "26aef9c8795ff3c906fda97f941631a84388d70fe21f838794f5dd267b5e7a22",
+      "bytes": 26606
+    },
+    {
+      "path": "original/sample-document.pdf",
+      "sha256": "558b6353bbbeeb87d9108544554b944b585a973c3aee5add46bcfc96912c5cfa",
+      "bytes": 81230
+    },
+    {
+      "path": "original/sample-page.html",
+      "sha256": "996010c0a00841d71904362ff185a2fbdfcb90f131ccc2d65324c624e7847bfd",
+      "bytes": 20114
+    },
+    {
+      "path": "original/slide-1.png",
+      "sha256": "367fdcf02d9fd27acfb147f48e8e68f1e7e00d99a1944bfaaf755f024835042c",
+      "bytes": 76534
+    },
+    {
+      "path": "original/slide-3.png",
+      "sha256": "fa7e1c65e067f65054cdd3a7cff00e9940738567a2b23c0c0b6980a689a96b36",
+      "bytes": 93675
+    },
+    {
+      "path": "original/slide-4.png",
+      "sha256": "fe3612d4a7338e6cc5fcde77ad437c1412861f0891f0af476e2d06b83593f988",
+      "bytes": 81414
+    },
+    {
+      "path": "original/slide-5.png",
+      "sha256": "3e81e4cb170f35dbf4f5dd7e714ad37afb9cb688cae5ba6e698b829db07c5897",
+      "bytes": 61748
+    },
+    {
+      "path": "original/slide-6.png",
+      "sha256": "59d5dee3a84f7420ff3c3e37d91405b676b23437d74bef3ebcd9178384cf4374",
+      "bytes": 41462
+    },
+    {
+      "path": "original/slide-9.png",
+      "sha256": "077a19a3cd2c2635f6571de81df2f5f03a04c535afe28263bc6c72bf58677bfe",
+      "bytes": 48494
+    },
+    {
+      "path": "original/ag-trenches-style-kit.zip",
+      "sha256": "4018e9b3b762babb0dfbe3efef2c37baa007a27c15c1a1d668af2b3972cf3a4c",
+      "bytes": 33046
+    }
+  ]
+}

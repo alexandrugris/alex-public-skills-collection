@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>alexandrugris.ro — From The Trenches</title>
+<link rel="stylesheet" href="TOKENS_PATH">
+<style>
+  body { background: var(--paper); }
+  .skip { position: absolute; left: -9999px; top: 10px; z-index: 20; padding: 10px 14px;
+          background: var(--paper); font-family: var(--font-sans); font-size: 13px; }
+  .skip:focus { left: 10px; }
+
+  /* ---------- hero ---------- */
+  .hero { position: relative; display: flex; align-items: flex-end; min-height: 620px;
+          padding: 72px max(7%, calc((100% - 1180px)/2));
+          /* Original photograph was not supplied; deliberate asset-free fallback. */
+          background: #CFD9CD;
+          isolation: isolate; }
+  .hero::before { content: ""; position: absolute; z-index: -1; inset: 0;
+    background: linear-gradient(90deg, rgba(21,31,25,.47), rgba(21,31,25,.08) 72%); }
+  .hero-copy { width: min(600px, 68%); padding: 42px 46px 38px;
+    background: rgba(251,250,247,.95); box-shadow: 0 18px 46px rgba(28,36,29,.2); }
+  .hero-copy h1 { font-size: clamp(38px, 4vw, 50px); }
+  .signature { display: flex; align-items: center; gap: 14px; margin-top: 30px;
+    color: var(--green); font-family: var(--font-sans); font-size: 12px; line-height: 1.4; }
+  .portrait { width: 62px; height: 62px; flex: none; border-radius: 50%;
+    background: var(--paper-warm); color: var(--burgundy);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-serif); font-size: 21px; letter-spacing: .02em; }
+  .location { position: absolute; right: max(7%, calc((100% - 1180px)/2)); bottom: 23px;
+    padding: 7px 10px; color: var(--paper); background: rgba(30,39,32,.58);
+    font-family: var(--font-sans); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+
+  /* ---------- about ---------- */
+  .about { display: grid; grid-template-columns: .8fr 1.2fr; gap: 52px;
+    background: var(--paper-alt); border-top: 1px solid var(--rule); }
+  .about p { max-width: 700px; margin: 0; color: #595C55; font-size: 18px; line-height: 1.6; }
+  .cv-link { display: inline-flex; flex-direction: column; gap: 6px; margin-top: 30px;
+    padding: 16px 22px 17px; border: 1px solid var(--rule); border-left: 3px solid var(--burgundy);
+    background: var(--paper); text-decoration: none; }
+  .cv-link:hover { border-color: var(--burgundy); border-left-color: var(--burgundy); }
+  .cv-link:hover .cv-link-title { color: var(--burgundy); }
+  .cv-link-title { font-size: 21px; letter-spacing: -.02em; }
+  .cv-link-meta { color: var(--muted-light); font-family: var(--font-sans); font-size: 10px;
+    letter-spacing: .1em; text-transform: uppercase; }
+
+  @media (max-width: 760px) {
+    .hero { min-height: 620px; padding: 38px 5%; background-position: 63% center; }
+    .hero-copy { width: 100%; padding: 31px 29px; }
+    .location { display: none; }
+    .about { grid-template-columns: 1fr; gap: 31px; }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="masthead">
+  <a class="display-l link" href="#top">alexandrugris.ro</a>
+  <nav class="nav">
+    <a href="#top">Home</a>
+    <a href="#writing">Writings</a>
+    <a href="#about">About</a>
+    <a href="https://www.linkedin.com/in/alexandrugris/">LinkedIn</a>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero" id="top">
+    <div class="hero-copy">
+      <div class="kicker">From the trenches · Since 2008</div>
+      <h1 class="display-xl">Technology, teams,<br>and the long view.</h1>
+      <p class="lede">I build technology and lead teams. I write to understand — from
+        software, data, and organizations to judgment, progress, and the human questions
+        underneath.</p>
+      <div class="signature">
+        <div class="portrait" aria-hidden="true">AG</div>
+        <span>Alexandru Gris<br><span class="meta">Engineering leader · Technologist · Writer</span></span>
+      </div>
+    </div>
+    <div class="location">Munich · Morning</div>
+  </section>
+
+  <!-- ================= PRINCIPLES ================= -->
+  <section class="section section--warm">
+    <div class="section-head">
+      <h2 class="h2">Principles</h2>
+      <span class="meta">Ideas I try to work by</span>
+    </div>
+    <div class="grid-4">
+      <div class="principle">
+        <span class="num">01</span>
+        <span>Disagree — and then commit.</span>
+      </div>
+      <div class="principle">
+        <span class="num">02</span>
+        <span>Authority is not an argument.</span>
+      </div>
+      <div class="principle">
+        <span class="num">03</span>
+        <span>Move fast, focused, and deep.</span>
+      </div>
+      <div class="principle">
+        <span class="num">04</span>
+        <span>Measure learning and process.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WRITINGS ================= -->
+  <section class="section" id="writing">
+    <div class="section-head">
+      <h2 class="h2">Writings</h2>
+      <span class="meta">Creative Writing · Management · Technical writing</span>
+    </div>
+    <div class="grid-3">
+      <article class="article article--feature">
+        <span class="meta meta--accent">Creative Writing · 2024–2026</span>
+        <h3>Media Projects</h3>
+        <p class="card-body">The history, the diptych, and the three illustrated works —
+          each built and published as its own site.</p>
+      </article>
+      <article class="article">
+        <span class="meta meta--accent">Management · 2025</span>
+        <h3>Some Leadership Principles</h3>
+        <p class="card-body">Open disagreement, intellectual curiosity, depth of
+          understanding, and honest learning.</p>
+      </article>
+      <article class="article">
+        <span class="meta meta--accent">Technical writing · 2022</span>
+        <h3>Timeseries Analysis with PyTorch</h3>
+        <p class="card-body">A practical experiment in forecasting, written to learn by
+          building.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section class="section about" id="about">
+    <div>
+      <div class="section-head">
+        <h2 class="h2">About</h2>
+      </div>
+      <a class="cv-link" href="#cv">
+        <span class="cv-link-title">Curriculum vitae</span>
+        <span class="cv-link-meta">PDF download · 3 pages</span>
+      </a>
+    </div>
+    <div>
+      <p>I have spent my career building software, products, and teams across countries
+        and industries.</p>
+      <p style="margin-top:18px">This is where I keep the ideas that survive the work:
+        technical experiments, leadership lessons, unfinished questions, and occasional
+        reflections on being human.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <span>From The Trenches</span>
+  <span>Code archive · Writing archive · alexandrugris.ro</span>
+</footer>
+
+</body>
+</html>

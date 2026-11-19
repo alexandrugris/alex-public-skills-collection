@@ -30,6 +30,16 @@ Apply Alexandru Gris's personal design system to any styled artifact he asks for
 
 **Tables and spreadsheets.** Paper-warm header band, ink text, 1px hairline row rules, burgundy reserved for accents and key figures. No default theme blues.
 
+## Brand toolkit (full assets)
+
+For production work, use the complete brand toolkit in `brand/` (merged from
+github.com/alexandrugris/ag-personal-brand): `brand/references/tokens.css` is the
+single source of truth for palette, type and components; `brand/references/style-spec.md`
+is the full written spec; `brand/templates/` hold working web and A4 document HTML;
+`brand/scripts/` render PDFs, page PNGs and the reference deck; `brand/samples/`
+records the original reference gallery. `design-system.md` (next to this file) remains
+the compact distilled spec; run from `brand/` root so the relative paths resolve.
+
 ## Quality bar
 
 - Light paper backgrounds always; never dark themes unless requested (code blocks use the dark inset).
