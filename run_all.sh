@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+# Full gate run for alex-public-skills-collection.
+# Every control must behave in its declared direction:
+# an expected-ok control exits 0, an expected-fail control exits non-zero.
+# Exit 0 = the repo is green.
+
+set -u
+cd "$(dirname "$0")"
+
+pass=0
+fail=0
+
+check() {
+  # check <label> <ok|fail> <command...>
+  local label="$1" want="$2"
+  shift 2
+  local out rc got verdict
+  out="$("$@" 2>&1)"
+  rc=$?
+  if [ "$rc" -eq 0 ]; then got=ok; else got=fail; fi
+  if [ "$got" = "$want" ]; then verdict=PASS; else verdict=FAIL; fi
+  if [ "$verdict" = "PASS" ]; then
+    pass=$((pass + 1))
+  else
+    fail=$((fail + 1))
+  fi
+  printf "%-4s %s (exit %s, expected %s)\n" "$verdict" "$label" "$rc" "$want"
+  if [ "$verdict" = "FAIL" ]; then
+    printf '%s\n' "$out" | sed 's/^/    | /'
+  fi
+}
+
+printf '%s\n' "run_all: gates for alex-public-skills-collection"
+
+check "anti-ai fixtures gate + self-scan" ok \
+  python3 anti-ai/tests/run_tests.py
+
+check "blog-writer clean draft passes gate" ok \
+  python3 blog-writer/tests/validate_draft.py blog-writer/tests/expected/clean-draft.md
+
+check "seed-tell paragraph still fires (must FAIL)" fail \
+  python3 blog-writer/tests/validate_draft.py blog-writer/tests/input/seed-tell-paragraph.md
+
+check "planted-fabrication draft still fails gate" fail \
+  python3 blog-writer/tests/validate_draft.py blog-writer/tests/input/draft-with-planted-fabrication.md
+
+check "AG style sample page passes checker" ok \
+  python3 alexandru-style/tests/check_styled.py alexandru-style/tests/expected/sample-page.html
+
+check "AG style anti-sample fails checker (must FAIL)" fail \
+  python3 alexandru-style/tests/check_styled.py alexandru-style/tests/expected/anti-sample.html
+
+check "root files self-scan (0 HIGH/MEDIUM)" ok \
+  python3 -c "import json,subprocess,sys
+r=subprocess.run([sys.executable,'anti-ai/check_tells.py','--json','AGENTS.md','run_all.sh'],capture_output=True,text=True)
+if r.returncode!=0: print(r.stdout,r.stderr); sys.exit(1)
+hits=json.loads(r.stdout)['hits']
+bad=[h for h in hits if h['severity'] in ('high','medium')]
+print('%d HIGH/MEDIUM hits on AGENTS.md + run_all.sh' % len(bad))
+for h in bad: print('  %s %s: %s' % (h['severity'].upper(), h['file'], h['id']))
+sys.exit(1 if bad else 0)"
+
+total=$((pass + fail))
+printf '%s\n' "----------------------------------------"
+printf '%s\n' "controls: $pass/$total in declared direction"
+if [ "$fail" -eq 0 ]; then
+  printf 'ALL GREEN\n'
+  exit 0
+else
+  printf 'RED: %d control(s) off direction\n' "$fail"
+  exit 1
+fi
