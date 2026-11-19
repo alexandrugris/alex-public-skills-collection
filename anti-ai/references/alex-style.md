@@ -26,7 +26,7 @@ apoi un paragraf care spune DE CE. Asa arata lista lui.
 6. Prima persoana, rar: the one I can point to, 2 ori in 29 de propozitii.
 7. Substantiv concret, nu categorie: freedom has a flag.
 8. Zero vorbire de model, zero hedge-uri in grup.
-9. Fara "honest" despre propia vorbire. Interzis, exceptie: referinta la o persoana.
+9. Fara "honest" despre propria vorbire. Interzis, exceptie: referinta la o persoana.
 10. Verbele de greutate sunt interzise: "load-bearing", "carries weight" in orice forma
     ("carries the weight of", "carries enormous weight"), "anchors", "underpins",
     "grants", "fosters", "fuels", "earns its".
@@ -42,7 +42,7 @@ langă references/).
 ## Vocabular masurat - blogul complet (19 nov 2026)
 
 Corpus: 90 de posturi blog.alexandrugris.ro (2008-2025), 55.700 cuvinte, extractie din
-post-body. Textul extractat (feed-ul blogului, 55.700 cuvinte) nu e publicat; regenerabil oricand
+post-body. Textul extractat (feed-ul blogului, 55.700 cuvinte) nu e publicat; regenerabil oricând
 din arhiva blog.alexandrugris.ro. Doua ere care nu se amesteca in profile: 2008-2013
 (jurnal, 45.200 cuv) si 2014-2025 (eseuri, 10.400 cuv). Proba recenta e VOCEA CURENTA.
 
@@ -53,7 +53,7 @@ Era recenta (vocea curenta, fata de era de inceput):
 - "very" scade de la 2,3/k la 1,0/k. Intensificator folosit econom: nu-l largi.
 - propozitia scurteaza: medie 19,8 -> 15,0 cuvinte.
 - "not only...but": 26 de aparitii in prima era, 2 in era recenta.
-- "to be honest/honestly" despre propia vorbire: prima era; in 2025 apare o singura
+- "to be honest/honestly" despre propria vorbire: prima era; in 2025 apare o singura
   data (flagged corect de scanner). Regula 9 masoara vocea curenta, nu mostenirea.
 
 Confirmari dure:
@@ -85,6 +85,7 @@ Postul 2025 e FAIL doar pe "looking under the hood honestly" - regula 9 face exa
 ## Regula 11 - fiecare cuvant are sens literal
 
 Nicio metafora. "weapons" despre strategie e interzis: cuvantul nu are sens in propozitie.
+
 Proba: dicționar, in context. Daca sensul nu rezista, cuvantul se rescrie concret.
 Excepție: citatele intre ghilimele, pastrate ca citate, cu atribuire explicita.
 

@@ -14,7 +14,7 @@ cuvinte) si 2014-2025 (eseuri, ~10.400 cuvinte). Vocea curenta = era recenta:
 - "very" scade de la 2,3/k la 1,0/k; intensificatorii se folosesc economic
 - propozitia scurteaza: medie 19,8 -> 15,0 cuvinte
 - "not only...but": 26 de aparitii in prima era, 2 in era recenta
-- "to be honest / honestly" despre propia vorbire: numai in prima era
+- "to be honest / honestly" despre propria vorbire: numai in prima era
 
 ## Reguli de casa (calibrate)
 
@@ -28,7 +28,7 @@ cuvinte) si 2014-2025 (eseuri, ~10.400 cuvinte). Vocea curenta = era recenta:
 6. Prima persoana, rara.
 7. Substantiv concret, nu categorie.
 8. Zero vorbire de model, zero hedge-uri in grup.
-9. Fara "honest" despre propia vorbire. Exceptie: referinta la o persoana.
+9. Fara "honest" despre propria vorbire. Exceptie: referinta la o persoana.
 10. Verbele de greutate sunt interzise: "load-bearing", "carries weight" in orice
     forma ("carries the weight of", "carries enormous weight"), "anchors", "underpins",
     "grants", "fosters", "fuels", "earns its".
