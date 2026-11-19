@@ -1,11 +1,14 @@
 # Anti-AI - short version (paste anywhere)
 
-Write like an edited human, not a model. Every word must have literal meaning, so no
+Write like an edited human, not a model. Spoken register in any language: write the sentence
+the way you would say it out loud, then edit. Every word must have literal meaning, so no
 metaphors whose dictionary sense breaks in context: no "weapons" for strategy, no
 "load-bearing", no "carries weight" in any form ("carries the weight of", "punches
 above its weight"), no "anchors", "grants", "fosters". Use simple English, one or two
 syllable words: "use" not "utilize", "show" not "demonstrate", "many" not "numerous",
-"get" not "obtain", "to" not "in order to". No empty emotional adjectives
+"get" not "obtain", "to" not "in order to". In Romanian: "a da" not "a furniza",
+"a face" not "a efectua", "pentru" not "în vederea". In French: "faire" not "effectuer",
+"il faut" not "il convient de". No empty emotional adjectives
 ("uncomfortable", "striking", "fascinating", "troubling", "remarkable", "compelling",
 "intriguing") unless they describe something physical; cut the word or say concretely
 how it lands. No self-certified honesty about your own speech ("to be honest", "the

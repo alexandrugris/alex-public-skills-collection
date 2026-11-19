@@ -7,11 +7,18 @@ AI tell in the given files/directories, with line numbers, severity and fix.
 Usage:
     python3 check_tells.py <file-or-dir> [...] [--json] [--cat chat,inflated]
                            [--severity high] [--density]
+    python3 check_tells.py --fixtures tests/fixtures-ro.csv tests/fixtures-fr.csv
+
+The --fixtures mode scores trap sentences (CSV: lang,expect,exid,text). expect=FAIL
+must fire pattern exid; expect=PASS must fire nothing. Only the regex blocklist runs;
+the heuristics (structure/list/house) are excluded, they need longer texts.
+Gate: >=90% of MUST-FAIL fire, 100% of MUST-PASS stay clean.
 
 Exit code is always 0. The VERDICT line states the result.
 """
 
 import argparse
+import csv
 import json
 import os
 import re
@@ -334,16 +341,69 @@ def house_style_notes(text, path):
     return notes
 
 
+def run_fixtures(paths, data):
+    must_fail = must_pass = fired = clean = 0
+    problems = []
+    for path in paths:
+        try:
+            with open(path, encoding="utf-8") as fh:
+                rows = list(csv.DictReader(fh))
+        except OSError as exc:
+            print("cannot read %s: %s" % (path, exc), file=sys.stderr)
+            continue
+        for row in rows:
+            expect = (row.get("expect") or "").strip().upper()
+            exid = (row.get("exid") or "").strip()
+            text = row.get("text") or ""
+            hits = scan(text, data)
+            ids = sorted({h["id"] for h in hits})
+            if expect == "FAIL":
+                must_fail += 1
+                if exid.endswith("."):
+                    matched = any(i.startswith(exid) for i in ids)
+                elif exid:
+                    matched = exid in ids
+                else:
+                    matched = bool(ids)
+                if matched:
+                    fired += 1
+                else:
+                    problems.append("%s NOT-FIRED %s: %r -> %s" % (path, exid, text[:70], ids))
+            elif expect == "PASS":
+                must_pass += 1
+                if not ids:
+                    clean += 1
+                else:
+                    problems.append("%s GHOST %s: %r" % (path, ",".join(ids), text[:70]))
+    fire_rate = 100.0 * fired / max(must_fail, 1)
+    clean_rate = 100.0 * clean / max(must_pass, 1)
+    print("fixtures: MUST-FAIL fired %d/%d (%.0f%%) | MUST-PASS clean %d/%d (%.0f%%)"
+          % (fired, must_fail, fire_rate, clean, must_pass, clean_rate))
+    for p in problems:
+        print("  " + p)
+    verdict = "PASS" if (must_fail and must_pass and fire_rate >= 90 and clean_rate == 100) else "FAIL"
+    print("VERDICT: %s" % verdict)
+    return verdict
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("paths", nargs="+")
+    ap.add_argument("paths", nargs="*")
     ap.add_argument("--json", action="store_true")
     ap.add_argument("--cat", help="comma separated categories")
     ap.add_argument("--severity", choices=["low", "medium", "high"])
     ap.add_argument("--density", action="store_true", help="hits per 1000 words")
+    ap.add_argument("--fixtures", nargs="+", help="trap corpus CSVs (lang,expect,exid,text)")
     args = ap.parse_args()
 
     data = load_list()
+
+    if args.fixtures:
+        run_fixtures(args.fixtures, data)
+        return
+    if not args.paths:
+        ap.error("give files/directories, or --fixtures <csv> [...]")
+
     cats = set(args.cat.split(",")) if args.cat else None
 
     all_hits = []

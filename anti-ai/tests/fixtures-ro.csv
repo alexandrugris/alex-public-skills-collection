@@ -1,0 +1,31 @@
+lang,expect,exid,text
+ro,FAIL,complex.ro.invvedea,"În vederea finalizării proiectului, echipa a cerut o pauză."
+ro,FAIL,complex.ro.momentuldefata,În momentul de față nu avem un răspuns clar deloc.
+ro,FAIL,complex.ro.inconsecinta,"În consecință, am mutat termenul cu două săptămâni."
+ro,FAIL,complex.ro.furniza, Firma ne va furniza datele până vineri.
+ro,FAIL,complex.ro.efectua,Echipa va efectua o analiză completă a numerelor.
+ro,FAIL,complex.ro.utiliza,Putem utiliza aceeași metodă și luna viitoare.
+ro,FAIL,complex.ro.implementa,Urmează să implementăm soluția în toate filialele.
+ro,FAIL,complex.ro.finaliza,Vom finaliza raportul până la mijlocul lunii.
+ro,FAIL,complex.ro.solicita,Vă solicităm o copie a contractului semnat.
+ro,FAIL,complex.ro.achizitiona,Compania a achiziționat două mașini noi anul trecut.
+ro,FAIL,complex.ro.beneficia,Clienții beneficiază de reducere la orice comandă.
+ro,FAIL,complex.ro.posibilitateadea,Există posibilitatea de a muta întâlnirea joia.
+ro,FAIL,complex.ro.ulterior,"Am primit oferta, ulterior am semnat contractul."
+ro,FAIL,ro.important,Este important de menționat că termenul s-a schimbat.
+ro,FAIL,ro.pe_scurt,Pe scurt: ne lipsesc două persoane în echipă.
+ro,FAIL,ro.concluzie,"În concluzie, anul a fost bun pentru noi."
+ro,FAIL,ro.esential,Este esențial să înțelegem cum gândesc clienții.
+ro,FAIL,ro.nu_doar,"Nu este doar un broker, ci și un prieten vechi."
+ro,FAIL,ro.hai_exploram,Hai să explorăm ce spune raportul de anul trecut.
+ro,FAIL,weight.ro,Analiza ancorează tot argumentul din paragraful doi.
+ro,FAIL,honesty.ro,"Sincer vorbind, nu știu ce vom face toamna."
+ro,FAIL,vague.ro.impresionantaul,Numerele anului sunt impresionante pentru o firmă mică.
+ro,PASS,,Mă duc la piață și cumpăr mere și pâine.
+ro,PASS,,"A fost o zi lungă, dar ne-am descurcat bine."
+ro,PASS,,"Am terminat raportul aseară, pe la zece."
+ro,PASS,,"Ne vedem mâine la prânz, la colț, ca de obicei."
+ro,PASS,,"Îmi place cum sună piesa, mai ales refrenul."
+ro,PASS,,Am pus problema pe masă și am vorbat două ore.
+ro,PASS,,"Cartea e groasă, dar se citește repede."
+ro,PASS,,"Plouă de dimineață, așa că iau umbrela."

@@ -18,6 +18,11 @@ these in a thousand words; human writing trips almost none (see
 ## Usage
 
     python3 check_tells.py <file-or-dir> [...] [--json] [--cat chat,inflated] [--severity high] [--density]
+    python3 check_tells.py --fixtures tests/fixtures-en.csv tests/fixtures-ro.csv tests/fixtures-fr.csv
+
+The "--fixtures" mode is the regression gate: synthetic trap sentences per language
+(MUST-FAIL rows must fire their pattern, MUST-PASS rows must fire nothing) so per-language
+coverage stays measurable and edits cannot silently break a language.
 
 Verdicts:
 
@@ -32,14 +37,17 @@ the weight of three trucks" is fine).
 
 ## The pattern file
 
-`patterns.json` (442 patterns, versioned) is the canonical blocklist. Categories:
+`patterns.json` (468 patterns, versioned) is the canonical blocklist. Categories:
 `metaphor` (words without literal meaning), `weight` ("carries the weight of",
 "anchors", "underpins", "grants"...), `inflated` (corporate inflation), `hedge`,
 `honesty` (self-certified sincerity, allowed when describing a person), `vague` (empty
 emotional adjectives), `structure` (shapes that self-confess: binaries, aphorisms,
 abstract chains), `list` (bullet lists disguised as prose), `chat` (assistant residue),
 `complex` (words with a simpler equivalent), `house` (see below) and `dramatic`.
-Romanian and French tells are included (`lang: ro|fr`).
+Romanian and French are first-class: `lang: ro|fr` gets its own tells, its own
+complex-word tables ("a furniza" -> "a da", "effectuer" -> "faire") and the spoken-register
+annexes `references/lang-ro.md` and `references/lang-fr.md` (equivalent tables, bad-to-good
+pairs, and the recipe to recalibrate the word-length numbers, which are English-calibrated).
 
 Labels and fix suggestions are in Romanian; the rules themselves are language-agnostic
 and the code adapts to new patterns without changes.
@@ -75,6 +83,7 @@ verdict flags.
 
 - `references/anti-ai-prompt.md` - full rules, pasteable into any model prompt
 - `references/anti-ai-short.md` - the short version
+- `references/lang-ro.md`, `references/lang-fr.md` - spoken-register annexes (Romanian, French)
 
 ## Limitations
 

@@ -7,6 +7,8 @@ description: Detect and remove AI tells from English (and Romanian/French) prose
 
 Full rule set, portable for other AIs: `references/anti-ai-prompt.md` (and the short
 version `references/anti-ai-short.md`).
+Per-language annexes for the spoken-register rule: `references/lang-ro.md` and
+`references/lang-fr.md` (equivalent tables, bad-to-good pairs, recalibration recipe).
 Blocklist (canonical, versioned): `patterns.json`, next to the scanner.
 House rules, calibrated on Alexandru's own blog voice (use as a template, then calibrate
 your own): `references/house-style.md`.
@@ -18,6 +20,12 @@ Calibration benchmarks (human corpora; third-party sources anonymized):
 ## Audit (fast)
 
     python3 check_tells.py <file-or-dir> [--json] [--cat chat,inflated] [--severity high]
+
+Regression gate (trilingual trap corpus, one CSV per language):
+
+    python3 check_tells.py --fixtures tests/fixtures-en.csv tests/fixtures-ro.csv tests/fixtures-fr.csv
+
+Requirement: every MUST-FAIL row fires its pattern, every MUST-PASS row fires nothing.
 
 Verdicts: FAIL (any HIGH hit), REVIEW (MEDIUM hits present), PASS otherwise.
 Exemptions are reported: quoted text, and literal context (a word is allowed when the

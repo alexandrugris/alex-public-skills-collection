@@ -1,5 +1,5 @@
 {
-  "version": "0.11.4",
+  "version": "0.11.5",
   "updated": "2026-11-19",
   "categories": {
     "chat": "Resturi de chatbot",
@@ -14,7 +14,7 @@
     "list": "Liste mascate in proza - bullet points fara bullet points",
     "house": "Reguli de casa Alex (blog)",
     "metaphor": "Metafore uzuale - cuvinte fara sens literal in context",
-    "complex": "Engleza complexa - cuvinte care au un echivalent simplu",
+    "complex": "Cuvinte complexe cu echivalent simplu (EN/RO/FR)",
     "vague": "Calificative emotionale vide - uncomfortable, striking, fascinating, troubling",
     "dramatic": "Registru noir pentru fapte simple - crime novel"
   },
@@ -897,7 +897,7 @@
       "cat": "ro",
       "lang": "ro",
       "severity": "medium",
-      "regex": "\\bconcluzion[\u0103a]nd\\b|\\bin concluzie\\b|\\bpentru a conclude\\b",
+      "regex": "\\bconcluzion[\u0103a]nd\\b|\\b[\u00eei]n concluzie\\b|\\bpentru a conclu[ds]iona?\\b",
       "label": "Concluzion\u00e2nd",
       "fix": "Taie."
     },
@@ -1086,7 +1086,7 @@
       "cat": "fr",
       "lang": "fr",
       "severity": "high",
-      "regex": "\\b[\u00e0a] l'[\u00e8e]re de\\b|\\bde nos jours\\b|\\bactuellement\\b",
+      "regex": "\\b[\u00e0a] l'[\u00e8e]re (?:de|du|des)\\b|\\bde nos jours\\b|\\bactuellement\\b",
       "label": "\u00e0 l'\u00e8re de",
       "fix": "Supprimer."
     },
@@ -1426,7 +1426,7 @@
       "severity": "low",
       "regex": "\\bit is (?:more|less|not as) \\w+ than\\b|\\bthat is what makes\\b",
       "label": "It is more X than Y / that is what makes",
-      "fix": "Propozitie de umpluturura. 'Strategy and leadership are too broad to be useful.'"
+      "fix": "Propozitie de umplutur\u0103. 'Strategy and leadership are too broad to be useful.'"
     },
     {
       "id": "inf.accumulation",
@@ -1461,7 +1461,7 @@
       "lang": "any",
       "severity": "medium",
       "regex": "\\b(?:a |an )?common (?:thread|theme)\\b\\.",
-      "label": "lead-in de umpluturare inainte de o lista",
+      "label": "lead-in de umplutur\u0103 inainte de o lista",
       "fix": "Daca urmeaza o lista, incepe cu lista. Daca nu, scrie ideea."
     },
     {
@@ -8521,7 +8521,7 @@
       "cat": "vague",
       "lang": "ro",
       "severity": "low",
-      "regex": "\\bimpresionant(?:[\u0103a]|ul)?\\b",
+      "regex": "\\bimpresionant[a-z\u0103\u00e2\u00ee\u0219\u021b]*\\b",
       "label": "impresionant(?:[\u0103a]|ul)?",
       "fix": "spune faptul: ce anume e neplacut / impresionant",
       "literal": [
@@ -10086,6 +10086,240 @@
       "regex": "you have to ask yourself\\b",
       "label": "you have to ask yourself",
       "fix": "Taie."
+    },
+    {
+      "id": "complex.ro.invvedea",
+      "cat": "complex",
+      "lang": "ro",
+      "severity": "low",
+      "regex": "\\b[\u00eei]n vederea\\b",
+      "label": "\u00een vederea -> pentru",
+      "fix": "spune: pentru"
+    },
+    {
+      "id": "complex.ro.momentuldefata",
+      "cat": "complex",
+      "lang": "ro",
+      "severity": "low",
+      "regex": "\\b[\u00eei]n momentul de fa[\u021bt][\u0103a]\\b",
+      "label": "\u00een momentul de fa\u021b\u0103 -> acum",
+      "fix": "spune: acum"
+    },
+    {
+      "id": "complex.ro.inconsecinta",
+      "cat": "complex",
+      "lang": "ro",
+      "severity": "low",
+      "regex": "\\b[\u00eei]n consecin[\u021bt][\u0103a]\\b",
+      "label": "\u00een consecin\u021b\u0103 -> de aceea",
+      "fix": "spune: de aceea"
+    },
+    {
+      "id": "complex.ro.furniza",
+      "cat": "complex",
+      "lang": "ro",
+      "severity": "low",
+      "regex": "\\bfurniz(?:ea(?:z[\u0103a])?|ez(?:i)?|[\u0103a]m?|[\u0103a](?:m|t|[\u00eei]nd?)?|at)?\\b",
+      "label": "a furniza -> a da",
+      "fix": "spune: a da"
+    },
+    {
+      "id": "complex.ro.efectua",
+      "cat": "complex",
+      "lang": "ro",
+      "severity": "low",
+      "regex": "\\befectu(?:ea(?:z[\u0103a])?|ez(?:i)?|[\u0103a]m?|[\u0103a](?:m|t|[\u00eei]nd?)?|at)?\\b",
+      "label": "a efectua -> a face",
+      "fix": "spune: a face"
+    },
+    {
+      "id": "complex.ro.utiliza",
+      "cat": "complex",
+      "lang": "ro",
+      "severity": "low",
+      "regex": "\\butiliz(?:ea(?:z[\u0103a])?|ez(?:i)?|[\u0103a]m|[\u0103a](?:m|t|[\u00eei]nd?)?|at)?\\b",
+      "label": "a utiliza -> a folosi",
+      "fix": "spune: a folosi"
+    },
+    {
+      "id": "complex.ro.implementa",
+      "cat": "complex",
+      "lang": "ro",
+      "severity": "low",
+      "regex": "\\bimplement(?:ea(?:z[\u0103a])?|eaz[\u0103a]|[\u0103a]m|[\u0103a](?:m|t|[\u00eei]nd?)?|are|at)?\\b",
+      "label": "a implementa -> a pune \u00een aplicare",
+      "fix": "spune: a pune \u00een aplicare"
+    },
+    {
+      "id": "complex.ro.finaliza",
+      "cat": "complex",
+      "lang": "ro",
+      "severity": "low",
+      "regex": "\\bfinaliz(?:ea(?:z[\u0103a])?|[\u0103a]m|[\u0103a](?:m|t|[\u00eei]nd?)?|are|at)?\\b",
+      "label": "a finaliza -> a termina",
+      "fix": "spune: a termina"
+    },
+    {
+      "id": "complex.ro.solicita",
+      "cat": "complex",
+      "lang": "ro",
+      "severity": "low",
+      "regex": "\\bsolicit(?:\u0103a|[\u0103a]m|[\u0103a](?:t|[rii]+)?|\\b)?",
+      "label": "a solicita -> a cere",
+      "fix": "spune: a cere"
+    },
+    {
+      "id": "complex.ro.achizitiona",
+      "cat": "complex",
+      "lang": "ro",
+      "severity": "low",
+      "regex": "\\bachizi[\u021bt]ion(?:ea(?:z[\u0103a])?|[\u0103a]m|[\u0103a](?:t|[rii]+)?|at)?\\b",
+      "label": "a achizi\u021biona -> a cump\u0103ra",
+      "fix": "spune: a cump\u0103ra"
+    },
+    {
+      "id": "complex.ro.beneficia",
+      "cat": "complex",
+      "lang": "ro",
+      "severity": "low",
+      "regex": "\\bbenefici(?:a(?:z[\u0103a]?|[\u0103a]m|[\u0103a]t)|e(?:z[\u0103a])?) de\\b|\\bbeneficiu de\\b",
+      "label": "a beneficia de -> a avea",
+      "fix": "spune: a avea"
+    },
+    {
+      "id": "complex.ro.posibilitateadea",
+      "cat": "complex",
+      "lang": "ro",
+      "severity": "low",
+      "regex": "\\bposibilitatea de a\\b",
+      "label": "posibilitatea de a X -> poate X",
+      "fix": "spune: poate (verb, direct)"
+    },
+    {
+      "id": "complex.ro.ulterior",
+      "cat": "complex",
+      "lang": "ro",
+      "severity": "low",
+      "regex": "\\bulterior\\b",
+      "label": "ulterior -> apoi",
+      "fix": "spune: apoi / dup\u0103"
+    },
+    {
+      "id": "complex.fr.subsequemment",
+      "cat": "complex",
+      "lang": "fr",
+      "severity": "low",
+      "regex": "\\bsubs[\u00e9e]quemment\\b",
+      "label": "subs\u00e9quemment -> apr\u00e8s",
+      "fix": "dire: apr\u00e8s"
+    },
+    {
+      "id": "complex.fr.ilconvient",
+      "cat": "complex",
+      "lang": "fr",
+      "severity": "low",
+      "regex": "\\bil convient de\\b",
+      "label": "il convient de -> il faut",
+      "fix": "dire: il faut"
+    },
+    {
+      "id": "complex.fr.effectuer",
+      "cat": "complex",
+      "lang": "fr",
+      "severity": "low",
+      "regex": "\\beffectu(?:er|[\u00e9e](?:e|es|s)?|ant|ation)\\b",
+      "label": "effectuer -> faire",
+      "fix": "dire: faire"
+    },
+    {
+      "id": "complex.fr.entermesde",
+      "cat": "complex",
+      "lang": "fr",
+      "severity": "low",
+      "regex": "\\ben termes de\\b",
+      "label": "en termes de -> pour",
+      "fix": "dire: pour / sur"
+    },
+    {
+      "id": "complex.fr.envuede",
+      "cat": "complex",
+      "lang": "fr",
+      "severity": "low",
+      "regex": "\\ben vue de\\b",
+      "label": "en vue de -> pour",
+      "fix": "dire: pour"
+    },
+    {
+      "id": "complex.fr.depar",
+      "cat": "complex",
+      "lang": "fr",
+      "severity": "low",
+      "regex": "\\bde par\\b",
+      "label": "de par -> par",
+      "fix": "dire: par"
+    },
+    {
+      "id": "complex.fr.perenniser",
+      "cat": "complex",
+      "lang": "fr",
+      "severity": "low",
+      "regex": "\\bp[\u00e9e]rennis(?:er|[\u00e9e](?:e|es|s)?|ation)\\b",
+      "label": "p\u00e9renniser -> faire durer",
+      "fix": "dire: faire durer"
+    },
+    {
+      "id": "complex.fr.adequation",
+      "cat": "complex",
+      "lang": "fr",
+      "severity": "low",
+      "regex": "\\ben ad[\u00e9e]quation avec\\b",
+      "label": "en ad\u00e9quation avec -> adapt\u00e9 \u00e0",
+      "fix": "dire: adapt\u00e9 \u00e0"
+    },
+    {
+      "id": "complex.fr.myriade",
+      "cat": "complex",
+      "lang": "fr",
+      "severity": "low",
+      "regex": "\\bune myriade de\\b",
+      "label": "une myriade de -> beaucoup de",
+      "fix": "dire: beaucoup de"
+    },
+    {
+      "id": "complex.fr.plethore",
+      "cat": "complex",
+      "lang": "fr",
+      "severity": "low",
+      "regex": "\\bune pl[\u00e9e]thore (?:de|d')\\b",
+      "label": "une pl\u00e9thore de -> beaucoup de",
+      "fix": "dire: beaucoup de"
+    },
+    {
+      "id": "complex.fr.eventail",
+      "cat": "complex",
+      "lang": "fr",
+      "severity": "low",
+      "regex": "\\bun [\u00e9e]ventail (?:de|d')\\b",
+      "label": "un \u00e9ventail de -> plusieurs",
+      "fix": "dire: plusieurs"
+    },
+    {
+      "id": "complex.fr.noussouhaitons",
+      "cat": "complex",
+      "lang": "fr",
+      "severity": "low",
+      "regex": "\\bnous souhait(?:ons|erions)\\b",
+      "label": "nous souhaitons -> nous voulons",
+      "fix": "dire: nous voulons / nous vous informons"
+    },
+    {
+      "id": "complex.fr.davantage",
+      "cat": "complex",
+      "lang": "fr",
+      "severity": "low",
+      "regex": "\\bdavantage\\b",
+      "label": "davantage -> plus",
+      "fix": "dire: plus"
     }
   ]
 }

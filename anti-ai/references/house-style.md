@@ -38,6 +38,8 @@ cuvinte) si 2014-2025 (eseuri, ~10.400 cuvinte). Vocea curenta = era recenta:
 12. Engleza simpla (cu atat mai mult daca engleza nu e prima ta limba): cuvinte de 1-2
     silabe, sens literal, propozitii de 12-22 de cuvinte; media de litere pe cuvant sub
     4.8; cuvintele de 10+ litere, sub 12%; fara latinisme care nu se traduc bine.
+    Numerele de litere sunt calibrate pe text englezesc; pentru romana si franceza sufixele
+    merg natural mai lung. Reteta de recalibrare: `lang-ro.md` si `lang-fr.md`.
 13. Calificativele emotionale ("uncomfortable", "striking", "fascinating", "troubling",
     "remarkable", "compelling", "intriguing") sunt interzise, exceptand descrierea fizica.
     Altfel: taie cuvantul sau explica concret ce anume produce reactia.
