@@ -9,30 +9,30 @@ comunicat de presă, o rescrii. Probează fiecare verb: l-ai folosi vorbind? Nu 
 
 | Scris de comunicat | Vorbit |
 |---|---|
-| în vederea | pentru |
-| în momentul de față | acum |
-| în consecință | de aceea |
-| a furniza | a da |
-| a efectua | a face |
-| a utiliza | a folosi |
-| a implementa | a pune în aplicare |
-| a finaliza | a termina |
-| a solicita | a cere |
-| a achiziționa | a cumpăra |
-| a beneficia de | a avea |
-| posibilitatea de a X | poate X |
-| ulterior | apoi |
+| "în vederea" | pentru |
+| "în momentul de față" | acum |
+| "în consecință" | de aceea |
+| "a furniza" | a da |
+| "a efectua" | a face |
+| "a utiliza" | a folosi |
+| "a implementa" | a pune în aplicare |
+| "a finaliza" | a termina |
+| "a solicita" | a cere |
+| "a achiziționa" | a cumpăra |
+| "a beneficia de" | a avea |
+| "posibilitatea de a X" | poate X |
+| "ulterior" | apoi |
 
 Toate sunt în patterns.json (categoria complex, lang ro), așa că check_tells.py le prinde.
 
 ## Prost -> bine
 
-- Prost: În vederea finalizării implementării soluției, echipa va efectua o analiză.
-  Bine: Ca să terminăm, echipa se uită întâi la numere.
-- Prost: Clienții beneficiază de posibilitatea de a opta pentru livrare gratuită.
-  Bine: Livrarea e gratuită dacă comanzi până vineri.
-- Prost: Este important de menționat că termenul s-a schimbat.
-  Bine: Termenul s-a schimbat.
+- Prost: "În vederea finalizării implementării soluției, echipa va efectua o analiză."
+  Bine: "Ca să terminăm, echipa se uită întâi la numere."
+- Prost: "Clienții beneficiază de posibilitatea de a opta pentru livrare gratuită."
+  Bine: "Livrarea e gratuită dacă comanzi până vineri."
+- Prost: "Este important de menționat că termenul s-a schimbat."
+  Bine: "Termenul s-a schimbat."
 
 ## Ritm: cum recalibrezi numerele
 

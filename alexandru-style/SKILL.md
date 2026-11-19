@@ -30,6 +30,11 @@ Apply Alexandru Gris's personal design system to any styled artifact he asks for
 
 **Tables and spreadsheets.** Paper-warm header band, ink text, 1px hairline row rules, burgundy reserved for accents and key figures. No default theme blues.
 
+## Tests
+
+`tests/test-cases.md` holds the five cases with pass conditions; `python3
+tests/check_styled.py <file>` is the static bar for styled deliverables.
+
 ## Brand toolkit (full assets)
 
 For production work, use the complete brand toolkit in `brand/` (merged from

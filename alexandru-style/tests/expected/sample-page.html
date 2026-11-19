@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sample page · AG Style v1.0</title>
+<style>
+  :root {
+    --paper: #FBFAF7;
+    --ink: #30332F;
+    --soft: #6B6F66;
+    --burgundy: #8D2829;
+    --rule: #E7E2D9;
+  }
+  * { box-sizing: border-box; }
+  body.doc {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 10.5pt;
+    line-height: 1.58;
+  }
+  .wrap { max-width: 166mm; margin: 0 auto; padding: 22mm; }
+  .kicker {
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.74em;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+  }
+  h1, h2, h3 { font-weight: 400; letter-spacing: -0.01em; }
+  h1 { font-size: 28pt; margin: 0.3em 0 0.4em; }
+  h2 { font-size: 16pt; margin-top: 1.6em; }
+  .spine { border-top: 2px solid var(--burgundy); margin: 0 0 2em; }
+  .meta {
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.74em;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--soft);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 1em;
+  }
+  figure { border-top: 1px solid var(--rule); margin: 1.5em 0; padding-top: 1em; }
+  code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.9em; }
+</style>
+</head>
+<body class="doc">
+  <main class="wrap">
+    <p class="kicker">FROM THE TRENCHES &middot; TEST CARD &middot; 19 NOV 2026</p>
+    <div class="spine"></div>
+    <h1>A quiet page that keeps to the rules</h1>
+    <p class="meta">AG STYLE V1.0 &middot; 4 KB &middot; SELF-CONTAINED</p>
+    <p>This page is the positive control for <code>check_styled.py</code>. It carries the
+    tokens, the typography and the hairlines of the system, and it breaks none of the
+    mechanical rules. Every style decision above comes straight from the quality bar.</p>
+    <h2>What it shows</h2>
+    <p>Paper ground instead of white, one burgundy accent per block, headings at
+    weight 400, hairlines one pixel and solid, and the middle dot doing the labelling
+    work in the kicker line. The body copy stays left aligned and ragged right.</p>
+  </main>
+</body>
+</html>

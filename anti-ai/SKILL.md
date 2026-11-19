@@ -25,7 +25,8 @@ Regression gate (trilingual trap corpus, one CSV per language):
 
     python3 check_tells.py --fixtures tests/fixtures-en.csv tests/fixtures-ro.csv tests/fixtures-fr.csv
 
-Requirement: every MUST-FAIL row fires its pattern, every MUST-PASS row fires nothing.
+Requirement: every MUST-FAIL row fires its pattern, every MUST-PASS row fires nothing. Full run (this gate plus a self-scan of these docs):
+`python3 tests/run_tests.py`.
 
 Verdicts: FAIL (any HIGH hit), REVIEW (MEDIUM hits present), PASS otherwise.
 Exemptions are reported: quoted text, and literal context (a word is allowed when the

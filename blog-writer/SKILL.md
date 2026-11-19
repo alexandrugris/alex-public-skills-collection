@@ -24,6 +24,11 @@ Execute passes in order. Each pass uses its reference file. Research findings, d
 5. **Review loop** (`references/fact-checker.md`), max 2 rounds: verify every external claim against its source. Fix blocking findings (contradictions, broken links, fabrications) by re-running the relevant pass; non-blocking findings go to the gate.
 6. **Review gate.** Present the draft plus: source list with links, fixed and open findings, content gaps. Nothing is final before Alexandru approves. On feedback, classify it yourself before routing, and don't trust its surface form ("this intro is boring" is usually structural). Route structure issues to Pass 1, voice/wording to Pass 2, factual issues to the fact-check fix path; then re-run step 5. If Pass 2 returns an `<escalation>`, go back to Pass 1 with it instead of accepting the draft.
 
+## Tests
+
+`tests/test-cases.md` holds the five cases with pass conditions; `python3
+tests/validate_draft.py <draft.md>` is the machine gate for finished drafts.
+
 ## Output
 
 Markdown article (title, kicker idea, body) with inline source links and a Sources section at the end. If Alexandru asks for a styled or published artifact (HTML page, PDF), apply the alexandru-style skill for rendering; this skill owns content, not presentation.

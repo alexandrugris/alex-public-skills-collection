@@ -10,30 +10,30 @@ du brouillon de modèle en français.
 
 | Écrit administrative | Parlé |
 |---|---|
-| subséquemment | après |
-| il convient de | il faut |
-| effectuer | faire |
-| en termes de | pour |
-| en vue de | pour |
-| de par | par |
-| pérenniser | faire durer |
-| en adéquation avec | adapté à |
-| une myriade de | beaucoup de |
-| une pléthore de | beaucoup de |
-| un éventail de | plusieurs |
-| nous souhaitons | nous voulons |
-| davantage | plus |
+| "subséquemment" | après |
+| "il convient de" | il faut |
+| "effectuer" | faire |
+| "en termes de" | pour |
+| "en vue de" | pour |
+| "de par" | par |
+| "pérenniser" | faire durer |
+| "en adéquation avec" | adapté à |
+| "une myriade de" | beaucoup de |
+| "une pléthore de" | beaucoup de |
+| "un éventail de" | plusieurs |
+| "nous souhaitons" | nous voulons |
+| "davantage" | plus |
 
 Tous sont dans patterns.json (catégorie complex, lang fr), donc check_tells.py les repère.
 
 ## Mauvais -> bien
 
-- Mauvais : Il convient de noter que nous souhaitons effectuer une analyse des coûts.
-  Bien : Nous allons regarder les coûts.
-- Mauvais : Il existe une myriade de solutions dans le paysage actuel.
-  Bien : Il y a plein de solutions aujourd'hui.
-- Mauvais : En conclusion, il est important de comprendre le budget.
-  Bien : Le budget est serré ; voici pourquoi.
+- Mauvais : "Il convient de noter que nous souhaitons effectuer une analyse des coûts."
+  Bien : "Nous allons regarder les coûts."
+- Mauvais : "Il existe une myriade de solutions dans le paysage actuel."
+  Bien : "Il y a plein de solutions aujourd'hui."
+- Mauvais : "En conclusion, il est important de comprendre le budget."
+  Bien : "Le budget est serré ; voici pourquoi."
 
 ## Rythme : recalibrer les chiffres
 
@@ -42,7 +42,7 @@ mots longs sous 12%) sont calibrés sur du texte anglais. Le noyau de phrase pas
 français. La longueur des mots ne passe pas : les suffixes français courent plus long,
 et ce n'est pas une faute de style.
 
-Recette de mesure : prends 2.000+ mots d'une prose à toi que tu aimes. Compte la
+Recette de mesure : prends 2.000+ mots d'une prose à toi que tu aimes, puis compte la
 moyenne de lettres par mot et la part des mots de 10+ lettres. Mets tes chiffres à la
 place de ceux de house-style.md et garde les tiens ensuite.
 
