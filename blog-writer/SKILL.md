@@ -1,6 +1,5 @@
 ---
-name: |
-  blog-writer
+name: blog-writer
 description: |
   Load this skill when Alexandru asks to write, draft, research, revise, or polish a blog article for alexandrugris.ro (or his blog), or mentions "writing an article", "blog post", or "write about X". Pipeline that produces well-researched, human-sounding articles in his "From the trenches" voice.
 ---

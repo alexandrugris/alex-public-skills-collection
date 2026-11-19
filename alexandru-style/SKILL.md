@@ -1,6 +1,5 @@
 ---
-name: |
-  alexandru-style
+name: alexandru-style
 description: |
   Load this skill whenever Alexandru asks to create, restyle, or export a styled deliverable: documents, reports, PDFs, slide decks, presentations, HTML pages, mini apps, dashboards, or tables. It applies his personal design system (AG Style v1.0: Georgia serif display, uppercase Inter labels, IBM Plex Mono code, paper and burgundy palette from alexandrugris.ro) instead of generic defaults. Also load when he says "my style", "my design system", "the usual style", or mentions the alexandrugris.ro look.
 ---
