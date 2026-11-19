@@ -274,6 +274,31 @@ def parallel_list_notes(text, path):
     return notes
 
 
+def mirrored_summary_notes(text, path):
+    """Two or more sentences in one paragraph that open with a name-like
+    'First Last' token plus a question verb = mirrored author summaries,
+    even when they are not adjacent (e.g. 19 / 11 / 23 / 10 word shapes)."""
+    notes = []
+    for para in re.split(r"\n\s*\n", text):
+        sents = _prose_sentences(para)
+        hits = [
+            s for s in sents
+            if re.match(r"^[A-Z][a-z]+ [A-Z][a-z]+", s)
+            and re.search(r"\b(?:asks?|asked|wonders?|examines?)\b", s)
+        ]
+        if len(hits) >= 2:
+            notes.append({
+                "id": "list.mirrored_summaries",
+                "cat": "list",
+                "severity": "medium",
+                "label": "%d propozitii-sablon 'First Last asks...' in acelasi paragraf" % len(hits),
+                "fix": "Sparge sablonul: organizeaza paragraful in jurul a ce explica fiecare in scena, variaza lungimea si forma.",
+                "line": 1,
+            })
+            break
+    return notes
+
+
 def house_style_notes(text, path):
     notes = []
     em = text.count(chr(8212)) + len(re.findall(r" - ", text))
@@ -445,7 +470,9 @@ def main():
         for note in structural_heuristics(text, path):
             note["file"] = path
             all_hits.append(note)
-        for note in parallel_list_notes(text, path) + house_style_notes(text, path):
+        for note in (parallel_list_notes(text, path)
+                     + mirrored_summary_notes(text, path)
+                     + house_style_notes(text, path)):
             note["file"] = path
             all_hits.append(note)
 

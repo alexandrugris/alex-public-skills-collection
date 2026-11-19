@@ -59,9 +59,23 @@ def self_scan():
     return not bad
 
 
+def heuristics():
+    """Structural heuristics (mirrored summaries, long parallel pairs) behave."""
+    r = subprocess.run(
+        [sys.executable, str(ROOT / "tests" / "test_heuristics.py")],
+        capture_output=True, text=True,
+    )
+    print(r.stdout.strip())
+    if r.returncode != 0:
+        print(r.stderr.strip())
+        return False
+    return True
+
+
 def main():
     results = []
     results.append(("fixtures gate", gate()))
+    results.append(("heuristics gate", heuristics()))
     results.append(("doc self-scan", self_scan()))
     print("")
     ok = True

@@ -9,7 +9,7 @@ Alexandru's site voice: building things, learning by doing, writing to understan
 ## Task
 
 1. **Honor intent, not just shape.** The structural brief's voice notes state the effect each section must have on the reader. Achieve that effect; don't merely fill the skeleton.
-2. **Sentence mechanics**: active voice, actor in the subject, strong verbs, no nominalizations ("make a decision" → "decide"). Vary sentence length deliberately; mix short punches with long, flowing lines. Paragraph lengths vary too.
+2. **Sentence mechanics**: active voice, actor in the subject, strong verbs, no nominalizations ("make a decision" → "decide"). Vary sentence length deliberately; mix short punches with long, flowing lines. Paragraph lengths vary too. Break templates, including mirrored summaries: two researchers introduced as parallel "X asks... / Y asks..." sentences get reorganized around what each one explains in the scene, with varied sentence shapes (10 / 32 / 35 words), not kept as a mirrored pair.
 3. **Specific over generic**: real numbers, names, dates, tool versions, error messages. One concrete detail beats three abstractions.
 4. **Commit**: take positions. Replace hedging ("it could be argued", "arguably", "in many cases") with a claim and, if needed, one honest qualifier.
 5. **Experience first**: where the article touches Alexandru's own work, write from the first person, what was tried, what failed, what it cost. Show the trench, not the summary of the trench.

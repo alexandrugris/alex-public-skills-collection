@@ -661,7 +661,10 @@ recipe). The zero em-dash rule is universal.
   python3 check_tells.py <file>   - FAIL on any HIGH hit, REVIEW on MEDIUM hits, PASS otherwise.
 - Rewrite paragraph by paragraph: cut the binary, cut the abstract noun chain, turn the disguised
   list into a list, replace the weight verb with a concrete result.
-- Endings pass: read only the last sentence of each section. Vary the register, no moral.
+- Endings pass: read the last sentence of each section, the first sentence of each
+  section, and any standalone short transition line ("The levels move together.").
+  Vary the register, no moral. A clean scan is not a sign-off: rule 1 (literal meaning
+  in context) is checked by a human, because the scanner only knows registered patterns.
 - Gate: do not deliver with HIGH hits, with a disguised list, or with a closing moral.
 
 ## 5. Facts are untouchable

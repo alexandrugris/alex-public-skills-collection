@@ -13,3 +13,11 @@ en,PASS,,"We start early tomorrow, before the heat."
 en,PASS,,"The road was long, but the car held."
 en,PASS,,"She reads two books a week, sometimes more."
 en,PASS,,"He came home late, ate quietly, and slept."
+en,FAIL,metaphor.landed,The restructuring that was right on paper still landed as a threat.
+en,FAIL,inflated.on_paper,It looked sound on paper before the meeting.
+en,FAIL,metaphor.room,Care widens the room people have to think and act.
+en,FAIL,structure.filler_declarative,The levels move together.
+en,FAIL,metaphor.slide_into,Leaders slide into old habits under pressure.
+en,PASS,,The plan was sound and the room went quiet.
+en,PASS,,"Care means people can decide, disagree and act without you in the room."
+en,PASS,,Any hard decision can be read on three levels at once.
