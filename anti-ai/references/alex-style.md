@@ -11,29 +11,30 @@ from-the-edges: 29 propozitii, medie 12.1 cuvinte, 0 em-dash, 2 aparitii de I, 5
 projects.html: 8 propozitii, medie 22.0, 0 em-dash.
 leadership principles: 24 propozitii, medie 28.5, 1 em-dash.
 on-leadership-meditation.md (local): 466 linii, 0 bullet points, 1 header.
-curated-reading-recommendations.md: lista scrisa cu titlu ingrosat, linie Prioritate, apoi
-un paragraf care spune DE CE. Asa arata lista lui.
+"curated-reading-recommendations.md": lista scrisa cu titlu ingrosat, linie Prioritate,
+apoi un paragraf care spune DE CE. Asa arata lista lui.
 
 ## Reguli de casa
 
 1. Daca e lista, e lista. Bullet points cu lead ingrosat. Nu trei propozitii paralele mascate in proza.
    (Alex, 19 nov 2026: If it is bullet points, make it bullet points, if not, write the idea.)
 2. Daca nu e lista, scrie ideea. Propozitii pline, nu bullet points.
-3. Fara moralitate la final. Se termina pe imagine sau fapt, nu pe maxima.
+3. Fara moralitate la final. Textul se termina pe o imagine sau pe un fapt, nu pe o maxima.
 4. Heading = propozitie declarativa cu punct final. Europe wrote the answer down two centuries ago.
 5. Nucleu de 12-22 de cuvinte. Enumararile pot alerga lung (postul de leadership: medie 28.5), dar nu
    peste tot; clauzele din enumerate raman scurte. Zero em-dash. Colon ca pauza de apoteza.
 6. Prima persoana, rar: the one I can point to, 2 ori in 29 de propozitii.
 7. Substantiv concret, nu categorie: freedom has a flag.
 8. Zero vorbire de model, zero hedge-uri in grup.
-9. Fara honest despre propria vorbire. Interzis, exceptie: referinta la o persoana.
-10. Verbele de greutate sunt interzise: load-bearing, carries weight in orice forma (carries the
-    weight of, carries enormous weight), anchors, underpins, grants, fosters, fuels, earns its.
+9. Fara "honest" despre propia vorbire. Interzis, exceptie: referinta la o persoana.
+10. Verbele de greutate sunt interzise: "load-bearing", "carries weight" in orice forma
+    ("carries the weight of", "carries enormous weight"), "anchors", "underpins",
+    "grants", "fosters", "fuels", "earns its".
 
 ## Ce nu apare niciodata pe blog
 
-lead-inuri de umpluturare, hedge-uri grupate, moralitati de inchidere, triade paralele fara bullet,
-a mere X, it genuinely earns its complexity, em-dash ca semn de pauza.
+lead-inuri de umpluturare, hedge-uri grupate, moralitati de inchidere, triade paralele
+fara bullet, "a mere X", "it genuinely earns its complexity", em-dash ca semn de pauza.
 
 Verificare: python3 check_tells.py fisier.txt (scannerul sta in rădăcina anti-ai/,
 langă references/).
@@ -52,7 +53,7 @@ Era recenta (vocea curenta, fata de era de inceput):
 - "very" scade de la 2,3/k la 1,0/k. Intensificator folosit econom: nu-l largi.
 - propozitia scurteaza: medie 19,8 -> 15,0 cuvinte.
 - "not only...but": 26 de aparitii in prima era, 2 in era recenta.
-- "to be honest/honestly" despre propria vorbire: prima era; in 2025 apare o singura
+- "to be honest/honestly" despre propia vorbire: prima era; in 2025 apare o singura
   data (flagged corect de scanner). Regula 9 masoara vocea curenta, nu mostenirea.
 
 Confirmari dure:
@@ -64,24 +65,26 @@ Confirmari dure:
 - bullet-uri si linii "term - descriere": ~200; listele sunt dovezi de casa, nu exceptii.
 
 Verbe permise (masurate intreaga pagina): do(193), need(126), think(94), make(79), get(67),
-know(60), start, take, trust(55), help, believe, ask. Adjective: good(77), important(63),
+know(60), start, take, trust(55), help, believe, ask. Adjective: good(77), "important"(63),
 clear(50), great, hard, simple, bad, small.
 Cuvinte interzise care totusi apar in blog (aproape toate in era veche, densitate umana
-~0,5/k): strategic x8, empowering x7, crucial x2, synergy x2, stakeholder x2, optimize x2,
-leveraging x2, foster x1, cornerstone x1. In era recenta: doar strategic x2 si
-comprehensive x2 (ambele in titluri/citate). Zero aparitii: delve, pivotal, robust,
-seamless, holistic, harness, elevate, meticulous, moreover, furthermore, myriad, realm.
+~0,5/k): "strategic" x8, "empowering" x7, "crucial" x2, "synergy" x2, "stakeholder" x2,
+"optimize" x2, "leveraging" x2, "foster" x1, "cornerstone" x1. In era recenta: doar
+"strategic" x2 si "comprehensive" x2 (ambele in titluri/citate); zero aparitii la restul:
+"delve", "pivotal", "robust", "seamless", "holistic", "harness", "elevate", "meticulous",
+"moreover", "furthermore", "myriad", "realm".
 
 Scanner v0.11.1 pe blog: 55,7k cuvinte -> 48 HIGH (0,9/k; era veche 1,0/k, recenta 0,4/k).
-Verdicturi: 14 PASS, 38 REVIEW, 25 FAIL in 2008-2013; 9 REVIEW, 4 FAIL in 2014-2025.
-Singurele HIGH din vocea curenta: binary_not_but (1), binary_is_is (1), cornerstone (1),
-honestly adverb (1, postul 2025). Toate citibile ca fapte, nu ca telluri de AI: densitatea
-umana e pe masura. Tellul de AI e ACELASI sablon la densitate mare si cu a doua clauza goala.
+Verdicturi: 14 PASS, 38 REVIEW, 25 FAIL in 2008-2013; 9 REVIEW, 4 FAIL in 2014-2025;
+singurele HIGH din vocea curenta: "binary_not_but" (1), "binary_is_is" (1),
+"cornerstone" (1), "honestly" adverb (1, postul 2025). Toate citibile ca fapte, nu ca
+telluri de AI: densitatea umana e pe masura. Tellul de AI e ACELASI sablon la densitate
+mare si cu a doua clauza goala.
 Postul 2025 e FAIL doar pe "looking under the hood honestly" - regula 9 face exact ce trebuie.
 
 ## Regula 11 - fiecare cuvant are sens literal
 
-Nicio metafora. „weapons" despre strategie e interzis: cuvantul nu are sens in propozitie.
+Nicio metafora. "weapons" despre strategie e interzis: cuvantul nu are sens in propozitie.
 Proba: dicționar, in context. Daca sensul nu rezista, cuvantul se rescrie concret.
 Excepție: citatele intre ghilimele, pastrate ca citate, cu atribuire explicita.
 
@@ -93,9 +96,10 @@ Fara nominalizari si fara latinisme care nu se traduc bine.
 
 ## Regula 13 - calificative emotionale
 
-Interzise in general: uncomfortable, striking, fascinating, troubling, remarkable, compelling,
-intriguing, disturbing, alarming, insightful, fascinating, elegant, profound si restul listei
-din anti-ai-prompt.md, sectiunea Empty emotional adjectives. Exceptie: daca descriu ceva fizic (scaun, caldura, zgomot).
+Interzise in general: "uncomfortable", "striking", "fascinating", "troubling",
+"remarkable", "compelling", "intriguing", "disturbing", "alarming", "insightful",
+"fascinating", "elegant", "profound" si restul listei din anti-ai-prompt.md, sectiunea
+Empty emotional adjectives. Exceptie: daca descriu ceva fizic (scaun, caldura, zgomot).
 Altfel: tai cuvantul sau explica concret ce reactioneaza la fapt.
 
 ## Regula 14 - fara registru noir la fapte simple

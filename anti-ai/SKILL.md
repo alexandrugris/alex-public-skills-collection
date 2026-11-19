@@ -21,7 +21,7 @@ Calibration benchmarks (human corpora; third-party sources anonymized):
 
 Verdicts: FAIL (any HIGH hit), REVIEW (MEDIUM hits present), PASS otherwise.
 Exemptions are reported: quoted text, and literal context (a word is allowed when the
-sentence is actually about the physical thing).
+sentence is about the physical thing).
 
 ## Write
 
@@ -30,4 +30,4 @@ House rhythm: a sentence built as an enumeration (2+ items, or a semicolon serie
 run long, the clause stays 12-22 words, and it must not become every sentence.
 Keep facts, numbers and quotations unchanged.
 FAIL = heavy tells, almost surely AI-drafted. REVIEW can be good human writing: read
-the benchmarks file before cutting.
+the benchmarks file before you cut a flagged sentence.

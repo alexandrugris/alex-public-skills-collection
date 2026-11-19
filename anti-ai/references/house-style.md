@@ -14,7 +14,7 @@ cuvinte) si 2014-2025 (eseuri, ~10.400 cuvinte). Vocea curenta = era recenta:
 - "very" scade de la 2,3/k la 1,0/k; intensificatorii se folosesc economic
 - propozitia scurteaza: medie 19,8 -> 15,0 cuvinte
 - "not only...but": 26 de aparitii in prima era, 2 in era recenta
-- "to be honest / honestly" despre propria vorbire: numai in prima era
+- "to be honest / honestly" despre propia vorbire: numai in prima era
 
 ## Reguli de casa (calibrate)
 
@@ -28,20 +28,20 @@ cuvinte) si 2014-2025 (eseuri, ~10.400 cuvinte). Vocea curenta = era recenta:
 6. Prima persoana, rara.
 7. Substantiv concret, nu categorie.
 8. Zero vorbire de model, zero hedge-uri in grup.
-9. Fara "honest" despre propria vorbire. Exceptie: referinta la o persoana.
-10. Verbele de greutate sunt interzise: load-bearing, carries weight in orice forma
-    (carries the weight of, carries enormous weight), anchors, underpins, grants, fosters,
-    fuels, earns its.
+9. Fara "honest" despre propia vorbire. Exceptie: referinta la o persoana.
+10. Verbele de greutate sunt interzise: "load-bearing", "carries weight" in orice
+    forma ("carries the weight of", "carries enormous weight"), "anchors", "underpins",
+    "grants", "fosters", "fuels", "earns its".
 11. Fiecare cuvant are sens literal. Nicio metafora: daca sensul de dictionar nu rezista
     in context, cuvantul se rescrie concret. Excepție: citatele, pastrate ca citate, cu
     atribuire explicita.
 12. Engleza simpla (cu atat mai mult daca engleza nu e prima ta limba): cuvinte de 1-2
-    silabe, sens literal, propozitii de 12-22 de cuvinte. Media de litere pe cuvant sub
-    4.8. Cuvinte de 10+ litere sub 12%. Fara latinisme care nu se traduc bine.
-13. Calificativele emotionale (uncomfortable, striking, fascinating, troubling, remarkable,
-    compelling, intriguing) sunt interzise, exceptand descrierea fizica. Altfel: taie
-    cuvantul sau explica concret ce anume produce reactia.
-14. Fara registru noir la fapte simple: daca faptul e mic, scrie-l mic. Fara teaser, fara
+    silabe, sens literal, propozitii de 12-22 de cuvinte; media de litere pe cuvant sub
+    4.8; cuvintele de 10+ litere, sub 12%; fara latinisme care nu se traduc bine.
+13. Calificativele emotionale ("uncomfortable", "striking", "fascinating", "troubling",
+    "remarkable", "compelling", "intriguing") sunt interzise, exceptand descrierea fizica.
+    Altfel: taie cuvantul sau explica concret ce anume produce reactia.
+14. Fara registru noir la fapte simple, daca faptul e mic, scrie-l mic; fara teaser, fara
     suspense, fara punchline, fara decor de scena.
 
 ## Confirmari dure din corpus
@@ -51,11 +51,11 @@ cuvinte) si 2014-2025 (eseuri, ~10.400 cuvinte). Vocea curenta = era recenta:
 - CAPS nu sunt emotionale: sunt acronime de lucru.
 - Verbe permise (masurate): do (193), need (126), think (94), make (79), get (67),
   know (60), start, take, trust (55), help, believe, ask.
-  Adjective: good (77), important (63), clear (50), great (49), hard (47), simple, bad, small.
+  Adjective: good (77), "important" (63), clear (50), great (49), hard (47), simple, bad, small.
 - Cuvintele din blocklist apar la densitate umana (~0,5/k) si aproape dispar in era
-  recenta: strategic x8, empowering x7, crucial x2, synergy x2, stakeholder x2, optimize x2.
-  Zero aparitii: delve, pivotal, robust, seamless, holistic, harness, elevate, meticulous,
-  moreover, furthermore, myriad, realm.
+  recenta: "strategic" x8, "empowering" x7, "crucial" x2, "synergy" x2, "stakeholder" x2,
+  "optimize" x2. Zero aparitii: "delve", "pivotal", "robust", "seamless", "holistic",
+  "harness", "elevate", "meticulous", "moreover", "furthermore", "myriad", "realm".
 - Scanner v0.11.x pe corpus: 48 HIGH / 55,7k cuvinte (0,9/k; 1,0/k prima era, 0,4/k recenta).
   Verdicturi pe 90 de posturi: 14 PASS, 38 REVIEW, 25 FAIL (2008-2013);
   9 REVIEW, 4 FAIL (2014-2025).

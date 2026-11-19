@@ -16,16 +16,17 @@ Vezi house-style.md. 14 PASS / 38 REVIEW / 25 FAIL, cele mai multe HIGH in era v
 Singurele tipare HIGH din vocea recenta: binarul "not only...but", binarul "is not X. It
 is Y", o metafora moarta unica si un adverb de sinceritate unic. Densitate umana, doua
 clauze concrete. Tellul de AI e ACELASI sablon la densitate mare si cu a doua clauza
-goal; densitatea e discriminatorul, nu aparitia izolata.
+goala; densitatea e discriminatorul, nu aparitia izolata.
 
 ## Corpus uman B: memo intern de management (alt autor, ~5.100 cuvinte)
 
 - 404 propozitii, medie 12,7 cuvinte, mediana 11; doar 8 peste 35 de cuvinte.
 - Adresare directa dominanta (raport you:I aproximativ 14:1), multe intrebari retorice,
-  exclamatii rare, paranteze pentru asideri, colon ca pauza, zero em-dash.
-- Zero cuvinte din blocklist in toata pagina: niciunul dintre delves, crucial, pivotal,
-  robust, seamless, leverage, foster, journey, landscape, navigate, unlock, harness,
-  elevate, empower, moreover, furthermore, stakeholder, synergy nu apare.
+  exclamatii putine, paranteze pentru asideri, colon ca pauza, zero em-dash.
+- Zero cuvinte din blocklist in toata pagina: niciunul dintre "delves", "crucial",
+  "pivotal", "robust", "seamless", "leverage", "foster", "journey", "landscape",
+  "navigate", "unlock", "harness", "elevate", "empower", "moreover", "furthermore",
+  "stakeholder", "synergy" nu apare.
 - Intensificatorii simpli sunt firesti, nu hedge: "very" x13, "really" x8.
 - ALL-CAPS pentru accent si 3 smileys in 5.100 de cuvinte: om care scrie lejer, nu asistent.
 - Scanner: REVIEW (0 HIGH, 29 MEDIUM, 35 LOW).
@@ -39,21 +40,21 @@ goal; densitatea e discriminatorul, nu aparitia izolata.
   castigate ale verbului "earn" (a castiga un drept prin fapte); tellul ramane "earns its
   place/complexity/stripes".
 
-## Corpus uman C: document de lucru intern (~1.500 cuvinte, cu comentarii in margine)
+## Corpus uman C: document de lucru intern (~1.500 de cuvinte, cu comentarii in margine)
 
 - 81 propozitii, medie 18,4, mediana 15; doar 5 peste 35 de cuvinte.
 - Registru normativ: "we" 14,4/k, "should" 7,8/k, dar "must" doar 0,7/k. Persuasiunea
   prin norme impartasite si opinie marcata ("I believe", "I feel", "To me"), nu prin
-  comenzi. Constructii "we don't want to X".
+  comenzi. Expresii "we don't want to X".
 - Intrebarile ca structura de argument (7,8/k), documentul organizat pe intrebari.
 - Zero exclamatii, zero em-dash adevarat, 10 linii "termen - explicatie" in rol de
   colon, un singur smiley dupa autoironie, "he/she" inclusiv, contractii
   normale, typos lasate in text (proza needitata).
 - CAPS ca operatori logici deliberati si acronime de lucru, nu ca emotie.
-- Conceptele denumite cu imagine concreta si definite in aceeasi fraza.
-- Scanner: REVIEW (0 HIGH, 11 MEDIUM, 24 LOW). ZERO la metaphor, weight, chat, honesty,
-  hedge, list. Cuvintele-blocklist care ies natural la densitate umana: holistic,
-  cutting edge, important.
+- Conceptele iau nume cu imagine concreta, definite in aceeasi fraza.
+- Scanner: REVIEW (0 HIGH, 11 MEDIUM, 24 LOW), zero la metaphor, weight, chat, honesty,
+  hedge, list; cuvintele-blocklist care ies natural la densitate umana: "holistic",
+  "cutting edge", "important".
 - Ce calibreaza: (1) la work-docs, categoriile complex-LOW sunt zgomot de registru;
   (2) "termen - explicatie" nu e em-dash, e sintaxa de lista; (3) proza needitata
   castiga REVIEW, nu FAIL: FAIL-ul apare la sabloane, nu la imperfectiune.

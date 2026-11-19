@@ -27,17 +27,17 @@ Verdicts:
 - **PASS**: nothing above LOW.
 
 Exemptions are reported, never silently dropped: quoted text, and literal context (a
-word is allowed when the sentence is actually about the physical thing: a bridge that
-carries the weight of three trucks is fine).
+word is allowed when the sentence is about the physical thing: "a bridge that carries
+the weight of three trucks" is fine).
 
 ## The pattern file
 
 `patterns.json` (442 patterns, versioned) is the canonical blocklist. Categories:
-`metaphor` (words without literal meaning), `weight` (carries the weight of / anchors /
-underpins / grants...), `inflated` (corporate inflation), `hedge`, `honesty`
-(self-certified sincerity, allowed when describing a person), `vague` (empty emotional
-adjectives), `structure` (shapes that self-confess: binaries, aphorisms, abstract
-chains), `list` (bullet lists disguised as prose), `chat` (assistant residue),
+`metaphor` (words without literal meaning), `weight` ("carries the weight of",
+"anchors", "underpins", "grants"...), `inflated` (corporate inflation), `hedge`,
+`honesty` (self-certified sincerity, allowed when describing a person), `vague` (empty
+emotional adjectives), `structure` (shapes that self-confess: binaries, aphorisms,
+abstract chains), `list` (bullet lists disguised as prose), `chat` (assistant residue),
 `complex` (words with a simpler equivalent), `house` (see below) and `dramatic`.
 Romanian and French tells are included (`lang: ro|fr`).
 
@@ -57,7 +57,7 @@ numbers.
 
 ## Calibration evidence
 
-The FAIL/REVIEW split was validated in both directions:
+The FAIL/REVIEW split was checked in both directions:
 
 | Corpus | Verdict |
 |---|---|
@@ -67,9 +67,9 @@ The FAIL/REVIEW split was validated in both directions:
 | Human unedited work doc (1.5k words) | REVIEW, 0 HIGH |
 
 Unedited human text wins REVIEW, not PASS: single blocklist words at low density
-(holistic, cutting edge, important) are noise; density and empty second clauses are the
-tells. Read `references/human-benchmarks.md` before cutting anything a REVIEW verdict
-flags.
+("holistic", "cutting edge", "important") are noise; density and empty second clauses
+are the tells. Read `references/human-benchmarks.md` before you cut anything a REVIEW
+verdict flags.
 
 ## Portable rule set
 
@@ -84,4 +84,4 @@ register (memos, design docs) the `complex` category fires as register noise: LO
 
 ## License
 
-MIT — see the `LICENSE` file at the repo root. Copyright (c) 2026 Alexandru Gris.
+MIT: see the `LICENSE` file at the repo root. Copyright (c) 2026 Alexandru Gris.
