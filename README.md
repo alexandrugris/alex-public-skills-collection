@@ -1,96 +1,43 @@
-# anti-ai
+# alex-public-skills-collection
 
-A regex-based linter that detects AI tells in prose: the phrases, structures and
-registers that give machine-written text away. Built by Alexandru Gris
-([alexandrugris.ro](https://alexandrugris.ro)), calibrated against real human
-corpora, not just against AI output. My voice, my rules; take them, replace the
-numbers with yours.
+The public home for my portable, self-contained skills for AI-assisted work. Each folder
+is one skill: a manifest (`SKILL.md`), its reference files, and any code it needs.
+Everything runs offline with plain Python. No accounts, no telemetry.
 
-## Why
+## Skills
 
-The obvious AI tells are not grammar mistakes. They are habits: metaphors whose
-dictionary sense does not survive in context, weight verbs, self-certified honesty,
-empty emotional adjectives, crime-novel register, lists disguised as prose, hedge
-clusters, inflated vocabulary, and a closing moral. A model draft trips several of
-these in a thousand words; human writing trips almost none (see
-`references/human-benchmarks.md`).
-
-## Usage
-
-    python3 check_tells.py <file-or-dir> [...] [--json] [--cat chat,inflated] [--severity high] [--density]
-    python3 check_tells.py --fixtures tests/fixtures-en.csv tests/fixtures-ro.csv tests/fixtures-fr.csv
-
-The `--fixtures` mode is the regression gate: synthetic trap sentences per language
-(MUST-FAIL rows must fire their pattern, MUST-PASS rows must fire nothing) so per-language
-coverage stays measurable and edits cannot silently break a language.
-
-Verdicts:
-
-- **FAIL** (exit report): at least one HIGH hit. Almost surely machine-drafted text, or
-  prose with heavy tells. Fix before publishing.
-- **REVIEW**: MEDIUM hits present. Can be perfectly good human writing: judge by hand.
-- **PASS**: nothing above LOW.
-
-Exemptions are reported, never silently dropped: quoted text, and literal context (a
-word is allowed when the sentence is actually about the physical thing: a bridge that
-carries the weight of three trucks is fine).
-
-## The pattern file
-
-`patterns.json` (468 patterns, versioned) is the canonical blocklist. Categories:
-`metaphor` (words without literal meaning), `weight` (carries the weight of / anchors /
-underpins / grants...), `inflated` (corporate inflation), `hedge`, `honesty`
-(self-certified sincerity, allowed when describing a person), `vague` (empty emotional
-adjectives), `structure` (shapes that self-confess: binaries, aphorisms, abstract
-chains), `list` (bullet lists disguised as prose), `chat` (assistant residue),
-`complex` (words with a simpler equivalent), `house` (see below) and `dramatic`.
-Romanian and French are first-class: `lang: ro|fr` gets its own tells, its own
-complex-word tables (a furniza -> a da, effectuer -> faire) and the spoken-register
-annexes `references/lang-ro.md`, `references/lang-fr.md` (equivalent tables, bad-to-good
-pairs, and the recipe to recalibrate the word-length numbers, which are English-calibrated).
-
-Labels and fix suggestions are in Romanian; the rules themselves are language-agnostic
-and the code adapts to new patterns without changes.
-
-## House rules
-
-`house` is a different animal: not AI tells, but *your* personal rhythm, measured on
-*your* clean writing (sentence length bands, em-dash budget, word length, metronome
-detection). The shipped `references/house-style.md` and `references/alex-style.md`
-are the real thing, not a toy example: Alexandru's voice as measured on his blog
-(90 posts, 2008-2025), including the two-era voice drift and the
-hard confirmations (one true em-dash in 55,700 words; "term - description" lines are
-list syntax, not pauses). Use it as a template: measure your own corpus, replace the
-numbers.
-
-## Calibration evidence
-
-The FAIL/REVIEW split was validated in both directions:
-
-| Corpus | Verdict |
+| Skill | What it does |
 |---|---|
-| AI draft (~1k words) | FAIL, 3 HIGH |
-| Human blog, recent era (10.5k words) | 9 REVIEW, 4 FAIL (0.4 HIGH/k) |
-| Human internal memo (5.1k words) | REVIEW, 0 HIGH |
-| Human unedited work doc (1.5k words) | REVIEW, 0 HIGH |
+| [anti-ai](./anti-ai/) | A regex linter that detects AI tells in prose: 442 patterns (EN/RO/FR), house-style calibration, and benchmarks from real human corpora |
+| [blog-writer](./blog-writer/) | Multi-pass article pipeline: brief, sourced research, developmental edit, copy edit in the author's voice, fact-check loop, review gate. Lints its own drafts with anti-ai |
+| [alexandru-style](./alexandru-style/) | AG Style v1.0: the design system distilled from alexandrugris.ro. Compact spec (`design-system.md`) plus the full brand toolkit under `brand/`: canonical tokens.css, style spec, working HTML templates, render/deck scripts and the reference sample gallery |
 
-Unedited human text wins REVIEW, not PASS: single blocklist words at low density
-(holistic, cutting edge, important) are noise; density and empty second clauses are the
-tells. Read `references/human-benchmarks.md` before cutting anything a REVIEW verdict
-flags.
+## Layout
 
-## Portable rule set
+    <skill-name>/
+      SKILL.md          manifest: description, audit and writing instructions
+      README.md         usage and background
+      <code + data>     whatever the skill needs to run
 
-- `references/anti-ai-prompt.md` - full rules, pasteable into any model prompt
-- `references/anti-ai-short.md` - the short version
-- `references/lang-ro.md`, `references/lang-fr.md` - spoken-register annexes (Romanian, French)
+## Using a skill
 
-## Limitations
+With an AI assistant that supports skills (e.g. Vibe), copy or install the skill folder.
+Standalone use, for the `anti-ai` linter:
 
-It is a linter, not a judge. Regexes overreach by design; exemptions cover quotes and
-literal contexts, and REVIEW exists because the human call stays yours. In work-related
-register (memos, design docs) the `complex` category fires as register noise: LOW, ignore.
+    python3 anti-ai/check_tells.py <file-or-dir> [--json] [--severity high]
+
+Verdicts: `FAIL` (at least one HIGH AI tell), `REVIEW` (MEDIUM hits: can be good human
+writing, judge by hand), `PASS`. The full calibration story behind those verdicts is in
+[anti-ai/references/human-benchmarks.md](./anti-ai/references/human-benchmarks.md).
+
+The brand toolkit in [alexandru-style/brand/](./alexandru-style/brand/) migrated from its
+own repository (ag-personal-brand) on 2026-11-19. The complete source snapshot, including
+every binary (fonts, reference PDFs, sample deck, screenshots), is preserved and
+byte-verified in
+[alexandru-style/brand/binaries-archive/](./alexandru-style/brand/binaries-archive/);
+see its README for the one-command restore.
 
 ## License
 
-MIT — see the `LICENSE` file at the repo root. Copyright (c) 2026 Alexandru Gris.
+MIT, see [LICENSE](./LICENSE). It covers the whole collection. Bundled font licenses
+(SIL OFL 1.1) stay with their font family names.
