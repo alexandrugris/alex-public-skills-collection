@@ -13,7 +13,7 @@ Never default to a listicle. If sections read like interchangeable parallel item
 
 ## Rules
 
-1. **Openings** start in media res: a scene, a moment, a problem, a number. Never "In this article, we'll explore...", never a definitional first paragraph. The title and every heading state a concrete claim the opening scene supports; no stock-pair headlines ("right on paper, still landed as a threat").
+1. **Openings** start in media res: a scene, a moment, a problem, a number. In a scene, every consequence names its cause from earlier in the same scene; no new object appears without its trigger. Scenes are rendered explicitly: the room, the objects, who stands where, and feelings shown as observable behavior (where people look, what they say), never as labels like "people are afraid". Never "In this article, we'll explore...", never a definitional first paragraph. The title and every heading state a concrete claim the opening scene supports; no stock-pair headlines ("right on paper, still landed as a threat"). The title and kicker name the concrete actors (the two researchers), not concepts: concepts cannot act ("care and reality-testing pull apart" fails; name what each does to people). No suspense or mystery tone in titles and kickers.
 2. **One idea per section**, and the section heading states it sharply (banned headings: "What is X?", "Introduction", "Conclusion", "Key takeaways").
 3. **The argument spine**: every section must advance the single idea from the brief; cut or merge sections that don't.
 4. **Tension/order**: order sections by the reader's curiosity, so each section raises the question the next one answers.

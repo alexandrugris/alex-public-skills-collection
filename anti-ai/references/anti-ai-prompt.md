@@ -18,7 +18,7 @@ attributed.
 
 **1b. When a metaphor goes, expand it into the concrete mechanism — do not just delete it.**
 A deleted metaphor leaves a hole the reader fills with a cliché. Replace it with who does
-what, and what changes as a result:
+what, why, and what changes as a result - the actor and the mechanism, not just the state:
 - "care widens the room people have to think and act" -> "care means people can decide,
   disagree and act without you in the room" (the room stays literal)
 - a punchy metaphorical title ("...still landed as a threat") -> a declarative sentence about
@@ -118,7 +118,7 @@ sentences that end with a period.
 Each noun gets checked against a dictionary in context, then each adjective, then the
 sentence that carries no information gets cut.
 
-**13. Say what it is, not what it is not.** A sentence opening with "X is not Y" makes the
+**13. Say what it is, not what it is not.** A sentence opening with "X is/was not Y" makes the
 reader guess the positive: state the positive and the reason. Same for negated tails that
 duplicate the positive: "starts from the person, not the org chart" -> "starts from the
 person". A negation that carries real information ("an interpreter, not a judge") is fine.
@@ -129,6 +129,19 @@ survive only inside checklists. No count fragments ("Four feelings, four reading
 open with the example ("Anger can signal an injustice."). Explain mechanisms plainly, no
 ceremonial verbs ("gave him the word" -> "the term comes from Winnicott, via Petriglieri").
 Every transition sentence carries a concrete detail or a condition, nothing else.
+No hanging aphorisms ("optimism becomes part of the job"): a consequence clause names
+the actor and the mechanism, never just the resulting state.
+
+**15. Scenes state their causes.** Every new fact in a scene traces to a cause introduced
+earlier in the same scene (revenue falls -> a restructuring is announced -> people fear
+layoffs -> they ask about selection -> silence). No "nobody is told" passives: name the
+actor who stayed silent and why ("HR never states who will be let go, or by what
+criteria.").
+
+Literary scenes are explicit, not summarized: describe the room, the objects, the light,
+who stands and who sits, and render every feeling as observable behavior - where people
+look, what they do with their hands, what they actually say. "People are afraid" alone is
+a label; "everyone has already done the math on their own salary" is a scene.
 
 ## 2. House style, measured from the author's published pages
 

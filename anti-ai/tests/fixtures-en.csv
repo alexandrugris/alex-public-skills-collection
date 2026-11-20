@@ -29,3 +29,13 @@ en,PASS,,Holding means staying with a hard reality.
 en,PASS,,Gianpiero Petriglieri starts from the person.
 en,PASS,,"If you put two researchers in that room, the silence changes meaning."
 en,PASS,,"For example, anger can signal an injustice or a wish for control."
+en,FAIL,structure.leading_negation,Silence at the all-hands was not agreement.
+en,FAIL,metaphor.pull_apart,Care and reality-testing pull apart.
+en,PASS,,The all-hands ended in silence.
+en,PASS,,What Petriglieri and Kets de Vries say about what leading does to people.
+en,FAIL,style.hanging_aphormism,"Revenue is falling, so optimism becomes part of the job."
+en,PASS,,"Revenue is falling, so people are afraid."
+en,PASS,,The chief executive tells managers to project confidence in every meeting.
+en,FAIL,structure.passive_nobody,Nobody is told how people will be selected.
+en,PASS,,"HR never states who will be let go, or by what criteria."
+en,PASS,,"The restructuring means layoffs, and the fear is visible in every meeting."

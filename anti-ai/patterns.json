@@ -1,5 +1,5 @@
 {
-  "version": "0.13.0",
+  "version": "0.13.3",
   "updated": "2026-11-19",
   "categories": {
     "chat": "Resturi de chatbot",
@@ -10371,8 +10371,8 @@
       "cat": "structure",
       "lang": "any",
       "severity": "medium",
-      "regex": "(?m)^(?!But |And |So |Or |Yet )[A-Z][\\w' -]{2,40} is not [^.]{3,60}\\.$",
-      "label": "lead cu 'X is not Y'",
+      "regex": "(?m)^(?!But |And |So |Or |Yet |Never |Don't |Do not )[A-Z][\\w' -]{2,40} (?:is|was|are|were|isn't|wasn't|aren't|weren't) not [^.]{3,60}\\.$",
+      "label": "lead cu 'X is/was not Y'",
       "fix": "Spune ce ESTE si de ce. Negatia izolata doar roaga cititorul sa ghiceasca pozitivul."
     },
     {
@@ -10401,6 +10401,33 @@
       "regex": "(?m)^(?:One|Two|Three|Four|Five|Six|Seven|Eight|Nine|Ten|Several|Many) [a-z]+, [a-z]+ [a-z]+\\.$",
       "label": "fragment de numar ('Four feelings, four readings.')",
       "fix": "Incepe cu exemplul concret: 'Anger can signal...'. Nu numara lucrurile din fraza."
+    },
+    {
+      "id": "metaphor.pull_apart",
+      "cat": "metaphor",
+      "lang": "any",
+      "severity": "medium",
+      "regex": "\\bpull(?:s|ed|ing)? (?:against|apart)\\b",
+      "label": "pull apart / pull against (concepte care trag)",
+      "fix": "Spune literal: the two needs conflict, or work in opposite directions."
+    },
+    {
+      "id": "style.hanging_aphormism",
+      "cat": "structure",
+      "lang": "any",
+      "severity": "medium",
+      "regex": "\\bbecomes? part of the (?:job|role|work|description|conversation)\\b|\\bis now (?:a|part of) (?:job|role)\\b",
+      "label": "aphorism suspendat ('becomes part of the job')",
+      "fix": "Nume\u0219te actorul si mecanismul: cine cere ce, si de ce. Starea singura nu explica nimic."
+    },
+    {
+      "id": "structure.passive_nobody",
+      "cat": "structure",
+      "lang": "any",
+      "severity": "medium",
+      "regex": "\\b[Nn]obody (?:is|was|were) (?:told|asked|shown|informed|consulted)\\b|\\bno one (?:is|was) (?:told|shown)\\b",
+      "label": "pasiv 'nobody is told' - ascunde actorul",
+      "fix": "Spune cine trebuia sa spuna si de ce nu a spus: 'HR never states who will be let go.'"
     }
   ]
 }
