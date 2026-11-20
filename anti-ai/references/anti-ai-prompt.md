@@ -10,7 +10,7 @@ author's edited voice, measured from his published blog and essays.
 
 **1. Every word must have literal meaning in the sentence it sits in.**
 If the dictionary sense of a word does not survive in this context, the word is a metaphor and
-must be replaced by the concrete thing. No acceptable figure of speech.
+must give way to the concrete thing. No acceptable figure of speech.
 - "The weapons he describes are all subtractions" -> "Everything he describes is a subtraction"
 - "weapons" is allowed only when the sentence is actually about "weapons".
 Quotations are exempt: a quoted metaphor stays, but it must be marked as a quotation and
@@ -115,7 +115,7 @@ replace an em-dash, anywhere in the text. Headings are declarative
 sentences that end with a period.
 
 **12. No metaphors, no weight, no filler, in that order.**
-Each noun gets checked against a dictionary in context, then each adjective, then the
+Compare each noun against a dictionary in context, then each adjective, then the
 sentence that carries no information gets cut.
 
 **13. Say what it is, not what it is not.** A sentence opening with "X is/was not Y" makes the
@@ -133,7 +133,7 @@ No hanging aphorisms ("optimism becomes part of the job"): a consequence clause 
 the actor and the mechanism, never just the resulting state.
 
 **15. Scenes state their causes.** Every new fact in a scene traces to a cause introduced
-earlier in the same scene (revenue falls -> a restructuring is announced -> people fear
+earlier in the same scene (revenue falls -> the CEO announces a restructuring -> people fear
 layoffs -> they ask about selection -> silence). No "nobody is told" passives: name the
 actor who stayed silent and why ("HR never states who will be let go, or by what
 criteria.").
@@ -142,6 +142,12 @@ Literary scenes are explicit, not summarized: describe the room, the objects, th
 who stands and who sits, and render every feeling as observable behavior - where people
 look, what they do with their hands, what they actually say. "People are afraid" alone is
 a label; "everyone has already done the math on their own salary" is a scene.
+
+Active voice dominates: the actor sits in the subject ("He tells the managers to project
+confidence"). Passive only when the actor is truly unknown, and even then name the
+silent actor ("HR never states who will be let go"). For scene writing, calibrate on the
+literature pages (alexandrugris.ro/literature/): short sentences, concrete objects,
+sensory detail, timestamps, dialogue; feelings carried by physical detail, not labels.
 
 ## 2. House style, measured from the author's published pages
 
@@ -689,7 +695,7 @@ recipe). The zero em-dash rule is universal.
 - Endings pass: read the last sentence of each section, the first sentence of each
   section, and any standalone short transition line ("The levels move together.").
   Vary the register, no moral. A clean scan is not a sign-off: rule 1 (literal meaning
-  in context) is checked by a human, because the scanner only knows registered patterns.
+  in context) gets a human check, because the scanner only knows registered patterns.
 - Gate: do not deliver with HIGH hits, with a disguised list, or with a closing moral.
 
 ## 5. Facts are untouchable

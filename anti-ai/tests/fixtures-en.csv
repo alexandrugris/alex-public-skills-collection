@@ -39,3 +39,7 @@ en,PASS,,The chief executive tells managers to project confidence in every meeti
 en,FAIL,structure.passive_nobody,Nobody is told how people will be selected.
 en,PASS,,"HR never states who will be let go, or by what criteria."
 en,PASS,,"The restructuring means layoffs, and the fear is visible in every meeting."
+en,FAIL,grammar.passive,Managers are told to inspire.
+en,FAIL,grammar.passive,The questions get labelled as resistance.
+en,PASS,,He tells the managers to project confidence in every meeting.
+en,PASS,,"HR never states who will be let go, or by what criteria."

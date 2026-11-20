@@ -1,5 +1,5 @@
 {
-  "version": "0.13.3",
+  "version": "0.14.0",
   "updated": "2026-11-19",
   "categories": {
     "chat": "Resturi de chatbot",
@@ -10428,6 +10428,15 @@
       "regex": "\\b[Nn]obody (?:is|was|were) (?:told|asked|shown|informed|consulted)\\b|\\bno one (?:is|was) (?:told|shown)\\b",
       "label": "pasiv 'nobody is told' - ascunde actorul",
       "fix": "Spune cine trebuia sa spuna si de ce nu a spus: 'HR never states who will be let go.'"
+    },
+    {
+      "id": "grammar.passive",
+      "cat": "structure",
+      "lang": "any",
+      "severity": "medium",
+      "regex": "\\b(?:am|is|are|was|were|be|been|being|get|gets|got|getting) (?!(?:allowed|banned|forbidden|permitted|required|quoted|exempt|listed|included|marked|noted|called|named|meant|intended|described|defined|located|situated|known|measured|calibrated|counted|based|derived|used)\\b)(?:[a-z]{3,}ed|[a-z]*(?:told|given|taken|written|spoken|chosen|shown|seen|made|said|sent|built|bought|brought|thought|caught|paid|sold|held|kept|left|gone|born|fallen|eaten|forgotten)\\b)\\b",
+      "label": "posibil pasiv (auxiliar + participiu)",
+      "fix": "Actorul in subiect: 'He tells the managers...' in loc de 'Managers are told...'. Pasiv doar cand actorul e cu adevarat necunoscut; si atunci numeste-l: 'HR never states...'."
     }
   ]
 }

@@ -29,7 +29,7 @@ Requirement: every MUST-FAIL row fires its pattern, every MUST-PASS row fires no
 `python3 tests/run_tests.py`.
 
 Verdicts: FAIL (any HIGH hit), REVIEW (MEDIUM hits present), PASS otherwise.
-Exemptions are reported: quoted text, and literal context (a word is allowed when the
+The scanner reports exemptions: quoted text and literal context (a word is allowed when the
 sentence is about the physical thing).
 
 ## Write

@@ -31,7 +31,7 @@ Verdicts:
 - **REVIEW**: MEDIUM hits present. Can be perfectly good human writing: judge by hand.
 - **PASS**: nothing above LOW.
 
-Exemptions are reported, never silently dropped: quoted text, and literal context (a
+The scanner reports exemptions, never silently dropped: quoted text and literal context (a
 word is allowed when the sentence is about the physical thing: "a bridge that carries
 the weight of three trucks" is fine).
 
@@ -65,7 +65,7 @@ numbers.
 
 ## Calibration evidence
 
-The FAIL/REVIEW split was checked in both directions:
+The FAIL/REVIEW split wgate checks both directions:
 
 | Corpus | Verdict |
 |---|---|
