@@ -435,6 +435,10 @@ a:focus-visible { outline: 3px solid var(--amber); outline-offset: 4px; }
 .doc--flow .doc-article > header { margin-bottom: 2.1em; }
 .doc--flow .doc-article > h2 { margin: 1.45em 0 0.55em; break-after: avoid; }
 .doc--flow .body + .body { margin-top: 1em; }
+.doc--flow .doc-article > ul:not(.list-clean),
+.doc--flow .doc-article > ol:not(.list-clean) { margin: 1em 0 1em 1.25em; }
+.doc--flow .doc-article > ul:not(.list-clean) > li + li,
+.doc--flow .doc-article > ol:not(.list-clean) > li + li { margin-top: 0.35em; }
 .doc--flow .doc-keep-next { break-after: avoid; }
 .doc--flow p, .doc--flow li { orphans: 2; widows: 2; }
 .doc--flow a { color: var(--burgundy); }
