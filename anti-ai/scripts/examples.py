@@ -153,9 +153,29 @@ def cmd_query(args: argparse.Namespace) -> int:
         for e in entries
     ]
     scored.sort(key=lambda pair: (pair[0][0] + pair[0][1], pair[1].get("date", "")), reverse=True)
+
     if wanted_tags or q_tokens or args.rule:
-        filtered = [e for (ms, _), e in scored if ms > 0.0]
-        selected = (filtered or [e for _, e in scored])[: args.limit]
+        matched = [e for (ms, _), e in scored if ms > 0.0]
+        selected = matched[: args.limit]
+        if len(selected) < args.limit:
+            # Backfill with diverse general structural/taste constructs (uncaught first)
+            seen_ids = {e["id"] for e in selected}
+            seen_rules = {r for e in selected for r in e.get("rules", [])}
+            rest = [e for _, e in scored if e["id"] not in seen_ids]
+            # Prefer entries that cover new rules and uncaught taste patterns
+            rest.sort(
+                key=lambda e: (
+                    not e.get("scanner_caught", False),
+                    bool(set(e.get("rules", [])) - seen_rules),
+                    e.get("date", ""),
+                ),
+                reverse=True,
+            )
+            for e in rest:
+                if len(selected) >= args.limit:
+                    break
+                selected.append(e)
+                seen_rules.update(e.get("rules", []))
     else:
         selected = [e for _, e in scored][: args.limit]
 
@@ -305,7 +325,7 @@ def main() -> int:
     p_q.add_argument("--tags", default="")
     p_q.add_argument("--rule", default=None)
     p_q.add_argument("--topic", default="")
-    p_q.add_argument("--limit", type=int, default=5)
+    p_q.add_argument("--limit", type=int, default=10)
     p_q.add_argument("--only-uncaught", action="store_true")
     p_q.add_argument("--format", choices=["compact", "json"], default="compact")
     p_q.set_defaults(func=cmd_query)

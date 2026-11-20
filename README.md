@@ -61,7 +61,7 @@ flowchart LR
 2. **Run the Deep Research Loop (Step 2).** Before any outlining, the agent runs 3-4 bounded rounds across primary papers/docs, practitioner blogs, Wikipedia (used only as a map to follow its primary citations), and YouTube talks/interviews (with transcript inspection and timestamped URLs). Default `deep` mode opens **10-15+ distinct URLs** and **2-3+ counter-arguments**, logging everything in `<research_brief>` and tagging unresolved items `[NEEDS SOURCE]`.
 3. **Review `<structural_brief>` from Pass 1 (Step 3).** Pass 1 chooses an archetype (Trenches story, Argument essay, Diataxis how-to, or Explanation) while respecting the target medium's layout rules from `alexandru-style/design-system.md`.
 4. **Calibrate, Draft, and Lint in Pass 2 (Step 4).**
-   - **4a (`examples.py query`):** Right before writing prose, Pass 2 queries `anti-ai/examples/corrections.jsonl` for the top 3-5 past human rewrites matching the topic and language. That loads your concrete taste (~220 tokens) without bloating `SKILL.md`.
+   - **4a (`examples.py query`):** Right before writing prose, Pass 2 queries `anti-ai/examples/corrections.jsonl` with `--limit 10` (~700 tokens). It pulls topic-matched rewrites first and backfills remaining slots with diverse general structural/taste constructs (mirrored summaries, leading negations, passive voice, scenes, closing morals) so those patterns stay fresh without bloating `SKILL.md`.
    - **4b–4c (Draft + `check_tells.py`):** Pass 2 writes the draft, runs `anti-ai/check_tells.py` and `blog-writer/tests/validate_draft.py`, fixes every HIGH hit, and checks headings, literal word sense, and endings by hand.
 5. **Run the Fact-Check Loop (Step 5, max 2 rounds).** Every external claim and URL faces read-only verification. Unverifiable claims leave the draft or get recast; the pipeline never invents a replacement link.
 6. **Approve at the Review Gate, then Style (Steps 6–7).** Nothing ships before your sign-off. When `alexandru-style` renders the HTML/A4 PDF/deck, any new UI copy (kickers, ledes, captions) goes through `anti-ai`, any overflow cuts route back to Pass 2, and `alexandru-style/tests/check_styled.py` verifies the output.
@@ -104,10 +104,10 @@ gaps: []
 After Pass 1 delivers `<structural_brief>` (Trenches/Explanation hybrid with A4 kicker, lede, and 3 short sections), Pass 2 runs `examples.py query` **before writing prose**:
 
 ```sh
-python3 anti-ai/scripts/examples.py query --lang en --topic "leadership holding petriglieri" --limit 3
+python3 anti-ai/scripts/examples.py query --lang en --topic "leadership holding petriglieri" --limit 10
 ```
 
-Actual output retrieved from `anti-ai/examples/corrections.jsonl` (~220 tokens):
+It returns up to 10 entries (~700 tokens): the 3 leadership-matched rewrites first, plus 7 general structural/taste constructs (leading negations, passive actor-hiding, flat scene summaries, closing morals, imperatives). Sample of the top 3 returned:
 
 ```text
 [ex-2026-11-19-012 | en | rules:1,2 | tags:abstraction,press-release,leadership,taste]

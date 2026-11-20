@@ -10,9 +10,9 @@ Alexandru's site voice: building things, learning by doing, writing to understan
 
 The measured house style and versioned blocklist live in the `anti-ai` skill (`../anti-ai/references/anti-ai-short.md` for the quick rule set, `../anti-ai/references/anti-ai-prompt.md` for full rules, and `../anti-ai/check_tells.py` for mechanical checks). Where this file and `anti-ai` differ, `anti-ai` wins.
 
-Before drafting, pull 3-5 relevant past rewrites for few-shot calibration:
+Before drafting, pull up to 10 relevant past rewrites (topic matches plus general structural/taste constructs) for few-shot calibration:
 
-    python3 ../anti-ai/scripts/examples.py query --lang <en|ro|fr> --topic "<topic>" --limit 5
+    python3 ../anti-ai/scripts/examples.py query --lang <en|ro|fr> --topic "<topic>" --limit 10
 
 ## Task
 

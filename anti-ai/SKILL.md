@@ -35,8 +35,8 @@ The scanner reports exemptions: quoted text, literal physical context, and hones
 
 ## Write and learn from edits
 
-1. **Retrieve relevant past rewrites before drafting or revising** (progressive disclosure, 3-5 examples only):
-   `python3 scripts/examples.py query --lang en --topic "<topic or tags>" --limit 5`
+1. **Retrieve relevant past rewrites before drafting or revising** (top 10: topic matches plus general structural/taste constructs):
+   `python3 scripts/examples.py query --lang en --topic "<topic or tags>" --limit 10`
 2. **Apply the rules while drafting, then scan and fix what the scanner reports.**
    House rhythm: a sentence built as an enumeration (2+ items, or a semicolon series) may run long, the clause stays 12-22 words, and it must not become every sentence.
    Keep facts, numbers, and quotations unchanged.
