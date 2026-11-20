@@ -11,12 +11,10 @@ anywhere.
 from __future__ import annotations
 
 import argparse
-import os
 import pathlib
 import re
 import shutil
 import subprocess
-import sys
 
 from fonts import font_css
 
@@ -67,9 +65,6 @@ def to_pdf(src: pathlib.Path, out: pathlib.Path, footer: bool) -> None:
     from playwright.sync_api import sync_playwright
 
     html = inline_tokens(src.read_text(encoding="utf-8"))
-    tmp = src.with_name(src.stem + ".render.html")
-    tmp.write_text(html, encoding="utf-8")
-
     exe = _find_chromium()
     with sync_playwright() as p:
         browser = p.chromium.launch(
@@ -77,21 +72,22 @@ def to_pdf(src: pathlib.Path, out: pathlib.Path, footer: bool) -> None:
             args=["--font-render-hinting=none", "--force-color-profile=srgb"],
         )
         page = browser.new_page()
+        page.emulate_media(media="print")
         page.set_content(html, wait_until="networkidle")
         page.evaluate("document.fonts.ready")
-        page.emulate_media(media="print")
+        has_print_footer = page.locator("body.doc--flow, .page-footer").count() > 0
+        browser_footer = footer and not has_print_footer
         page.pdf(
             path=str(out),
             format="A4",
             print_background=True,
             prefer_css_page_size=True,
-            display_header_footer=footer,
+            display_header_footer=browser_footer,
             header_template="<div></div>",
-            footer_template=FOOTER if footer else "<div></div>",
+            footer_template=FOOTER if browser_footer else "<div></div>",
             margin={"top": "0mm", "bottom": "0mm", "left": "0mm", "right": "0mm"},
         )
         browser.close()
-    tmp.unlink(missing_ok=True)
 
 
 def to_png(pdf: pathlib.Path, outdir: pathlib.Path, dpi: int = 130) -> list[pathlib.Path]:
@@ -110,7 +106,7 @@ def main() -> int:
     ap.add_argument("html")
     ap.add_argument("pdf")
     ap.add_argument("--png-dir")
-    ap.add_argument("--no-footer", action="store_true")
+    ap.add_argument("--no-footer", action="store_true", help="Disable the renderer footer for custom HTML")
     ap.add_argument("--dpi", type=int, default=130)
     args = ap.parse_args()
 

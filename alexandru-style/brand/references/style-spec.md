@@ -193,19 +193,28 @@ Applies to long-form texts, deck copy, document prose.
 - Focus ring `--amber` 3px with 4px offset. Skip link present.
 - Max width 1180px; collapse to 1 column under 760px.
 
-### 7.2 Document / PDF (`templates/document.html`)
+### 7.2 Document / PDF
 
-- A4, `--paper` ground (never white), 22mm side margins.
-- Title block: kicker, display title, lede, then a hairline, then meta line
-  (author · role · date · reading time) in Inter 10px.
-- Body at 10.5pt / 1.58, full measure, no column splits.
-- Four-column principle grids match the reference document; use two columns
-  for figure+caption pairs or when content needs more room.
-- Running footer: `FROM THE TRENCHES` left, page number right, Inter 8px
-  uppercase `--muted-light`, hairline above.
-- Section starts get `break-inside: avoid` on their first heading block so a
-  heading never orphans at the page bottom.
-- Colophon on the last page: one hairline, one line of Inter meta.
+- Use `templates/article.html` for long-form work. Its named A4 page paints
+  `--paper` across the sheet, including the margins, with a 166mm text measure.
+  Use `templates/document.html` for fixed compositions.
+- Open with a kicker and display title. Give the author's name its own byline
+  directly below the title. Add the publication date when known and include a
+  role or reading time only on request. Place the lede beneath the byline.
+- Set narrative body at 10.5pt / 1.58 in a single column. Leave 1em between
+  consecutive body paragraphs, with more space above section headings than below.
+  Reserve hairlines for elements such as tables and a colophon. Set sources as
+  a plain linked list below its heading, with space between links.
+- The flowing template uses print margin boxes for the left-hand signature and
+  right-hand page count. Keep headings with the next block, keep captions with
+  their figures, and repeat the header when a long table breaks across pages.
+- Route diagram arrows through the gaps between boxes. Put labels inside the
+  node they describe or reserve clear space outside the arrow path. Use a table
+  for independent checks that share the same input and result.
+
+For notebooks and research reports, use generous vertical space on covers and
+part openers. In a visual guide, give each main diagram its own block with the
+caption close by and a clear gap before the next block.
 
 ### 7.3 Slides (`scripts/build_deck.py`)
 

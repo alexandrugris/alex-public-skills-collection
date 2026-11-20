@@ -23,7 +23,7 @@ Apply Alexandru Gris's personal design system to any styled artifact he asks for
 
 **Standalone presenter deck (HTML).** Fixed 1280x720 stage centered and scaled to the viewport with a CSS transform; slides cross-fade via an `.active` class; arrow keys, space, and swipe navigate; `F` toggles fullscreen; a thin burgundy progress bar sits at the top and a muted counter bottom right; the deck's spine is a full-height burgundy bar on the left edge (as in the reference deck); include print CSS (one slide per page) so browser print yields a styled PDF. This exact pattern is proven to render in the HTML canvas.
 
-**PDF / document.** Author the content as a styled HTML document with this system, then export or print to PDF. A4, Paper ground `#FBFAF7` — never white — 22mm side margins, 166mm measure. Kicker → display title → lede → hairline → meta line (author · role · date · length). Body 10.5pt / 1.58, full measure, no column splits. Running footer: name left, page number right, Inter 7.4pt uppercase. Headings never orphan; figures keep their caption on the same page. Never deliver a text-only PPTX as the final styled artifact; the PPTX export strips custom styling, so offer the HTML presenter route instead.
+**PDF / document.** Start with [the flowing A4 article template](brand/templates/article.html) and follow the [brand print recipe](brand/references/style-spec.md#72-document--pdf). Put the author directly below the title, with the publication date if supplied. Add a role or reading time only if requested. Render with `python3 alexandru-style/brand/scripts/render.py INPUT.html OUTPUT.pdf --png-dir PREVIEWS` from the collection root. Inspect every rendered page before delivery. Check the paper margins, section breaks, space between arrows and labels, and spacing around Sources.
 
 **Markdown document canvas.** Markdown limits styling: carry over the structure and voice instead. Kicker lines in the form "FROM THE TRENCHES · TOPIC · DATE" above the title, quiet uppercase section notes, middle-dot separators, weight on prose, and the "From the trenches" register in drafting.
 
@@ -39,7 +39,7 @@ tests/check_styled.py <file>` is the static bar for styled deliverables.
 For production work, use the complete brand toolkit in `brand/` (merged from
 github.com/alexandrugris/ag-personal-brand): `brand/references/tokens.css` is the
 single source of truth for palette, type and components; `brand/references/style-spec.md`
-is the full written spec; `brand/templates/` hold working web and A4 document HTML;
+is the full written spec; `brand/templates/` holds web, flowing A4 article, and fixed-page document HTML;
 `brand/scripts/` render PDFs, page PNGs and the reference deck; `brand/samples/`
 records the original reference gallery. `design-system.md` (next to this file) remains
 the compact distilled spec; run from `brand/` root so the relative paths resolve.

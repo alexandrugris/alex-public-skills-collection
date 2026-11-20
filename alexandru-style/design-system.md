@@ -78,7 +78,7 @@ The guide specifies 18 tokens; the custom properties below are the working set (
 
 **Web page.** Masthead: domain in serif burgundy, centred; nav in Inter uppercase 11px. Hero: full-bleed image, copy card in Paper with the one permitted shadow. Sections alternate Paper / Paper warm / Paper alt, separated by hairlines. Footer band in Paper deep; focus ring amber 3px, 4px offset; skip link present. Collapse to one column under 760px.
 
-**Document / PDF.** A4, Paper ground — never white. 22mm side margins. Kicker → display title → lede → hairline → meta line (author · role · date · length). Body 10.5pt / 1.58, full measure, no column splits. Running footer: name left, page number right, Inter 7.4pt uppercase. Headings never orphan; figures keep their caption on the same page.
+**Document / PDF.** Flowing A4 with the Paper token painted through the margins. Use the shared article template with 22mm side margins. The opening has a kicker, display title, author and optional date, then the lede. Body is set at 10.5pt / 1.58 in a single column. The print stylesheet supplies the running footer and page numbers. Keep headings with the following content and figures with their captions. See the [print recipe](brand/references/style-spec.md#72-document--pdf) for layout and proofing.
 
 **Slides.** 16:9, Paper ground. The deck has one full-bleed burgundy spine rule — a top rule per the guide; the reference presenter deck carries it as a left-edge bar on every slide. One idea per slide. Body never below 14pt; meta never below 10pt. Charts: gridlines in Rule, axis labels in Inter 9pt, one burgundy series. 8–10 slides for a talk; never more than 6 bullets.
 

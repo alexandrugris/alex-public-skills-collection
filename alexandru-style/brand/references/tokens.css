@@ -418,12 +418,97 @@ a:focus-visible { outline: 3px solid var(--amber); outline-offset: 4px; }
 .doc .rule-accent { border-top-width: 1.5px; }
 .doc .rule-accent-lg { border-top-width: 2px; }
 
+.doc-title { margin-top: 0.32em; }
+.doc-byline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.3em 1em;
+  margin-top: 1em;
+  font: 9pt / 1.4 var(--font-sans);
+  color: var(--muted);
+}
+.doc-byline .author { font-weight: 600; color: var(--ink-deep); }
+.doc-byline + .lede { margin-top: 1.25em; }
+
+.doc--flow { page: ag-article; }
+.doc--flow .doc-article > header { margin-bottom: 2.1em; }
+.doc--flow .doc-article > h2 { margin: 1.45em 0 0.55em; break-after: avoid; }
+.doc--flow .body + .body { margin-top: 1em; }
+.doc--flow .doc-keep-next { break-after: avoid; }
+.doc--flow p, .doc--flow li { orphans: 2; widows: 2; }
+.doc--flow a { color: var(--burgundy); }
+.doc--flow .figure {
+  margin: 1.5em 0;
+  border: 0;
+  padding: 14px 16px;
+}
+.doc--flow .figure svg { display: block; width: 100%; height: auto; }
+.doc--flow .figure__caption {
+  margin-top: 0.8em;
+  font-size: 8pt;
+  color: var(--muted);
+  letter-spacing: normal;
+  text-transform: none;
+}
+.doc--flow .table { margin: 1em 0; }
+.doc--flow .figure .table { margin: 0; }
+.doc--flow .table th { padding-top: 8px; background: var(--paper-warm); color: var(--muted); }
+.doc--flow .table tr { break-inside: avoid; }
+.doc--flow .list-clean { margin: 0.8em 0; }
+.doc--flow .list-clean > li { border: 0; padding: 0; }
+.doc--flow .list-clean > li + li { margin-top: 0.7em; }
+.doc--flow .doc-sources { break-inside: avoid; }
+.doc--flow .doc-sources > li { break-inside: avoid; }
+.doc--flow .doc-sources > li + li { margin-top: 0.45em; }
+.doc--flow .doc-sources a { text-decoration: none; }
+.doc--flow .code { white-space: pre-wrap; overflow-wrap: anywhere; break-inside: avoid; }
+.doc--flow .code + p { margin-top: 0.85em; }
+.doc--flow .doc-colophon {
+  margin-top: 1.8em;
+  padding-top: 0.9em;
+  border-top: 1px solid var(--rule);
+  font: 8pt / 1.55 var(--font-sans);
+  color: var(--muted);
+  break-inside: avoid;
+}
+
+.doc-diagram { font-family: var(--font-sans); font-size: 13px; fill: var(--ink); }
+.doc-diagram .node { fill: var(--paper); stroke: var(--rule-strong); }
+.doc-diagram .edge { fill: none; stroke: var(--muted-faint); stroke-width: 1.2; }
+.doc-diagram .arrowhead { fill: var(--muted-faint); }
+.doc-diagram .label { font-weight: 600; }
+.doc-diagram .detail { font-size: 11.5px; fill: var(--muted); }
+
 .doc-break { break-before: page; }
 .doc-avoid { break-inside: avoid; }
 
+@page ag-article {
+  size: A4;
+  margin: 20mm 22mm 18mm;
+  background: var(--paper);
+  @bottom-left {
+    content: 'From the trenches';
+    color: var(--muted);
+    font: 7.4pt var(--font-sans);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  @bottom-right {
+    content: counter(page) ' / ' counter(pages);
+    color: var(--burgundy);
+    font: 7.4pt var(--font-sans);
+  }
+}
+
 @media print {
   .doc { background: var(--paper); }
+  .doc--flow { print-color-adjust: exact; }
   a { color: inherit; }
+}
+
+@media screen {
+  .doc--flow .doc-article { max-width: 210mm; margin: auto; padding: 20mm clamp(20px, 5vw, 22mm); }
 }
 
 /* ============================================================

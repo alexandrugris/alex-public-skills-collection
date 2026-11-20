@@ -5,9 +5,6 @@
 <title>The Long View — Alexandru Gris</title>
 <link rel="stylesheet" href="TOKENS_PATH">
 <style>
-
-</style>
-<style>
   @page { size: A4; margin: 0; }
   html, body { background: var(--paper); }
   html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -31,15 +28,6 @@
   }
   .page-footer .pg { color: var(--burgundy); }
 
-  .doc-title { margin-top: 9px; }
-  .doc-meta-line {
-    display: flex; flex-wrap: wrap; gap: 0 18px; align-items: baseline;
-    margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--rule);
-  }
-  .doc-meta-line span { font-family: var(--font-sans); font-size: 8pt; font-weight: 500;
-    letter-spacing: .1em; text-transform: uppercase; color: var(--muted-light); }
-  .doc-meta-line span + span::before { content: "·"; margin-right: 18px; color: var(--rule-strong); }
-
   .sec-head { display: flex; justify-content: space-between; align-items: baseline;
     gap: 16px; margin: 22px 0 13px; padding-bottom: 9px; border-bottom: 1px solid var(--rule); }
   .sec-head .h2 { margin: 0; }
@@ -62,7 +50,8 @@
     font-weight: 600; color: var(--ink-deep); width: 26%; }
 
   .cuts { margin-top: 2px; }
-  .cuts li { display: flex; gap: 18px; align-items: baseline; padding: 8px 0; }
+  .doc .cuts li { display: flex; gap: 18px; align-items: baseline; padding: 8px 0; border: 0; }
+  .doc .cuts li + li { border-top: 1px solid var(--rule); }
   .cuts b { font-family: var(--font-sans); font-size: 8.4pt; font-weight: 600;
     letter-spacing: .09em; text-transform: uppercase; color: var(--burgundy);
     width: 26%; flex: none; }
@@ -83,18 +72,14 @@
      PAGE 1
      ============================================================ -->
 <article class="page">
-  <div class="kicker">Essay · Engineering Leadership · 2026</div>
+  <div class="kicker">From the trenches · Essay</div>
   <h1 class="display-xl doc-title">The Long View</h1>
-  <p class="lede" style="margin-top:12px">Most engineering decisions outlive the teams that
+  <div class="doc-byline">
+    <span class="author">Alexandru Gris</span>
+  </div>
+  <p class="lede">Most engineering decisions outlive the teams that
     make them. The teams that survive are the ones that learn to see that far — and to keep
     the habit of writing down why they decided.</p>
-  <div class="doc-meta-line">
-    <span>Alexandru Gris</span>
-    <span>Engineering Leader</span>
-    <span>Munich</span>
-    <span>9 min read</span>
-  </div>
-
   <p class="body" style="margin-top:18px">Every team I have joined has been solving a version of the same
     problem: not the one written in the roadmap, but the one underneath it. The roadmap says
     <em>ship the feature</em>. The real problem is almost always about how the work is organised —

@@ -22,7 +22,8 @@ Canonical assets:
 | `references/tokens.css` | Single source of truth: palette, type scale, components, print rules |
 | `references/style-spec.md` | Full written spec, per-medium rules, anti-patterns |
 | `templates/page.html` | Working web page (masthead, hero, principles, writings, about, footer) |
-| `templates/document.html` | Working A4 document (fixed-height pages, running footer, figure, table) |
+| `templates/article.html` | Flowing A4 article, byline, page-wide paper and running page numbers |
+| `templates/document.html` | Fixed-page A4 sample for briefs with a specified page count |
 | `scripts/render.py` | HTML → PDF (+ page PNGs), inlines `tokens.css` automatically |
 | `scripts/shoot.py` | HTML → PNG screenshot (page or viewport) |
 | `scripts/deck_shots.py` | PPTX → per-slide PNGs (via soffice + pdftoppm) |
@@ -30,7 +31,7 @@ Canonical assets:
 
 ## Default and adaptation policy
 
-Read `references/brand-voice.md` for the writing baseline. This brand is the
+Read §6 of `references/style-spec.md` for the writing baseline. This brand is the
 starting point for work generated for Alexandru, not a rigid template.
 Explicit user requests, audience needs, accessibility and required external
 brands take precedence. A brief may use only selected elements of this system.
@@ -60,8 +61,8 @@ never claim visual equivalence when fallbacks or assets are missing.
   layout rules; the palette and type system do not change.
 - **Content**: what the piece says. Preserve supplied content for visual restyling. For new content, use the
   writing baseline and disclose material assumptions.
-- **Length**: one page or many. Documents are fixed-height A4 pages — ask how
-  many, or default to 3.
+- **Length**: let long-form documents paginate with the content. Use fixed
+  pages when the brief specifies a page count or composition per page.
 - Do not ask about colours, fonts or spacing. Those are decided.
 
 ## Procedure
@@ -77,19 +78,17 @@ never claim visual equivalence when fallbacks or assets are missing.
 3. **Pick the medium and use its template.**
    - Web → `templates/page.html`, keep `TOKENS_PATH` in the `<link>`;
      `scripts/render.py` inlines it.
-   - Document → `templates/document.html`. Pages are fixed-height
-     (`width:210mm; height:297mm; overflow:hidden`), so **content that
-     overflows is silently clipped** — check the rendered PNGs every time and
-     split or reflow content, never shrink narrative body type below 10.5pt.
+   - Document → `templates/article.html` for flowing A4. Keep `doc--flow` on
+     the body and use the shared stylesheet for the paper and page footer.
+     Put the author's name under the title. Use `templates/document.html` for
+     fixed compositions and check that every line fits above the footer.
      Preserve supplied wording unless editing is authorized.
    - Slides → `scripts/build_deck.py`. Edit the content lists inside `build()`
      in a working copy, keeping canonical source unchanged.
    - Long-form text → no template; apply the typography and voice rules in
      Markdown.
 
-   Every document template must keep `class="doc"` on `<body>` — that class is
-   what activates the print type scale in `tokens.css`. Without it the document
-   silently renders at web scale.
+   Keep the `doc` class on `<body>` to activate the print type scale.
 
 4. **For new or requested rewritten copy, use the AG voice** (see `references/style-spec.md` §6):
    declarative not promotional, concrete nouns over abstractions, past tense for
@@ -98,12 +97,14 @@ never claim visual equivalence when fallbacks or assets are missing.
 
 5. **Render and inspect.** Never ship a PDF or deck you have not looked at:
    ```bash
-   python3 scripts/render.py doc.html out.pdf --png-dir shots/ --no-footer
+   python3 scripts/render.py doc.html out.pdf --png-dir shots/
    python3 scripts/shoot.py page.html shots/page.png --full
    python3 scripts/deck_shots.py deck.pptx shots/
    ```
-   Check for: text colliding with the running footer, clipped text on a fixed
-   page, an orphan heading, two accents in one visual block.
+   Inspect every PDF page at reading size. Check paper through all four margins,
+   a clear byline, one divider at most per transition, complete figures and
+   captions, and comfortable space around Sources. Follow each diagram arrow
+   from start to end and check its clearance from text and unrelated boxes.
 
 6. **Deliver the artefact plus its screenshots.** A style the user cannot see is
    not delivered — always include rendered images of at least the first page and
@@ -127,9 +128,8 @@ never claim visual equivalence when fallbacks or assets are missing.
   which is intended as a compatible substitute; verify line wrapping. Bundled Gelasio faces include a real bold. HTML rendering embeds them and
   slide conversion uses the project-local alias automatically. Do not change
   system or user font settings.
-- **`--no-footer` for `render.py`**: document templates carry their own running
-  footer with a hard-coded page number. Without the flag you get a second,
-  duplicated footer.
+- **Print footers**: the renderer recognizes both current document templates.
+  Use `--no-footer` when custom HTML provides a different running footer.
 - **Name collisions**: `soffice --convert-to pdf` writes `<stem>.pdf` and will
   overwrite a document PDF that shares the stem. Use `scripts/deck_shots.py`,
   which converts in a temp directory.

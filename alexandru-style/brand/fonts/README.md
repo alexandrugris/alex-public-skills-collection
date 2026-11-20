@@ -14,6 +14,8 @@ versions may have subtle metric differences and are not claimed pixel-identical.
 
 HTML rendering embeds these fonts directly as data URLs, including a local
 Georgia-family alias to Gelasio. PDF and PNG output therefore work offline.
+In the skills collection, HTML rendering reads the verified binary snapshot
+when the TTF files have yet to be restored. Fontconfig still uses unpacked fonts.
 `inline_tokens()` returns the CSS with embedded fonts for standalone HTML.
 
 For Linux slide conversion, `deck_shots.py` automatically supplies a private
