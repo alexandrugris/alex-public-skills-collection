@@ -13,6 +13,7 @@ If the dictionary sense of a word does not survive in this context, the word is 
 must give way to the concrete thing. No acceptable figure of speech.
 - "The weapons he describes are all subtractions" -> "Everything he describes is a subtraction"
 - "weapons" is allowed only when the sentence is actually about "weapons".
+- Prefer "sustain" or "handle" over "bear" unless talking about an actual bear ("bear the loss" -> "sustain the loss").
 Quotations are exempt: a quoted metaphor stays, but it must be marked as a quotation and
 attributed.
 
@@ -152,7 +153,9 @@ literature pages (alexandrugris.ro/literature/): short sentences, concrete objec
 sensory detail, timestamps, dialogue; feelings carried by physical detail, not labels.
 In key scenes, rest on the moment instead of rushing from trigger to outcome in one summary
 sentence. Several concrete sentences let the room hold the mood (stiff faces, posture,
-hands, sound, and the tension people sit with) before the text turns to analysis.
+hands, sound, and the tension people sit with) before the text turns to analysis. Stay at
+one level in description mode: write only what people say, do, look at, and hold, plus
+physical room details, without attaching motives or naming internal feelings inside the scene.
 
 **16. Do not be elliptical ("don't make me think"), and avoid A-to-B-to-C progressions.**
 When you follow a scene with a researcher, concept, or theory, state the link to the scene
