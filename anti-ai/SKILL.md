@@ -32,6 +32,7 @@ Requirement: every MUST-FAIL row fires its pattern, every MUST-PASS row fires no
 
 Verdicts: FAIL (any HIGH hit), REVIEW (MEDIUM hits present, zero HIGH), PASS otherwise (including LOW-only hits).
 The scanner reports exemptions: quoted text, literal physical context, and honesty words referring to a person. For Markdown files, it masks YAML frontmatter, fenced code blocks, and URLs before scanning prose.
+Guardrail: during prose tasks, if a rule fires on your draft, fix the text and never edit `check_tells.py` or `patterns.json`.
 
 ## Write and learn from edits
 
