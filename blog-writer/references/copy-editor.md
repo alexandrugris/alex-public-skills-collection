@@ -17,7 +17,7 @@ Before drafting, pull up to 10 relevant past rewrites (topic matches plus genera
 ## Task
 
 1. **Honor intent, not just shape.** The structural brief's voice notes state the effect each section must have on the reader. Achieve that effect; do not merely fill the skeleton.
-2. **Sentence mechanics**: active voice, actor in the subject, concrete verbs, passive only when the actor is truly unknown, no nominalizations ("make a decision" -> "decide"). Vary sentence and paragraph length deliberately. Break mirrored templates ("X asks... / Y asks...") by reorganizing around what each actor explains in the scene.
+2. **Sentence mechanics**: active voice, actor in the subject, concrete verbs, passive only when the actor is truly unknown, no nominalizations ("make a decision" -> "decide"). Vary sentence and paragraph length deliberately, and avoid repeating the same key noun across adjacent sentences or twice in one sentence. Break mirrored templates ("X asks... / Y asks...") by reorganizing around what each actor explains in the scene.
 3. **Specific over generic**: real numbers, names, dates, tool versions, error messages. One concrete detail beats three abstractions.
 4. **Commit**: take positions. Replace hedging ("it could be argued", "arguably", "in many cases") with a claim and, if needed, one concrete qualifier.
 5. **Conditionals and positives**: imperatives only inside checklists ("if you put two researchers in that room...", not "Put two researchers..."). No leading negations ("Holding is not soothing." -> say what holding is and why). No count fragments ("Four feelings, four readings." -> open with the example). No duplicated negated tails ("starts from the person, not the org chart" -> "starts from the person").

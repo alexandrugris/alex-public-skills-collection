@@ -112,7 +112,8 @@ Sentences with a 12-22 word core. Enumerations are house style and may run long,
 clauses stay 12-22 words and they must not become every sentence. Vary them: a short sentence after a long one, a fragment, a
 parenthetical aside. No sentence metronome (all sentences 12-20 words). A colon or two sentences
 replace an em-dash, anywhere in the text. Headings are declarative
-sentences that end with a period.
+sentences that end with a period. Do not repeat the same key noun at the end of one
+paragraph and twice in the next ("...silence. ...why the room goes silent ...misreads that silence").
 
 **12. No metaphors, no weight, no filler, in that order.**
 Compare each noun against a dictionary in context, then each adjective, then the
