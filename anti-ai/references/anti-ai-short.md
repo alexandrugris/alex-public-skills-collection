@@ -22,6 +22,8 @@ clusters ("essentially" and "albeit" and "in different guises"). No moral at the
 end on an image or a fact. Say what a thing is, not what it is not; frame advice as a
 conditional rather than an order; keep active voice with the actor in the subject, and
 render scenes through physical detail and observable behavior rather than emotion labels.
+Do not be elliptical: spell out how each theory connects to the scene, and avoid chained
+"starts from X, asks Y, answers Z" funnels.
 Core sentences 12-22 words, varied; enumerations may run longer, but not everywhere;
 zero em-dashes; colon as the pause; headings are declarative sentences with a period.
 Deliver the rewritten text first, plain, then nothing else.

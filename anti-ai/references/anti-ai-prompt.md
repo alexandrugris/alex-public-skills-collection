@@ -119,9 +119,10 @@ Compare each noun against a dictionary in context, then each adjective, then the
 sentence that carries no information gets cut.
 
 **13. Say what it is, not what it is not.** A sentence opening with "X is/was not Y" makes the
-reader guess the positive: state the positive and the reason. Same for negated tails that
-duplicate the positive: "starts from the person, not the org chart" -> "starts from the
-person". A negation that carries real information ("an interpreter, not a judge") is fine.
+reader guess the positive: state the positive and the reason. Same for disguised negations
+("stops looking like X; it starts looking like Y") and negated tails that duplicate the
+positive: "starts from the person, not the org chart" -> "starts from the person". A
+negation that carries real information ("an interpreter, not a judge") is fine.
 
 **14. Advice reads as conditional, not as an order.** "Put two researchers in that room"
 -> "If you put two researchers in that room, the silence changes meaning." Imperatives
@@ -148,6 +149,15 @@ confidence"). Passive only when the actor is truly unknown, and even then name t
 silent actor ("HR never states who will be let go"). For scene writing, calibrate on the
 literature pages (alexandrugris.ro/literature/): short sentences, concrete objects,
 sensory detail, timestamps, dialogue; feelings carried by physical detail, not labels.
+In key scenes, rest on the moment instead of rushing from trigger to outcome in one summary
+sentence. Several concrete sentences let the room hold the mood (stiff faces, posture,
+hands, sound, and the tension people sit with) before the text turns to analysis.
+
+**16. Do not be elliptical ("don't make me think"), and avoid A-to-B-to-C progressions.**
+When you follow a scene with a researcher, concept, or theory, state the link to the scene
+explicitly in plain words. Never leave the reader to jump between the story and an abstract
+summary. Avoid chained rhetorical funnels ("He starts from X, asking Y. His answer is Z."):
+state directly what the person studies and what it explains in the room.
 
 ## 2. House style, measured from the author's published pages
 
