@@ -18,8 +18,8 @@ Execute passes in order. Each pass uses its reference file. Research findings, d
 
 | Step | Pass | Reference | Output / Gate |
 |---|---|---|---|
-| 1 | **Brief** | (inline) | Confirm topic, angle, target reader, length, format, language, the one idea argued, and first-person vs. external claims. |
-| 2 | **Research** | `references/research.md` | `<research_brief>` with opened source URLs, counter-arguments, and `[NEEDS SOURCE]` gaps. |
+| 1 | **Brief** | (inline) | Confirm topic, angle, target reader, length, format, language, research depth (`deep` default, or `standard`/`quick`), the one idea argued, and first-person vs. external claims. |
+| 2 | **Research** | `references/research.md` | Multi-round loop (default `deep`: 10-15+ opened sources across primary docs/papers, blogs, Wikipedia leads, YouTube/talks, and 2-3+ counter-arguments) -> `<research_brief>` with opened URLs and `[NEEDS SOURCE]` gaps. |
 | 3 | **Pass 1: Developmental editor** | `references/developmental-editor.md` | `<structural_brief>` with Diataxis/Trenches archetype, argument spine, evidence slots, voice notes, and preserved gaps. |
 | 4 | **Pass 2: Copy editor** | `references/copy-editor.md` | Full prose in voice. Pull 3-5 exemplars via `python3 ../anti-ai/scripts/examples.py query`, run `python3 ../anti-ai/check_tells.py <draft>`, fix every HIGH hit, and complete the Clean-Scan Sign-off checklist. |
 | 5 | **Fact-check loop** (max 2 rounds) | `references/fact-checker.md` | `<fact_check_report>`. Blocking findings (contradictions, broken links, fabrications) route back to the pass that owns them; non-blocking findings go to the gate. |
