@@ -9,7 +9,7 @@ Core linters, draft gates, the corrections database, and unit tests run offline 
 | Skill | Job | Mechanical gate |
 |---|---|---|
 | [anti-ai](./anti-ai/) | Multilingual (EN/RO/FR) prose linter (`patterns.json` + `check_tells.py`), measured house voice, human benchmarks, and a JSONL corrections database (`examples/`) | `python3 anti-ai/tests/run_tests.py` |
-| [blog-writer](./blog-writer/) | Six-pass article pipeline: brief, sourced research, developmental edit, copy edit in voice, fact-check loop, human review gate | `python3 blog-writer/tests/validate_draft.py <draft.md>` |
+| [blog-writer](./blog-writer/) | Six-pass article pipeline: brief, multi-round deep research (10-15+ opened sources), developmental edit, copy edit in voice, fact-check loop, human review gate | `python3 blog-writer/tests/validate_draft.py <draft.md>` |
 | [alexandru-style](./alexandru-style/) | AG Style v1.0 design system from alexandrugris.ro (`design-system.md`) plus the merged production toolkit in `brand/` (`tokens.css`, templates, render scripts) | `python3 alexandru-style/tests/check_styled.py <file>` |
 
 ## Architecture
@@ -23,8 +23,9 @@ flowchart TB
     AG -->|"Write / revise / fact-check article"| BW["blog-writer/<br/>SKILL.md · 4 pass references<br/>tests/validate_draft.py"]
     AG -->|"Style HTML, PDF, Marp, PPTX, table"| AS["alexandru-style/<br/>SKILL.md · design-system.md<br/>brand/tokens.css · render scripts"]
 
-    BW -->|"Pass 2 lint + gate"| AA
-    BW -->|"Handoff after approval"| AS
+    BW <-->|"few-shot query + lint gate"| AA
+    BW <-->|"medium constraints & overflow cuts"| AS
+    AS -->|"lint kickers, ledes, captions"| AA
     AA --> GATE["bash run_all.sh<br/>9 controls + tests/ (24 unit tests)"]
     BW --> GATE
     AS --> GATE
@@ -32,13 +33,13 @@ flowchart TB
 
 ## Execution flow: writing an article end to end
 
-The three skills compose in sequence. `blog-writer` owns research, structure, and verification; `anti-ai` guards prose quality and supplies past rewrites; `alexandru-style` handles visual rendering after content approval.
+When a task spans content and presentation, all three skills work in one shared session context rather than as blind one-way steps: `alexandru-style` supplies medium constraints up front (paragraph cadence, kicker/lede shape, slide bullet caps), `blog-writer` runs multi-round research and drafting, `anti-ai` calibrates voice and blocks AI tells, and any layout overflow during rendering routes back to `blog-writer` Pass 2 without dropping sources.
 
 ```mermaid
 flowchart LR
-    B["1. Brief<br/>idea, reader, format,<br/>1st-person vs external"] --> R["2. Research pass<br/>opened primary URLs<br/>+ [NEEDS SOURCE] gaps"]
-    R --> P1["3. Pass 1: Dev editor<br/>Diataxis/Trenches archetype<br/>+ <structural_brief>"]
-    P1 --> Q["4a. Few-shot retrieval<br/>examples.py query (top 3-5)"]
+    B["1. Brief<br/>idea, reader, depth=deep,<br/>target medium, 1st-person vs external"] --> R["2. Deep Research loop (3-4 rounds)<br/>10-15+ opened sources: primary, blogs,<br/>Wikipedia leads, YouTube + 2-3 critiques"]
+    R --> P1["3. Pass 1: Dev editor<br/>archetype + medium rules<br/>-> <structural_brief>"]
+    P1 --> Q["4a. Few-shot retrieval<br/>examples.py query (top 3-5)<br/>from corrections.jsonl"]
     Q --> P2["4b. Pass 2: Copy editor<br/>prose in voice"]
     P2 -->|"<escalation> on bad outline"| P1
     P2 --> L["4c. anti-ai lint<br/>check_tells.py + sign-off"]
@@ -50,28 +51,63 @@ flowchart LR
     RG -->|"Feedback routed by cause"| P1
     RG -->|"User edits prose"| DB["Log rewrite<br/>examples.py add"]
     RG -->|"Approved + styled output"| ST["7. alexandru-style<br/>HTML / A4 PDF / deck<br/>+ check_styled.py"]
+    ST -->|"Overflow / cut copy"| P2
+    ST -->|"New kickers / captions"| L
 ```
 
 ## How to write a blog article using these skills
 
-1. **Start with a brief.** Give the agent a topic, reader, target length, language, and any personal notes or seed paragraphs, and mark which claims come from your own experience (no external source needed) versus claims that need primary links.
-2. **Let Research run before drafting.** The agent searches primary sources (papers, official docs, interviews), opens every URL it plans to cite, notes counter-arguments, and marks open holes as `[NEEDS SOURCE]`.
-3. **Review the `<structural_brief>` from Pass 1.** Pass 1 picks an archetype (Trenches story, Argument essay, Diataxis how-to, or Explanation) and maps evidence slots and per-section voice intent before writing prose.
-4. **Draft and lint in Pass 2.** Before drafting, Pass 2 pulls 3 to 5 relevant past rewrites with `anti-ai/scripts/examples.py query`. After drafting, it runs `anti-ai/check_tells.py` and `blog-writer/tests/validate_draft.py`, fixes every HIGH hit, and checks headings, literal word sense, and endings by hand.
-5. **Run the fact-check loop (max 2 rounds).** Every external claim and URL faces read-only verification. Unverifiable claims leave the draft or get recast; the pipeline never invents a replacement link.
-6. **Approve at the Review Gate, then style.** Nothing ships before your sign-off. When you want a printable A4 PDF, HTML page, or Marp deck, `alexandru-style` renders it from `brand/templates/article.html` and verifies it with `alexandru-style/tests/check_styled.py`.
+1. **Confirm the Brief (Step 1).** Give the agent a topic, reader, target length, language, research depth (`deep` by default, or `standard` / `quick`), and target medium (Markdown, flowing A4 HTML/PDF, or Marp deck). Separate your own first-person experience (no external link needed) from external claims (primary source required).
+2. **Run the Deep Research Loop (Step 2).** Before any outlining, the agent runs 3-4 bounded rounds across primary papers/docs, practitioner blogs, Wikipedia (used only as a map to follow its primary citations), and YouTube talks/interviews (with transcript inspection and timestamped URLs). Default `deep` mode opens **10-15+ distinct URLs** and **2-3+ counter-arguments**, logging everything in `<research_brief>` and tagging unresolved items `[NEEDS SOURCE]`.
+3. **Review `<structural_brief>` from Pass 1 (Step 3).** Pass 1 chooses an archetype (Trenches story, Argument essay, Diataxis how-to, or Explanation) while respecting the target medium's layout rules from `alexandru-style/design-system.md`.
+4. **Calibrate, Draft, and Lint in Pass 2 (Step 4).**
+   - **4a (`examples.py query`):** Right before writing prose, Pass 2 queries `anti-ai/examples/corrections.jsonl` for the top 3-5 past human rewrites matching the topic and language. That loads your concrete taste (~220 tokens) without bloating `SKILL.md`.
+   - **4b–4c (Draft + `check_tells.py`):** Pass 2 writes the draft, runs `anti-ai/check_tells.py` and `blog-writer/tests/validate_draft.py`, fixes every HIGH hit, and checks headings, literal word sense, and endings by hand.
+5. **Run the Fact-Check Loop (Step 5, max 2 rounds).** Every external claim and URL faces read-only verification. Unverifiable claims leave the draft or get recast; the pipeline never invents a replacement link.
+6. **Approve at the Review Gate, then Style (Steps 6–7).** Nothing ships before your sign-off. When `alexandru-style` renders the HTML/A4 PDF/deck, any new UI copy (kickers, ledes, captions) goes through `anti-ai`, any overflow cuts route back to Pass 2, and `alexandru-style/tests/check_styled.py` verifies the output.
 
 ## Worked example: Gianpiero Petriglieri on leadership
 
-Below is a real run of all three skills on a concrete prompt: *"Write a short blog section on Gianpiero Petriglieri's leadership ideas (holding and identity workspaces), lint it with anti-ai, validate the draft, and style it as a flowing A4 HTML page."*
+Below is an end-to-end run in pipeline order for the prompt: *"Write a short blog piece on Gianpiero Petriglieri's leadership ideas (holding and identity workspaces), lint it, validate it, and style it as a flowing A4 HTML page."*
 
-### Step 1: Retrieve past leadership rewrites (`examples.py query`)
+### Step 1 & Step 2: Brief + Research brief (opened sources)
+
+The Brief sets `language: en`, `target_medium: a4-html`, and `depth: standard` (a compact section rather than a 2,000-word essay). The Research pass searches and opens primary sources and counter-views to build `<research_brief>`:
+
+```text
+<research_brief>
+depth: standard
+sources_opened_count: 5
+claims:
+  - claim: In a crisis, people already want to act and need "holding" (naming emotions, giving context and reality) before a lofty vision.
+    stance: support
+    source_type: primary
+    url: https://hbsp.harvard.edu/product/H05KQR-PDF-ENG
+    date: 2020-04-22
+  - claim: Organizations act as "identity workspaces" (with Jennifer Petriglieri) that shape who people become; "nomadic professionals" gain mobility yet struggle to win trust.
+    stance: support
+    source_type: primary
+    url: https://thinkers50.com/blog/new-leadership/
+    date: 2016
+counter_arguments:
+  - claim: Leaders who lean on outside peer communities or "holding" without clear execution targets risk seeming detached from local accountability.
+    url: https://thinkers50.com/blog/new-leadership/
+    why_it_matters: Prevents treating holding as soft therapy rather than clear reality-testing.
+gaps: []
+</research_brief>
+```
+
+*(For a full-length `deep` article, Step 2 expands to 10-15+ opened URLs across HBR, INSEAD working papers, practitioner blogs, Wikipedia leads, YouTube talks with timestamps, and 2-3 independent critiques.)*
+
+### Step 3 & Step 4a: Pass 1 outline -> Retrieve past rewrites (`examples.py query`)
+
+After Pass 1 delivers `<structural_brief>` (Trenches/Explanation hybrid with A4 kicker, lede, and 3 short sections), Pass 2 runs `examples.py query` **before writing prose**:
 
 ```sh
 python3 anti-ai/scripts/examples.py query --lang en --topic "leadership holding petriglieri" --limit 3
 ```
 
-Actual output injected into Pass 2 (~220 tokens):
+Actual output retrieved from `anti-ai/examples/corrections.jsonl` (~220 tokens):
 
 ```text
 [ex-2026-11-19-012 | en | rules:1,2 | tags:abstraction,press-release,leadership,taste]
@@ -88,24 +124,7 @@ Actual output injected into Pass 2 (~220 tokens):
   WHY : Dead spatial metaphor ('widens the room'); deleting it leaves a gap, so expand into concrete actor behavior while keeping 'room' literal.
 ```
 
-### Step 2: Research brief (opened primary sources)
-
-```text
-<research_brief>
-claims:
-  - claim: In a crisis, people already want to act and need "holding" (naming emotions, giving context and reality) before a lofty vision.
-    stance: support
-    url: https://hbsp.harvard.edu/product/H05KQR-PDF-ENG
-    date: 2020-04-22
-  - claim: Organizations act as "identity workspaces" (developed with Jennifer Petriglieri) that shape who people become; "nomadic professionals" gain mobility yet struggle to win trust.
-    stance: support
-    url: https://thinkers50.com/blog/new-leadership/
-    date: 2016
-gaps: []
-</research_brief>
-```
-
-### Step 3: Outcome comparison (raw AI draft vs skills pipeline)
+### Step 4b–4c: Outcome comparison (raw AI draft vs skills pipeline)
 
 A typical unguided model draft on the same topic fails `anti-ai/check_tells.py` with **8 HIGH, 4 MEDIUM, and 4 LOW hits**:
 
@@ -148,7 +167,7 @@ Before pitching a three-year roadmap to an anxious team, write down three facts:
 - [Thinkers50: The New Leadership, interview with Gianpiero Petriglieri](https://thinkers50.com/blog/new-leadership/)
 ```
 
-Gate verification across all three skills on the final outcome:
+### Step 5–7: Fact-check, style handoff, and gate verification
 
 ```text
 $ python3 anti-ai/check_tells.py petriglieri_holding.md
@@ -234,7 +253,7 @@ anti-ai/
   tests/                       trilingual CSV fixtures, heuristics, and self-scan
 blog-writer/
   SKILL.md                     six-pass pipeline manifest
-  references/                  research, developmental-editor, copy-editor, fact-checker
+  references/                  research (deep multi-round), developmental-editor, copy-editor, fact-checker
   tests/                       validate_draft.py + positive/negative draft controls
 alexandru-style/
   SKILL.md                     AG Style v1.0 manifest
