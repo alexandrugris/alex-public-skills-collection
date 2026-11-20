@@ -1,14 +1,14 @@
 {
-  "version": "0.14.0",
-  "updated": "2026-11-19",
+  "version": "0.15.0",
+  "updated": "2026-11-20",
   "categories": {
     "chat": "Resturi de chatbot",
     "inflated": "Vocabular umflat",
-    "hedge": "Vorbire evaziv\u0103 / atribuiri vagi",
-    "structure": "Structuri care se auto-deconspireaz\u0103",
+    "hedge": "Vorbire evazivă / atribuiri vagi",
+    "structure": "Structuri care se auto-deconspirează",
     "format": "Habits de formatare",
-    "ro": "Rom\u00e2n\u0103",
-    "fr": "Fran\u00e7ais",
+    "ro": "Română",
+    "fr": "Français",
     "weight": "Familia verbelor de greutate - metaforeze care spun 'greu' in loc de 'bine'",
     "honesty": "Auto-certificarea sinceritatii - 'honest answer', 'to be honest' (interzis, exceptand referinta la o persoana)",
     "list": "Liste mascate in proza - bullet points fara bullet points",
@@ -26,7 +26,7 @@
       "severity": "high",
       "regex": "\\b(?:great|fantastic|excellent|awesome) question\\b",
       "label": "Great question!",
-      "fix": "\u0218tergeReplica, r\u0103spunde direct."
+      "fix": "ȘtergeReplica, răspunde direct."
     },
     {
       "id": "chat.willing",
@@ -44,7 +44,7 @@
       "severity": "high",
       "regex": "\\bI hope (?:this|that) (?:helps|is helpful)\\b",
       "label": "I hope this helps",
-      "fix": "\u0218terge."
+      "fix": "Șterge."
     },
     {
       "id": "chat.let_me_know",
@@ -53,7 +53,7 @@
       "severity": "high",
       "regex": "\\blet me know if you(?:'?d like| want| need)\\b|\\blet me know if there'?s anything else\\b",
       "label": "Let me know if you'd like...",
-      "fix": "\u0218terge, sau \u00eentreab\u0103 concret."
+      "fix": "Șterge, sau întreabă concret."
     },
     {
       "id": "chat.certainly",
@@ -62,7 +62,7 @@
       "severity": "medium",
       "regex": "\\bcertainly\\b|\\babsolutely(?:!|,)\\b",
       "label": "Certainly! / Absolutely!",
-      "fix": "Decupeaz\u0103 din propozi\u021bie."
+      "fix": "Decupează din propoziție."
     },
     {
       "id": "chat.of_course",
@@ -71,7 +71,7 @@
       "severity": "low",
       "regex": "\\bof course\\b",
       "label": "Of course",
-      "fix": "Adesea justific\u0103 ceva evident. Taie."
+      "fix": "Adesea justifică ceva evident. Taie."
     },
     {
       "id": "chat.further_ado",
@@ -80,7 +80,7 @@
       "severity": "high",
       "regex": "\\bwithout further ado\\b",
       "label": "Without further ado",
-      "fix": "\u0218terge."
+      "fix": "Șterge."
     },
     {
       "id": "chat.dive_in",
@@ -89,7 +89,7 @@
       "severity": "high",
       "regex": "\\blet'?s (?:dive|delve) (?:in|into)\\b|\\blet'?s dive\\b",
       "label": "Let's dive in!",
-      "fix": "\u00cencepe direct cu con\u021binutul."
+      "fix": "Începe direct cu conținutul."
     },
     {
       "id": "chat.here_is",
@@ -98,7 +98,7 @@
       "severity": "medium",
       "regex": "\\bhere'?s (?:what|how|why|the)\\b",
       "label": "Here's what/why",
-      "fix": "P\u0103streaz\u0103 doar dac\u0103 anun\u021b\u0103 ceva concret."
+      "fix": "Păstrează doar dacă anunță ceva concret."
     },
     {
       "id": "chat.feel_free",
@@ -107,7 +107,7 @@
       "severity": "high",
       "regex": "\\bfeel free to (?:ask|reach out|let me know|share)\\b",
       "label": "Feel free to ask",
-      "fix": "\u0218terge."
+      "fix": "Șterge."
     },
     {
       "id": "chat.praise_point",
@@ -116,7 +116,7 @@
       "severity": "high",
       "regex": "\\b(?:that'?s|great) (?:a )?(?:great|excellent) (?:point|question|take|insight)\\b",
       "label": "That's a great point!",
-      "fix": "R\u0103spunde direct la punct."
+      "fix": "Răspunde direct la punct."
     },
     {
       "id": "chat.ai_disclaimer",
@@ -125,7 +125,7 @@
       "severity": "high",
       "regex": "\\bas an ai(?: language)? model\\b|\\bi'?m just an ai\\b|\\bi am an ai\\b",
       "label": "As an AI language model",
-      "fix": "\u0218terge."
+      "fix": "Șterge."
     },
     {
       "id": "chat.end_of_day",
@@ -143,7 +143,7 @@
       "severity": "medium",
       "regex": "\\bwhen it comes to\\b",
       "label": "When it comes to X",
-      "fix": "\u00cencepe propozi\u021bia cu substantivul."
+      "fix": "Începe propoziția cu substantivul."
     },
     {
       "id": "chat.whether_or",
@@ -152,7 +152,7 @@
       "severity": "medium",
       "regex": "\\bwhether you(?:'?re| are)\\b[^.!?]{0,50}\\bor\\b",
       "label": "Whether you're X or Y",
-      "fix": "Taie rama, p\u0103streaz\u0103 cazul."
+      "fix": "Taie rama, păstrează cazul."
     },
     {
       "id": "chat.key_takeaway",
@@ -170,7 +170,7 @@
       "severity": "medium",
       "regex": "\\bin conclusion\\b|\\bto sum up\\b|\\bin summary\\b|\\bto summarize\\b|\\bin closing\\b",
       "label": "In conclusion / To sum up",
-      "fix": "Taie; termin\u0103 pe ultimul fapt."
+      "fix": "Taie; termină pe ultimul fapt."
     },
     {
       "id": "chat.fast_paced",
@@ -179,7 +179,7 @@
       "severity": "high",
       "regex": "\\bin today'?s (?:fast-paced|digital|rapidly evolving|modern|connected) world\\b|\\bin today'?s world\\b",
       "label": "In today's fast-paced world",
-      "fix": "\u0218terge."
+      "fix": "Șterge."
     },
     {
       "id": "chat.beauty_of",
@@ -197,7 +197,7 @@
       "severity": "medium",
       "regex": "\\blet'?s (?:explore|unpack|break (?:this|it) down|go deeper|take a closer look)\\b",
       "label": "Let's unpack / explore / break it down",
-      "fix": "Taie umbrela, f\u0103 treaba direct."
+      "fix": "Taie umbrela, fă treaba direct."
     },
     {
       "id": "chat.i_can_help",
@@ -206,7 +206,7 @@
       "severity": "medium",
       "regex": "\\bi can help you with (?:that|this)\\b|\\bi can help with that\\b",
       "label": "I can help you with that",
-      "fix": "F\u0103-l, nu anun\u021ba."
+      "fix": "Fă-l, nu anunța."
     },
     {
       "id": "chat.happy_continue",
@@ -224,7 +224,7 @@
       "severity": "medium",
       "regex": "\\bhere'?s the (?:thing|kicker|catch)\\b",
       "label": "Here's the thing",
-      "fix": "Taie; afirm\u0103 direct."
+      "fix": "Taie; afirmă direct."
     },
     {
       "id": "chat.breaking_down",
@@ -242,7 +242,7 @@
       "severity": "high",
       "regex": "\\bdelv(?:e|es|ed|ing)\\b",
       "label": "delve",
-      "fix": "'a intra \u00een', 'a privi \u00een am\u0103nunt'."
+      "fix": "'a intra în', 'a privi în amănunt'."
     },
     {
       "id": "inf.tapestry",
@@ -251,7 +251,7 @@
       "severity": "high",
       "regex": "\\btapestr(?:y|ies)\\b",
       "label": "tapestry",
-      "fix": "Numeaz\u0103 ce e, sau taie."
+      "fix": "Numează ce e, sau taie."
     },
     {
       "id": "inf.testament",
@@ -260,7 +260,7 @@
       "severity": "high",
       "regex": "\\btestament to\\b|\\bis a testament\\b",
       "label": "a testament to",
-      "fix": "Spune simplu ce dovede\u0219te."
+      "fix": "Spune simplu ce dovedește."
     },
     {
       "id": "inf.realm",
@@ -287,7 +287,7 @@
       "severity": "medium",
       "regex": "\\bcrucial\\b",
       "label": "crucial",
-      "fix": "'decisiv' / 'esen\u021bial'."
+      "fix": "'decisiv' / 'esențial'."
     },
     {
       "id": "inf.vital",
@@ -296,7 +296,7 @@
       "severity": "medium",
       "regex": "\\bvital\\b",
       "label": "vital",
-      "fix": "'necesar' / 'de baz\u0103'."
+      "fix": "'necesar' / 'de bază'."
     },
     {
       "id": "inf.robust",
@@ -314,7 +314,7 @@
       "severity": "high",
       "regex": "\\bseamless(?:ly)?\\b",
       "label": "seamless",
-      "fix": "'f\u0103r\u0103 \u00eentreruperi' sau concret."
+      "fix": "'fără întreruperi' sau concret."
     },
     {
       "id": "inf.leverage",
@@ -332,7 +332,7 @@
       "severity": "high",
       "regex": "\\bharness(?:es|ed|ing)?\\b",
       "label": "harness",
-      "fix": "'folosi' / 'con\u021bine'."
+      "fix": "'folosi' / 'conține'."
     },
     {
       "id": "inf.unlock",
@@ -341,7 +341,7 @@
       "severity": "high",
       "regex": "\\bunlock(?:s|ed|ing)?\\b|\\bunleash(?:es|ed|ing)?\\b",
       "label": "unlock / unleash",
-      "fix": "'deschide' / 'elibereaz\u0103'."
+      "fix": "'deschide' / 'eliberează'."
     },
     {
       "id": "inf.embark",
@@ -350,7 +350,7 @@
       "severity": "medium",
       "regex": "\\bembark(?:ed|ing|s)?\\b",
       "label": "embark on",
-      "fix": "'\u00eencepe'."
+      "fix": "'începe'."
     },
     {
       "id": "inf.elevate",
@@ -359,7 +359,7 @@
       "severity": "medium",
       "regex": "\\belevat(?:e|es|ed|ing|ion)\\b",
       "label": "elevate",
-      "fix": "'ridic\u0103' \u2014 sau taie."
+      "fix": "'ridică' — sau taie."
     },
     {
       "id": "inf.curate",
@@ -368,7 +368,7 @@
       "severity": "medium",
       "regex": "\\bcurat(?:e|es|ed|ing|ion)\\b",
       "label": "curate",
-      "fix": "'alc\u0103tuie\u0219te' / 'selecteaz\u0103'."
+      "fix": "'alcătuiește' / 'selectează'."
     },
     {
       "id": "inf.foster",
@@ -377,7 +377,7 @@
       "severity": "medium",
       "regex": "\\bfoster(?:s|ed|ing)?\\b",
       "label": "foster",
-      "fix": "'\u00eencurajeaz\u0103'."
+      "fix": "'încurajează'."
     },
     {
       "id": "inf.showcase",
@@ -386,7 +386,7 @@
       "severity": "high",
       "regex": "\\bshowcas(?:e|es|ed|ing)\\b",
       "label": "showcase",
-      "fix": "'arat\u0103' / 'prezint\u0103'."
+      "fix": "'arată' / 'prezintă'."
     },
     {
       "id": "inf.underscore",
@@ -395,7 +395,7 @@
       "severity": "high",
       "regex": "\\bunderscor(?:e|es|ed|ing)\\b",
       "label": "underscore(s)",
-      "fix": "'arat\u0103' / 'subliniaz\u0103'."
+      "fix": "'arată' / 'subliniază'."
     },
     {
       "id": "inf.myriad",
@@ -404,7 +404,7 @@
       "severity": "medium",
       "regex": "\\bmyriad\\b",
       "label": "myriad",
-      "fix": "'nenum\u0103rate' \u2014 dar de obicei taie."
+      "fix": "'nenumărate' — dar de obicei taie."
     },
     {
       "id": "inf.plethora",
@@ -413,7 +413,7 @@
       "severity": "medium",
       "regex": "\\bplethora\\b",
       "label": "plethora",
-      "fix": "Nume\u0219te c\u00e2teva."
+      "fix": "Numește câteva."
     },
     {
       "id": "inf.holistic",
@@ -431,7 +431,7 @@
       "severity": "medium",
       "regex": "\\bparadigm(?:s)?\\b",
       "label": "paradigm",
-      "fix": "'model' / 'mod de g\u00e2ndire'."
+      "fix": "'model' / 'mod de gândire'."
     },
     {
       "id": "inf.multifaceted",
@@ -440,7 +440,7 @@
       "severity": "medium",
       "regex": "\\bmultifaceted\\b|\\bmultidimensional\\b",
       "label": "multifaceted",
-      "fix": "Spune ce fa\u021bete are."
+      "fix": "Spune ce fațete are."
     },
     {
       "id": "inf.intricate",
@@ -449,7 +449,7 @@
       "severity": "medium",
       "regex": "\\bintricat(?:e|es|ed|ion)\\b",
       "label": "intricate",
-      "fix": "'complicat' / 'cu multe p\u0103r\u021bi'."
+      "fix": "'complicat' / 'cu multe părți'."
     },
     {
       "id": "inf.transformative",
@@ -458,7 +458,7 @@
       "severity": "medium",
       "regex": "\\btransformativ(?:e|es|ed|ion)?\\b",
       "label": "transformative",
-      "fix": "'care schimb\u0103 lucrurile'."
+      "fix": "'care schimbă lucrurile'."
     },
     {
       "id": "inf.groundbreaking",
@@ -476,7 +476,7 @@
       "severity": "medium",
       "regex": "\\bcutting[- ]edge\\b|\\bstate[- ]of[- ]the[- ]art\\b|\\bbleeding[- ]edge\\b",
       "label": "cutting-edge",
-      "fix": "'de ultim\u0103 genera\u021bie' / 'nou'."
+      "fix": "'de ultimă generație' / 'nou'."
     },
     {
       "id": "inf.ever_evolving",
@@ -494,7 +494,7 @@
       "severity": "medium",
       "regex": "\\bsynerg(?:y|ies|istic)\\b",
       "label": "synergy",
-      "fix": "'efect cumulat' \u2014 sau taie."
+      "fix": "'efect cumulat' — sau taie."
     },
     {
       "id": "inf.utilize",
@@ -503,7 +503,7 @@
       "severity": "medium",
       "regex": "\\butiliz(?:e|es|ed|ing|ation)\\b",
       "label": "utilize",
-      "fix": "'folose\u0219te'."
+      "fix": "'folosește'."
     },
     {
       "id": "inf.facilitate",
@@ -512,7 +512,7 @@
       "severity": "medium",
       "regex": "\\bfacilitat(?:e|es|ed|ing|ion)\\b",
       "label": "facilitate",
-      "fix": "'face posibil' / 'ajut\u0103'."
+      "fix": "'face posibil' / 'ajută'."
     },
     {
       "id": "inf.endeavor",
@@ -521,7 +521,7 @@
       "severity": "medium",
       "regex": "\\bendeavou?r(?:s|ed|ing)?\\b",
       "label": "endeavor",
-      "fix": "'\u00eencercare'."
+      "fix": "'încercare'."
     },
     {
       "id": "inf.beacon",
@@ -548,7 +548,7 @@
       "severity": "medium",
       "regex": "\\b(?:the |this |our )?landscape\\b|\\bat scale\\b",
       "label": "landscape / at scale",
-      "fix": "Nume\u0219te sectorul concret."
+      "fix": "Numește sectorul concret."
     },
     {
       "id": "inf.earns_its",
@@ -593,7 +593,7 @@
       "severity": "high",
       "regex": "\\bserves? as\\b|\\bstands? as\\b",
       "label": "serves as / stands as",
-      "fix": "Folose\u0219te 'e'."
+      "fix": "Folosește 'e'."
     },
     {
       "id": "inf.navigate_complexities",
@@ -602,7 +602,7 @@
       "severity": "high",
       "regex": "\\bnavigate the complexities\\b|\\bnavigat(?:e|ing) the\\b",
       "label": "navigate the complexities",
-      "fix": "'e complicat' / 'se descurc\u0103 \u00een'."
+      "fix": "'e complicat' / 'se descurcă în'."
     },
     {
       "id": "inf.deep_dive",
@@ -611,7 +611,7 @@
       "severity": "high",
       "regex": "\\bdeep dive\\b",
       "label": "deep dive",
-      "fix": "'o privire \u00een profunzime' / 'deschid'."
+      "fix": "'o privire în profunzime' / 'deschid'."
     },
     {
       "id": "inf.move_needle",
@@ -620,7 +620,7 @@
       "severity": "medium",
       "regex": "\\bmove the needle\\b|\\blow[- ]hanging fruit\\b|\\bdouble down on\\b|\\blow[- ]hanging\\b",
       "label": "move the needle / low-hanging fruit",
-      "fix": "Spune concret ce se schimb\u0103."
+      "fix": "Spune concret ce se schimbă."
     },
     {
       "id": "inf.shed_light",
@@ -629,7 +629,7 @@
       "severity": "medium",
       "regex": "\\bshed light on\\b|\\bpave the way for\\b|\\bthe backbone of\\b|\\bthe bedrock of\\b",
       "label": "shed light on / pave the way",
-      "fix": "Reformuleaz\u0103 simplu."
+      "fix": "Reformulează simplu."
     },
     {
       "id": "inf.wide_range",
@@ -638,7 +638,7 @@
       "severity": "medium",
       "regex": "\\ba wide range of\\b|\\ba variety of\\b|\\ba host of\\b|\\bnumerous\\b|\\bcountless\\b",
       "label": "a wide range of / numerous",
-      "fix": "Nume\u0219te 2-3."
+      "fix": "Numește 2-3."
     },
     {
       "id": "inf.more_than_just",
@@ -674,7 +674,7 @@
       "severity": "medium",
       "regex": "\\b(?:evolving|changing|dynamic) (?:landscape|environment|ecosystem|arena)\\b",
       "label": "evolving landscape",
-      "fix": "Taie; spune ce se schimb\u0103."
+      "fix": "Taie; spune ce se schimbă."
     },
     {
       "id": "hedge.important_to",
@@ -683,7 +683,7 @@
       "severity": "high",
       "regex": "\\bit(?:'?s| is) (?:important|crucial|essential|worth) to (?:note|remember|understand|mention|recognize|highlight)\\b",
       "label": "It's important to note that...",
-      "fix": "Taie sau 'Not\u0103:'."
+      "fix": "Taie sau 'Notă:'."
     },
     {
       "id": "hedge.one_might",
@@ -701,7 +701,7 @@
       "severity": "high",
       "regex": "\\b(?:some|many|leading|top) experts (?:say|believe|argue|suggest|note|claim)\\b|\\bexperts (?:agree|believe|say)\\b",
       "label": "Experts say...",
-      "fix": "Nume\u0219te sursa."
+      "fix": "Numește sursa."
     },
     {
       "id": "hedge.studies",
@@ -710,7 +710,7 @@
       "severity": "high",
       "regex": "\\bstudies (?:show|have shown|suggest|indicate)\\b|\\bresearch (?:shows|suggests|indicates)\\b|\\bsurveys (?:show|suggest)\\b",
       "label": "Studies show...",
-      "fix": "Nume\u0219te studiul."
+      "fix": "Numește studiul."
     },
     {
       "id": "hedge.recent_data",
@@ -719,7 +719,7 @@
       "severity": "high",
       "regex": "\\baccording to (?:recent|some|most|many|new|various) (?:data|research|studies|reports|findings)\\b|\\bindustry reports suggest\\b",
       "label": "According to recent data...",
-      "fix": "Nume\u0219te raportul."
+      "fix": "Numește raportul."
     },
     {
       "id": "hedge.in_many_ways",
@@ -755,7 +755,7 @@
       "severity": "low",
       "regex": "\\bthat said\\b|\\bthat being said\\b",
       "label": "That said",
-      "fix": "P\u0103streaz\u0103 doar dac\u0103 r\u0103sturn\u0103 un argument."
+      "fix": "Păstrează doar dacă răsturnă un argument."
     },
     {
       "id": "hedge.needless",
@@ -773,7 +773,7 @@
       "severity": "low",
       "regex": "\\barguably\\b|\\bessentially\\b|\\bbasically\\b|\\bactually\\b",
       "label": "arguably / essentially / basically",
-      "fix": "Dac\u0103 ai spune-o de dou\u0103 ori, taie una."
+      "fix": "Dacă ai spune-o de două ori, taie una."
     },
     {
       "id": "hedge.in_essence",
@@ -791,7 +791,7 @@
       "severity": "high",
       "regex": "\\bnot\\s+(?:just|merely|simply|only)\\b[^.!?]{0,90}\\bbut\\b",
       "label": "not just X but Y",
-      "fix": "P\u0103streaz\u0103 doar jum\u0103tatea a doua."
+      "fix": "Păstrează doar jumătatea a doua."
     },
     {
       "id": "str.binary_is_is",
@@ -800,7 +800,7 @@
       "severity": "high",
       "regex": "\\bis\\s+not\\b[^.!?]{0,70}[.!?]\\s*(?:It|That|This|They)\\s+(?:is|are|was|were)\\b",
       "label": "X is not Y. It is Z.",
-      "fix": "\u00cencepe cu Z."
+      "fix": "Începe cu Z."
     },
     {
       "id": "str.binary_point",
@@ -817,8 +817,8 @@
       "lang": "any",
       "severity": "medium",
       "regex": "\\bwhat matters is\\b|\\bultimately,\\s|\\bin the end,\\s|\\bthe real question is\\b|\\bonly time will tell\\b",
-      "label": "moral\u0103 de final",
-      "fix": "Variet: imagine, \u00eentrebare, fapt sec."
+      "label": "morală de final",
+      "fix": "Variet: imagine, întrebare, fapt sec."
     },
     {
       "id": "str.enumerate",
@@ -827,7 +827,7 @@
       "severity": "medium",
       "regex": "\\b(?:first|firstly|second|secondly|third|thirdly|fourthly),\\b",
       "label": "First... Second... Third...",
-      "fix": "Una dintre ele devine propozi\u021bie, restul bullets."
+      "fix": "Una dintre ele devine propoziție, restul bullets."
     },
     {
       "id": "str.dive_deeper",
@@ -854,7 +854,7 @@
       "severity": "low",
       "regex": "\\bTL;DR\\b|\\bTL;DR\\b",
       "label": "TL;DR",
-      "fix": "\u00cen eseu: scoate; \u00een chat: ok."
+      "fix": "În eseu: scoate; în chat: ok."
     },
     {
       "id": "fmt.sic",
@@ -870,8 +870,8 @@
       "cat": "ro",
       "lang": "ro",
       "severity": "high",
-      "regex": "\\beste important de men[\u021bt]ionat c[\u0103a]\\b|\\beste important s[\u0103a] observ[\u0103a]m\\b",
-      "label": "Este important de men\u021bionat c\u0103",
+      "regex": "\\beste important de men[țt]ionat c[ăa]\\b|\\beste important s[ăa] observ[ăa]m\\b",
+      "label": "Este important de menționat că",
       "fix": "Taie."
     },
     {
@@ -879,8 +879,8 @@
       "cat": "ro",
       "lang": "ro",
       "severity": "high",
-      "regex": "\\b\u00een lumea actual[\u0103a]\\b|\\b\u00een lumea noastr[\u0103a]\\b|\\bin zilele noastre\\b",
-      "label": "\u00een lumea actual\u0103",
+      "regex": "\\bîn lumea actual[ăa]\\b|\\bîn lumea noastr[ăa]\\b|\\bin zilele noastre\\b",
+      "label": "în lumea actuală",
       "fix": "Taie."
     },
     {
@@ -897,8 +897,8 @@
       "cat": "ro",
       "lang": "ro",
       "severity": "medium",
-      "regex": "\\bconcluzion[\u0103a]nd\\b|\\b[\u00eei]n concluzie\\b|\\bpentru a conclu[ds]iona?\\b",
-      "label": "Concluzion\u00e2nd",
+      "regex": "\\bconcluzion[ăa]nd\\b|\\b[îi]n concluzie\\b|\\bpentru a conclu[ds]iona?\\b",
+      "label": "Concluzionând",
       "fix": "Taie."
     },
     {
@@ -906,8 +906,8 @@
       "cat": "ro",
       "lang": "ro",
       "severity": "medium",
-      "regex": "\\beste esen[\u021bt]ial s[\u0103a] (?:\u00een[\u021bt]elegem|constat\u0103m|re\u021binem)\\b|\\beste fundamental\\b",
-      "label": "Este esen\u021bial s\u0103 \u00een\u021belegem",
+      "regex": "\\beste esen[țt]ial s[ăa] (?:în[țt]elegem|constatăm|reținem)\\b|\\beste fundamental\\b",
+      "label": "Este esențial să înțelegem",
       "fix": "Taie."
     },
     {
@@ -915,7 +915,7 @@
       "cat": "ro",
       "lang": "ro",
       "severity": "medium",
-      "regex": "\\bindiferent de (?:context|nevoile|situa[\u021bt]ia|cazul)\\b",
+      "regex": "\\bindiferent de (?:context|nevoile|situa[țt]ia|cazul)\\b",
       "label": "Indiferent de context",
       "fix": "Taie rama."
     },
@@ -924,17 +924,17 @@
       "cat": "ro",
       "lang": "ro",
       "severity": "high",
-      "regex": "\\bnu este doar\\b[^.!?]{0,80}\\bci [\u0219s]i\\b|\\bnu doar\\b[^.!?]{0,80}\\bci [\u0219s]i\\b",
-      "label": "Nu este doar X, ci \u0219i Y",
-      "fix": "P\u0103streaz\u0103 doar Y."
+      "regex": "\\bnu este doar\\b[^.!?]{0,80}\\bci [șs]i\\b|\\bnu doar\\b[^.!?]{0,80}\\bci [șs]i\\b",
+      "label": "Nu este doar X, ci și Y",
+      "fix": "Păstrează doar Y."
     },
     {
       "id": "ro.safim_clari",
       "cat": "ro",
       "lang": "ro",
       "severity": "medium",
-      "regex": "\\bs[\u0103a] fim clari\\b|\\bs[\u0103a] fim direc[\u021bt]i\\b",
-      "label": "S\u0103 fim clari:",
+      "regex": "\\bs[ăa] fim clari\\b|\\bs[ăa] fim direc[țt]i\\b",
+      "label": "Să fim clari:",
       "fix": "Taie."
     },
     {
@@ -942,26 +942,26 @@
       "cat": "ro",
       "lang": "ro",
       "severity": "medium",
-      "regex": "\\bhai s[\u0103a] (?:explor[\u0103a]m|descompunem|vedem|analiz[\u0103a]m)\\b",
-      "label": "Hai s\u0103 explor\u0103m",
-      "fix": "F\u0103 treaba direct."
+      "regex": "\\bhai s[ăa] (?:explor[ăa]m|descompunem|vedem|analiz[ăa]m)\\b",
+      "label": "Hai să explorăm",
+      "fix": "Fă treaba direct."
     },
     {
       "id": "ro.asadar",
       "cat": "ro",
       "lang": "ro",
       "severity": "low",
-      "regex": "\\ba[\u0219s]adar\\b|\\bdeci,?\\b",
-      "label": "A\u0219adar",
-      "fix": "De obicei e o umplutur\u0103 \u00eenainte de o concluzie."
+      "regex": "\\ba[șs]adar\\b|\\bdeci,?\\b",
+      "label": "Așadar",
+      "fix": "De obicei e o umplutură înainte de o concluzie."
     },
     {
       "id": "ro.piatra",
       "cat": "ro",
       "lang": "ro",
       "severity": "medium",
-      "regex": "\\bo piatr[\u0103a] de temelie\\b|\\bpiatra de temelie\\b|\\bintr[\u0103a] \u00een joc\\b|\\bcheia este\\b|\\bse remarc[\u0103a] prin\\b",
-      "label": "piatr\u0103 de temelie / intr\u0103 \u00een joc",
+      "regex": "\\bo piatr[ăa] de temelie\\b|\\bpiatra de temelie\\b|\\bintr[ăa] în joc\\b|\\bcheia este\\b|\\bse remarc[ăa] prin\\b",
+      "label": "piatră de temelie / intră în joc",
       "fix": "Spune concret."
     },
     {
@@ -969,8 +969,8 @@
       "cat": "ro",
       "lang": "ro",
       "severity": "medium",
-      "regex": "\\bun pas important (?:c[\u0103a]tre|spre)\\b|\\bjuc[\u0103a]tor cheie\\b|\\bo schimbare (?:major[\u0103a]|semnificativ[\u0103a])\\b",
-      "label": "un pas important c\u0103tre",
+      "regex": "\\bun pas important (?:c[ăa]tre|spre)\\b|\\bjuc[ăa]tor cheie\\b|\\bo schimbare (?:major[ăa]|semnificativ[ăa])\\b",
+      "label": "un pas important către",
       "fix": "Spune ce s-a schimbat."
     },
     {
@@ -978,9 +978,9 @@
       "cat": "ro",
       "lang": "ro",
       "severity": "medium",
-      "regex": "\\bcu drag\\b|\\bcu pl[\u0103a]cere\\b|\\bcu mare drag\\b",
+      "regex": "\\bcu drag\\b|\\bcu pl[ăa]cere\\b|\\bcu mare drag\\b",
       "label": "Cu drag!",
-      "fix": "\u00cen chat e normal; \u00een proz\u0103, taie."
+      "fix": "În chat e normal; în proză, taie."
     },
     {
       "id": "ro.sigur",
@@ -989,16 +989,16 @@
       "severity": "low",
       "regex": "\\bsigur[!,]\\b|\\bdesigur[!,]\\b|\\bbine ai venit\\b",
       "label": "Sigur! / Desigur!",
-      "fix": "\u00cen chat e normal; \u00een proz\u0103, taie."
+      "fix": "În chat e normal; în proză, taie."
     },
     {
       "id": "ro.te_pot_ajuta",
       "cat": "ro",
       "lang": "ro",
       "severity": "medium",
-      "regex": "\\bte pot ajuta [\u0219s]i cu\\b|\\bpot s[\u0103a] te ajut\\b|\\bspune-mi dac[\u0103a] vrei\\b|\\bdac[\u0103a] ai nevoie de\\b|\\bspune-mi ce (?:zici|ai nevoie)\\b",
-      "label": "Te pot ajuta \u0219i cu...",
-      "fix": "\u00centreab\u0103 concret sau taie."
+      "regex": "\\bte pot ajuta [șs]i cu\\b|\\bpot s[ăa] te ajut\\b|\\bspune-mi dac[ăa] vrei\\b|\\bdac[ăa] ai nevoie de\\b|\\bspune-mi ce (?:zici|ai nevoie)\\b",
+      "label": "Te pot ajuta și cu...",
+      "fix": "Întreabă concret sau taie."
     },
     {
       "id": "ro.de_fapt",
@@ -1007,16 +1007,16 @@
       "severity": "low",
       "regex": "\\bde fapt,?\\b|\\bde altfel,?\\b",
       "label": "de fapt",
-      "fix": "Adesea e zgomot \u00eenainte de o afirma\u021bie bun\u0103."
+      "fix": "Adesea e zgomot înainte de o afirmație bună."
     },
     {
       "id": "ro.poate_ca",
       "cat": "ro",
       "lang": "ro",
       "severity": "low",
-      "regex": "\\bpoate c[\u0103a]\\b",
-      "label": "poate c\u0103",
-      "fix": "Dac\u0103 apare de 2+ ori, taie una."
+      "regex": "\\bpoate c[ăa]\\b",
+      "label": "poate că",
+      "fix": "Dacă apare de 2+ ori, taie una."
     },
     {
       "id": "fr.il_est_important",
@@ -1032,7 +1032,7 @@
       "cat": "fr",
       "lang": "fr",
       "severity": "medium",
-      "regex": "\\ben fin de compte\\b|\\bapr\u00e8s tout\\b",
+      "regex": "\\ben fin de compte\\b|\\baprès tout\\b",
       "label": "En fin de compte",
       "fix": "Supprimer."
     },
@@ -1041,7 +1041,7 @@
       "cat": "fr",
       "lang": "fr",
       "severity": "medium",
-      "regex": "\\ben conclusion\\b|\\bpour conclure\\b|\\ben r[\u00e9e]sum[\u00e9e]\\b|\\bpour r[\u00e9e]sumer\\b",
+      "regex": "\\ben conclusion\\b|\\bpour conclure\\b|\\ben r[ée]sum[ée]\\b|\\bpour r[ée]sumer\\b",
       "label": "En conclusion / Pour conclure",
       "fix": "Supprimer."
     },
@@ -1059,7 +1059,7 @@
       "cat": "fr",
       "lang": "fr",
       "severity": "medium",
-      "regex": "\\bdans le paysage\\b|\\bpanorama\\b|\\b[\u00e9e]cosyst[\u00e8e]me\\b",
+      "regex": "\\bdans le paysage\\b|\\bpanorama\\b|\\b[ée]cosyst[èe]me\\b",
       "label": "Dans le paysage de",
       "fix": "Nommer le secteur."
     },
@@ -1077,8 +1077,8 @@
       "cat": "fr",
       "lang": "fr",
       "severity": "medium",
-      "regex": "\\bpotentiel illimit[\u00e9e]\\b|\\bdes possibilit[\u00e9e]s infinies\\b",
-      "label": "potentiel illimit\u00e9",
+      "regex": "\\bpotentiel illimit[ée]\\b|\\bdes possibilit[ée]s infinies\\b",
+      "label": "potentiel illimité",
       "fix": "Supprimer."
     },
     {
@@ -1086,8 +1086,8 @@
       "cat": "fr",
       "lang": "fr",
       "severity": "high",
-      "regex": "\\b[\u00e0a] l'[\u00e8e]re (?:de|du|des)\\b|\\bde nos jours\\b|\\bactuellement\\b",
-      "label": "\u00e0 l'\u00e8re de",
+      "regex": "\\b[àa] l'[èe]re (?:de|du|des)\\b|\\bde nos jours\\b|\\bactuellement\\b",
+      "label": "à l'ère de",
       "fix": "Supprimer."
     },
     {
@@ -1095,8 +1095,8 @@
       "cat": "fr",
       "lang": "fr",
       "severity": "low",
-      "regex": "\\bc'est-[\u00e0a]-dire\\b",
-      "label": "c'est-\u00e0-dire",
+      "regex": "\\bc'est-[àa]-dire\\b",
+      "label": "c'est-à-dire",
       "fix": "Souvent un remplissage."
     },
     {
@@ -1104,7 +1104,7 @@
       "cat": "fr",
       "lang": "fr",
       "severity": "medium",
-      "regex": "\\bsans conteste\\b|\\bforce est de constater\\b|\\b[\u00e0a] n'en pas douter\\b",
+      "regex": "\\bsans conteste\\b|\\bforce est de constater\\b|\\b[àa] n'en pas douter\\b",
       "label": "sans conteste",
       "fix": "Supprimer."
     },
@@ -1115,14 +1115,14 @@
       "severity": "low",
       "regex": "\\btout d'abord\\b|\\bensuite\\b|\\benfin\\b",
       "label": "tout d'abord / ensuite / enfin",
-      "fix": "S\u00e9quence de connecteurs : couper."
+      "fix": "Séquence de connecteurs : couper."
     },
     {
       "id": "fr.approche_innovante",
       "cat": "fr",
       "lang": "fr",
       "severity": "medium",
-      "regex": "\\bune approche innovante\\b|\\bune nouvelle perspective\\b|\\bdes r[\u00e9e]flexions appr[\u00e9e]ciables\\b",
+      "regex": "\\bune approche innovante\\b|\\bune nouvelle perspective\\b|\\bdes r[ée]flexions appr[ée]ciables\\b",
       "label": "une approche innovante",
       "fix": "Nommer l'approche."
     },
@@ -1131,7 +1131,7 @@
       "cat": "fr",
       "lang": "fr",
       "severity": "medium",
-      "regex": "\\ben ce sens\\b|\\b[\u00e0a] cet [\u00e9e]gard\\b|\\bde ce point de vue\\b",
+      "regex": "\\ben ce sens\\b|\\b[àa] cet [ée]gard\\b|\\bde ce point de vue\\b",
       "label": "en ce sens",
       "fix": "Supprimer."
     },
@@ -1183,7 +1183,7 @@
       "severity": "medium",
       "regex": "\\bpunch(?:es|ing)?\\s+above\\s+(?:your|its|their|his|her)\\s+weight(?:\\s*(?:class|division))?\\b",
       "label": "punches above its weight",
-      "fix": "Spune performan\u021ba concret\u0103: ce ob\u021bine cu ce resurse."
+      "fix": "Spune performanța concretă: ce obține cu ce resurse."
     },
     {
       "id": "weight.anchor",
@@ -1280,7 +1280,7 @@
       "cat": "weight",
       "lang": "ro",
       "severity": "medium",
-      "regex": "\\b(?:ancoreaz[\u0103a]|ancorat(?:[\u0103a])?|e temelia|temelia\\s+(?:\u00eentregii|\u00eentregului)|ridic[\u0103a]\\s+la\\s+putere|for[\u021bt]a\\s+motrice|d[\u0103a]\\s+greutate|baza\\s+(?:\u00eentregii|\u00eentregului)|creierul afacerii|poart[\u0103a]\\s+(?:greutatea|povara))\\b",
+      "regex": "\\b(?:ancoreaz[ăa]|ancorat(?:[ăa])?|e temelia|temelia\\s+(?:întregii|întregului)|ridic[ăa]\\s+la\\s+putere|for[țt]a\\s+motrice|d[ăa]\\s+greutate|baza\\s+(?:întregii|întregului)|creierul afacerii|poart[ăa]\\s+(?:greutatea|povara))\\b",
       "label": "ancoreaza / e temelia / forta motrice",
       "fix": "Spune mecanismul concret, nu metafora de greutate."
     },
@@ -1289,7 +1289,7 @@
       "cat": "weight",
       "lang": "fr",
       "severity": "medium",
-      "regex": "\\b(?:porte [\u00e0a] lui seul(?:e)?|pilier|socle|au c[\u0153oe]ur de|catalyseur|boussole|porte\\s+le\\s+poids)\\b",
+      "regex": "\\b(?:porte [àa] lui seul(?:e)?|pilier|socle|au c[œoe]ur de|catalyseur|boussole|porte\\s+le\\s+poids)\\b",
       "label": "pilier / socle / boussole",
       "fix": "Dire ce fait precisement, pas la metaphore du poids."
     },
@@ -1352,7 +1352,7 @@
       "cat": "honesty",
       "lang": "ro",
       "severity": "high",
-      "regex": "\\b(?:sincer(?:e|a|ul|\u0103)?|onest(?:a|ul|\u0103|ului)?|pentru a fi sincer(?:i)?|cu sinceritate|sincer vorbind)\\b",
+      "regex": "\\b(?:sincer(?:e|a|ul|ă)?|onest(?:a|ul|ă|ului)?|pentru a fi sincer(?:i)?|cu sinceritate|sincer vorbind)\\b",
       "label": "sincer / onest (RO)",
       "fix": "Sterge. Exceptie: daca se refera la o persoana (om sincer, un angajat onest)."
     },
@@ -1361,7 +1361,7 @@
       "cat": "honesty",
       "lang": "fr",
       "severity": "high",
-      "regex": "\\bhonn[\u00eae]tement\\b|\\bhonn[\u00eae]te\\b|\\bfranchement\\b|\\ben toute honn[\u00eae]t[\u00e9e]\\b|\\bpour [\u00eae]tre honn[\u00eae]te\\b|\\bfranchementement\\b",
+      "regex": "\\bhonn[êe]tement\\b|\\bhonn[êe]te\\b|\\bfranchement\\b|\\ben toute honn[êe]t[ée]\\b|\\bpour [êe]tre honn[êe]te\\b|\\bfranchementement\\b",
       "label": "honnetement / franchement (FR)",
       "fix": "Supprimer. Exception: si cela designe une personne."
     },
@@ -1426,7 +1426,7 @@
       "severity": "low",
       "regex": "\\bit is (?:more|less|not as) \\w+ than\\b|\\bthat is what makes\\b",
       "label": "It is more X than Y / that is what makes",
-      "fix": "Propozitie de umplutur\u0103. 'Strategy and leadership are too broad to be useful.'"
+      "fix": "Propozitie de umplutură. 'Strategy and leadership are too broad to be useful.'"
     },
     {
       "id": "inf.accumulation",
@@ -1453,7 +1453,7 @@
       "severity": "low",
       "regex": "\\bdeclares? it obsolete\\b|\\bdeclares? (?:them|it) (?:obsolete|unnecessary|overrated)\\b",
       "label": "declares it obsolete",
-      "fix": "Inchidere de moral\u0103. Las\u0103 triada concret\u0103 s\u0103 fac\u0103 treaba."
+      "fix": "Inchidere de morală. Lasă triada concretă să facă treaba."
     },
     {
       "id": "list.lead_in",
@@ -1461,7 +1461,7 @@
       "lang": "any",
       "severity": "medium",
       "regex": "\\b(?:a |an )?common (?:thread|theme)\\b\\.",
-      "label": "lead-in de umplutur\u0103 inainte de o lista",
+      "label": "lead-in de umplutură inainte de o lista",
       "fix": "Daca urmeaza o lista, incepe cu lista. Daca nu, scrie ideea."
     },
     {
@@ -1552,7 +1552,7 @@
       "severity": "medium",
       "regex": "\\b(?:battlefield|battleground)\\b",
       "label": "battlefield",
-      "fix": "Nume\u0219te subiectul conflictului concret."
+      "fix": "Numește subiectul conflictului concret."
     },
     {
       "id": "metaphor.sword",
@@ -2885,15 +2885,6 @@
       "regex": "whilst",
       "label": "whilst",
       "fix": "spune: while"
-    },
-    {
-      "id": "complex.methodologyies",
-      "cat": "complex",
-      "lang": "any",
-      "severity": "low",
-      "regex": "methodolog(?:y|ies)",
-      "label": "methodolog(?:y|ies)",
-      "fix": "spune: method"
     },
     {
       "id": "complex.bwizationisationb",
@@ -8385,8 +8376,8 @@
       "cat": "vague",
       "lang": "ro",
       "severity": "low",
-      "regex": "\\bnepl[\u0103a]cut(?:[\u0103a]|ul)?\\b",
-      "label": "nepl[\u0103a]cut(?:[\u0103a]|ul)?",
+      "regex": "\\bnepl[ăa]cut(?:[ăa]|ul)?\\b",
+      "label": "nepl[ăa]cut(?:[ăa]|ul)?",
       "fix": "spune faptul: ce anume e neplacut / impresionant",
       "literal": [
         "pain",
@@ -8453,8 +8444,8 @@
       "cat": "vague",
       "lang": "ro",
       "severity": "low",
-      "regex": "\\btulbur[\u0103a]tor(?:ie|ul)?\\b",
-      "label": "tulbur[\u0103a]tor(?:ie|ul)?",
+      "regex": "\\btulbur[ăa]tor(?:ie|ul)?\\b",
+      "label": "tulbur[ăa]tor(?:ie|ul)?",
       "fix": "spune faptul: ce anume e neplacut / impresionant",
       "literal": [
         "pain",
@@ -8521,8 +8512,8 @@
       "cat": "vague",
       "lang": "ro",
       "severity": "low",
-      "regex": "\\bimpresionant[a-z\u0103\u00e2\u00ee\u0219\u021b]*\\b",
-      "label": "impresionant(?:[\u0103a]|ul)?",
+      "regex": "\\bimpresionant[a-zăâîșț]*\\b",
+      "label": "impresionant(?:[ăa]|ul)?",
       "fix": "spune faptul: ce anume e neplacut / impresionant",
       "literal": [
         "pain",
@@ -8589,8 +8580,8 @@
       "cat": "vague",
       "lang": "ro",
       "severity": "low",
-      "regex": "\\bfascinant(?:[\u0103a]|ul)?\\b",
-      "label": "fascinant(?:[\u0103a]|ul)?",
+      "regex": "\\bfascinant(?:[ăa]|ul)?\\b",
+      "label": "fascinant(?:[ăa]|ul)?",
       "fix": "spune faptul: ce anume e neplacut / impresionant",
       "literal": [
         "pain",
@@ -8725,8 +8716,8 @@
       "cat": "vague",
       "lang": "ro",
       "severity": "low",
-      "regex": "\\balarmant(?:[\u0103a]|ul)?\\b",
-      "label": "alarmant(?:[\u0103a]|ul)?",
+      "regex": "\\balarmant(?:[ăa]|ul)?\\b",
+      "label": "alarmant(?:[ăa]|ul)?",
       "fix": "spune faptul: ce anume e neplacut / impresionant",
       "literal": [
         "pain",
@@ -8793,8 +8784,8 @@
       "cat": "vague",
       "lang": "ro",
       "severity": "low",
-      "regex": "\\bcutremur[\u0103a]tor(?:ie|ul)?\\b",
-      "label": "cutremur[\u0103a]tor(?:ie|ul)?",
+      "regex": "\\bcutremur[ăa]tor(?:ie|ul)?\\b",
+      "label": "cutremur[ăa]tor(?:ie|ul)?",
       "fix": "spune faptul: ce anume e neplacut / impresionant",
       "literal": [
         "pain",
@@ -8861,8 +8852,8 @@
       "cat": "vague",
       "lang": "ro",
       "severity": "low",
-      "regex": "\\bsurprinz[\u0103a]tor(?:ie|ul)?\\b",
-      "label": "surprinz[\u0103a]tor(?:ie|ul)?",
+      "regex": "\\bsurprinz[ăa]tor(?:ie|ul)?\\b",
+      "label": "surprinz[ăa]tor(?:ie|ul)?",
       "fix": "spune faptul: ce anume e neplacut / impresionant",
       "literal": [
         "pain",
@@ -8929,8 +8920,8 @@
       "cat": "vague",
       "lang": "ro",
       "severity": "low",
-      "regex": "\\bconving[\u0103a]tor(?:ie|ul)?\\b",
-      "label": "conving[\u0103a]tor(?:ie|ul)?",
+      "regex": "\\bconving[ăa]tor(?:ie|ul)?\\b",
+      "label": "conving[ăa]tor(?:ie|ul)?",
       "fix": "spune faptul: ce anume e neplacut / impresionant",
       "literal": [
         "pain",
@@ -9133,8 +9124,8 @@
       "cat": "vague",
       "lang": "fr",
       "severity": "medium",
-      "regex": "\\bd[\u00e9e]rangeant(?:e|es)?\\b",
-      "label": "d[\u00e9e]rangeant(?:e|es)?",
+      "regex": "\\bd[ée]rangeant(?:e|es)?\\b",
+      "label": "d[ée]rangeant(?:e|es)?",
       "fix": "spune faptul: ce anume e neplacut / impresionant",
       "literal": [
         "pain",
@@ -9609,8 +9600,8 @@
       "cat": "vague",
       "lang": "fr",
       "severity": "medium",
-      "regex": "\\binqui[\u00e9e]tant(?:e|es)?\\b",
-      "label": "inqui[\u00e9e]tant(?:e|es)?",
+      "regex": "\\binqui[ée]tant(?:e|es)?\\b",
+      "label": "inqui[ée]tant(?:e|es)?",
       "fix": "spune faptul: ce anume e neplacut / impresionant",
       "literal": [
         "pain",
@@ -9677,8 +9668,8 @@
       "cat": "vague",
       "lang": "fr",
       "severity": "medium",
-      "regex": "\\b[\u00e9e]pouvant(?:e|es)?\\b",
-      "label": "[\u00e9e]pouvant(?:e|es)?",
+      "regex": "\\b[ée]pouvant(?:e|es)?\\b",
+      "label": "[ée]pouvant(?:e|es)?",
       "fix": "spune faptul: ce anume e neplacut / impresionant",
       "literal": [
         "pain",
@@ -9745,8 +9736,8 @@
       "cat": "vague",
       "lang": "fr",
       "severity": "medium",
-      "regex": "\\bd[\u00e9e]cevant(?:e|es)?\\b",
-      "label": "d[\u00e9e]cevant(?:e|es)?",
+      "regex": "\\bd[ée]cevant(?:e|es)?\\b",
+      "label": "d[ée]cevant(?:e|es)?",
       "fix": "spune faptul: ce anume e neplacut / impresionant",
       "literal": [
         "pain",
@@ -10092,8 +10083,8 @@
       "cat": "complex",
       "lang": "ro",
       "severity": "low",
-      "regex": "\\b[\u00eei]n vederea\\b",
-      "label": "\u00een vederea -> pentru",
+      "regex": "\\b[îi]n vederea\\b",
+      "label": "în vederea -> pentru",
       "fix": "spune: pentru"
     },
     {
@@ -10101,8 +10092,8 @@
       "cat": "complex",
       "lang": "ro",
       "severity": "low",
-      "regex": "\\b[\u00eei]n momentul de fa[\u021bt][\u0103a]\\b",
-      "label": "\u00een momentul de fa\u021b\u0103 -> acum",
+      "regex": "\\b[îi]n momentul de fa[țt][ăa]\\b",
+      "label": "în momentul de față -> acum",
       "fix": "spune: acum"
     },
     {
@@ -10110,8 +10101,8 @@
       "cat": "complex",
       "lang": "ro",
       "severity": "low",
-      "regex": "\\b[\u00eei]n consecin[\u021bt][\u0103a]\\b",
-      "label": "\u00een consecin\u021b\u0103 -> de aceea",
+      "regex": "\\b[îi]n consecin[țt][ăa]\\b",
+      "label": "în consecință -> de aceea",
       "fix": "spune: de aceea"
     },
     {
@@ -10119,7 +10110,7 @@
       "cat": "complex",
       "lang": "ro",
       "severity": "low",
-      "regex": "\\bfurniz(?:ea(?:z[\u0103a])?|ez(?:i)?|[\u0103a]m?|[\u0103a](?:m|t|[\u00eei]nd?)?|at)?\\b",
+      "regex": "\\bfurniz(?:ea(?:z[ăa])?|ez(?:i)?|[ăa]m?|[ăa](?:m|t|[îi]nd?)?|at)?\\b",
       "label": "a furniza -> a da",
       "fix": "spune: a da"
     },
@@ -10128,7 +10119,7 @@
       "cat": "complex",
       "lang": "ro",
       "severity": "low",
-      "regex": "\\befectu(?:ea(?:z[\u0103a])?|ez(?:i)?|[\u0103a]m?|[\u0103a](?:m|t|[\u00eei]nd?)?|at)?\\b",
+      "regex": "\\befectu(?:ea(?:z[ăa])?|ez(?:i)?|[ăa]m?|[ăa](?:m|t|[îi]nd?)?|at)?\\b",
       "label": "a efectua -> a face",
       "fix": "spune: a face"
     },
@@ -10137,7 +10128,7 @@
       "cat": "complex",
       "lang": "ro",
       "severity": "low",
-      "regex": "\\butiliz(?:ea(?:z[\u0103a])?|ez(?:i)?|[\u0103a]m|[\u0103a](?:m|t|[\u00eei]nd?)?|at)?\\b",
+      "regex": "\\butiliz(?:ea(?:z[ăa])?|ez(?:i)?|[ăa]m|[ăa](?:m|t|[îi]nd?)?|at)?\\b",
       "label": "a utiliza -> a folosi",
       "fix": "spune: a folosi"
     },
@@ -10146,16 +10137,16 @@
       "cat": "complex",
       "lang": "ro",
       "severity": "low",
-      "regex": "\\bimplement(?:ea(?:z[\u0103a])?|eaz[\u0103a]|[\u0103a]m|[\u0103a](?:m|t|[\u00eei]nd?)?|are|at)?\\b",
-      "label": "a implementa -> a pune \u00een aplicare",
-      "fix": "spune: a pune \u00een aplicare"
+      "regex": "\\bimplement(?:ea(?:z[ăa])?|eaz[ăa]|[ăa]m|[ăa](?:m|t|[îi]nd?)?|are|at)?\\b",
+      "label": "a implementa -> a pune în aplicare",
+      "fix": "spune: a pune în aplicare"
     },
     {
       "id": "complex.ro.finaliza",
       "cat": "complex",
       "lang": "ro",
       "severity": "low",
-      "regex": "\\bfinaliz(?:ea(?:z[\u0103a])?|[\u0103a]m|[\u0103a](?:m|t|[\u00eei]nd?)?|are|at)?\\b",
+      "regex": "\\bfinaliz(?:ea(?:z[ăa])?|[ăa]m|[ăa](?:m|t|[îi]nd?)?|are|at)?\\b",
       "label": "a finaliza -> a termina",
       "fix": "spune: a termina"
     },
@@ -10164,7 +10155,7 @@
       "cat": "complex",
       "lang": "ro",
       "severity": "low",
-      "regex": "\\bsolicit(?:\u0103a|[\u0103a]m|[\u0103a](?:t|[rii]+)?|\\b)?",
+      "regex": "\\bsolicit(?:ăa|[ăa]m|[ăa](?:t|[rii]+)?|\\b)?",
       "label": "a solicita -> a cere",
       "fix": "spune: a cere"
     },
@@ -10173,16 +10164,16 @@
       "cat": "complex",
       "lang": "ro",
       "severity": "low",
-      "regex": "\\bachizi[\u021bt]ion(?:ea(?:z[\u0103a])?|[\u0103a]m|[\u0103a](?:t|[rii]+)?|at)?\\b",
-      "label": "a achizi\u021biona -> a cump\u0103ra",
-      "fix": "spune: a cump\u0103ra"
+      "regex": "\\bachizi[țt]ion(?:ea(?:z[ăa])?|[ăa]m|[ăa](?:t|[rii]+)?|at)?\\b",
+      "label": "a achiziționa -> a cumpăra",
+      "fix": "spune: a cumpăra"
     },
     {
       "id": "complex.ro.beneficia",
       "cat": "complex",
       "lang": "ro",
       "severity": "low",
-      "regex": "\\bbenefici(?:a(?:z[\u0103a]?|[\u0103a]m|[\u0103a]t)|e(?:z[\u0103a])?) de\\b|\\bbeneficiu de\\b",
+      "regex": "\\bbenefici(?:a(?:z[ăa]?|[ăa]m|[ăa]t)|e(?:z[ăa])?) de\\b|\\bbeneficiu de\\b",
       "label": "a beneficia de -> a avea",
       "fix": "spune: a avea"
     },
@@ -10202,16 +10193,16 @@
       "severity": "low",
       "regex": "\\bulterior\\b",
       "label": "ulterior -> apoi",
-      "fix": "spune: apoi / dup\u0103"
+      "fix": "spune: apoi / după"
     },
     {
       "id": "complex.fr.subsequemment",
       "cat": "complex",
       "lang": "fr",
       "severity": "low",
-      "regex": "\\bsubs[\u00e9e]quemment\\b",
-      "label": "subs\u00e9quemment -> apr\u00e8s",
-      "fix": "dire: apr\u00e8s"
+      "regex": "\\bsubs[ée]quemment\\b",
+      "label": "subséquemment -> après",
+      "fix": "dire: après"
     },
     {
       "id": "complex.fr.ilconvient",
@@ -10227,7 +10218,7 @@
       "cat": "complex",
       "lang": "fr",
       "severity": "low",
-      "regex": "\\beffectu(?:er|[\u00e9e](?:e|es|s)?|ant|ation)\\b",
+      "regex": "\\beffectu(?:er|[ée](?:e|es|s)?|ant|ation)\\b",
       "label": "effectuer -> faire",
       "fix": "dire: faire"
     },
@@ -10263,8 +10254,8 @@
       "cat": "complex",
       "lang": "fr",
       "severity": "low",
-      "regex": "\\bp[\u00e9e]rennis(?:er|[\u00e9e](?:e|es|s)?|ation)\\b",
-      "label": "p\u00e9renniser -> faire durer",
+      "regex": "\\bp[ée]rennis(?:er|[ée](?:e|es|s)?|ation)\\b",
+      "label": "pérenniser -> faire durer",
       "fix": "dire: faire durer"
     },
     {
@@ -10272,9 +10263,9 @@
       "cat": "complex",
       "lang": "fr",
       "severity": "low",
-      "regex": "\\ben ad[\u00e9e]quation avec\\b",
-      "label": "en ad\u00e9quation avec -> adapt\u00e9 \u00e0",
-      "fix": "dire: adapt\u00e9 \u00e0"
+      "regex": "\\ben ad[ée]quation avec\\b",
+      "label": "en adéquation avec -> adapté à",
+      "fix": "dire: adapté à"
     },
     {
       "id": "complex.fr.myriade",
@@ -10290,8 +10281,8 @@
       "cat": "complex",
       "lang": "fr",
       "severity": "low",
-      "regex": "\\bune pl[\u00e9e]thore (?:de|d')\\b",
-      "label": "une pl\u00e9thore de -> beaucoup de",
+      "regex": "\\bune pl[ée]thore (?:de|d')\\b",
+      "label": "une pléthore de -> beaucoup de",
       "fix": "dire: beaucoup de"
     },
     {
@@ -10299,8 +10290,8 @@
       "cat": "complex",
       "lang": "fr",
       "severity": "low",
-      "regex": "\\bun [\u00e9e]ventail (?:de|d')\\b",
-      "label": "un \u00e9ventail de -> plusieurs",
+      "regex": "\\bun [ée]ventail (?:de|d')\\b",
+      "label": "un éventail de -> plusieurs",
       "fix": "dire: plusieurs"
     },
     {
@@ -10418,7 +10409,7 @@
       "severity": "medium",
       "regex": "\\bbecomes? part of the (?:job|role|work|description|conversation)\\b|\\bis now (?:a|part of) (?:job|role)\\b",
       "label": "aphorism suspendat ('becomes part of the job')",
-      "fix": "Nume\u0219te actorul si mecanismul: cine cere ce, si de ce. Starea singura nu explica nimic."
+      "fix": "Numește actorul si mecanismul: cine cere ce, si de ce. Starea singura nu explica nimic."
     },
     {
       "id": "structure.passive_nobody",

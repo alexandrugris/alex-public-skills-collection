@@ -1,0 +1,31 @@
+id,prompt,expected_skills,should_trigger,notes
+tr-01,"De-AI this three-paragraph memo before I send it to the team.",anti-ai,true,direct EN de-AI request
+tr-02,"Humanize this Romanian newsletter draft; it sounds like ChatGPT.",anti-ai,true,RO prose humanization
+tr-03,"Audit this French essay for AI tells and inflated verbs.",anti-ai,true,FR prose audit
+tr-04,"Rewrite this section so it sounds like me, without dead metaphors or closing morals.",anti-ai,true,paraphrased anti-ai trigger
+tr-05,"Check this markdown draft with the tells linter and fix the HIGH hits.",anti-ai,true,explicit scanner audit
+tr-06,"Strip the corporate buzzwords and weight verbs out of this product note.",anti-ai,true,implicit voice cleanup
+tr-07,"Write a 1,000-word blog post for alexandrugris.ro on migrating my home server to immutable Linux.",blog-writer,true,direct blog-writer TC1
+tr-08,"Draft a From the trenches essay about why small bash gates beat big CI frameworks.",blog-writer,true,voice-named essay request
+tr-09,"Turn this rough seed paragraph into a researched section for my blog, keeping the engineer quote verbatim.",blog-writer,true,seed rewrite TC2
+tr-10,"Fact-check this article draft before I publish it on my site.",blog-writer,true,fact-check pass TC3
+tr-11,"Help me outline and write a blog article comparing Podman and Docker for solo operators.",blog-writer,true,paraphrased blog post
+tr-12,"Polish this draft article, verify every external claim with primary links, and wait for my sign-off.",blog-writer,true,full review loop trigger
+tr-13,"Turn these plain notes into a styled A4 PDF in my usual look.",alexandru-style,true,A4 document TC1
+tr-14,"Build a six-slide Marp deck about our release process using my design system.",alexandru-style,true,Marp deck TC2
+tr-15,"Create a self-contained HTML dashboard for these latency numbers in the alexandrugris.ro style.",alexandru-style,true,HTML mini app TC3
+tr-16,"Restyle this quarterly report HTML to AG Style v1.0 without changing any wording.",alexandru-style,true,visual-only restyle
+tr-17,"Format these bullet notes as a markdown canvas with From the trenches kickers.",alexandru-style,true,markdown canvas TC4
+tr-18,"Export this approved draft as a printable A4 HTML page and render PDF previews.",alexandru-style,true,PDF render workflow
+tr-19,"Write a researched blog post on local RAG pipelines, then style it as an A4 HTML page in my style.",blog-writer+alexandru-style,true,multi-skill chain: content then styling
+tr-20,"Revise this draft article for AI tells and fact-check the citations, then render a clean HTML page.",blog-writer+alexandru-style,true,multi-skill chain: revise then render
+tr-21,"Fix the KeyError on line 42 of parser.py and add a unit test.",none,false,negative control: pure code debugging
+tr-22,"Write a SQL query that groups monthly invoices by customer country.",none,false,negative control: SQL query
+tr-23,"Convert this JSON array into a CSV file with columns id,name,total.",none,false,negative control: data script
+tr-24,"Explain what git rebase --onto does with a two-branch example.",none,false,negative control: short technical Q&A
+tr-25,"Run pytest and tell me which assertion failed.",none,false,negative control: test execution
+tr-26,"Generate a Dockerfile for a Python 3.12 FastAPI app.",none,false,negative control: DevOps config
+tr-27,"Rename variable foo to bar across src/utils.py.",none,false,negative control: mechanical refactor
+tr-28,"Check disk usage on /tmp and list the 5 largest files.",none,false,negative control: shell inspection
+tr-29,"Summarize the diff in the last three git commits in two bullet points.",none,false,negative control: short internal summary
+tr-30,"Write a bash one-liner to find duplicate SHA-256 hashes in a directory.",none,false,negative control: CLI utility

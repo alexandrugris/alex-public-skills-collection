@@ -32,7 +32,7 @@ check() {
 
 printf '%s\n' "run_all: gates for alex-public-skills-collection"
 
-check "anti-ai fixtures gate + self-scan" ok \
+check "anti-ai fixtures + heuristics + examples + self-scan" ok \
   python3 anti-ai/tests/run_tests.py
 
 check "blog-writer clean draft passes gate" ok \
@@ -50,14 +50,20 @@ check "AG style sample page passes checker" ok \
 check "AG style anti-sample fails checker (must FAIL)" fail \
   python3 alexandru-style/tests/check_styled.py alexandru-style/tests/expected/anti-sample.html
 
+check "AG style brand offline check (templates + palette + archive)" ok \
+  python3 alexandru-style/brand/scripts/check.py
+
+check "repo-wide Tier 1-2 suite (spec, integrity, unit tests)" ok \
+  python3 -m unittest discover -s tests -v
+
 check "root files self-scan (0 HIGH/MEDIUM)" ok \
   python3 -c "import json,subprocess,sys
-r=subprocess.run([sys.executable,'anti-ai/check_tells.py','--json','AGENTS.md','run_all.sh'],capture_output=True,text=True)
+r=subprocess.run([sys.executable,'anti-ai/check_tells.py','--json','--severity','medium','AGENTS.md','run_all.sh','README.md'],capture_output=True,text=True)
 if r.returncode!=0: print(r.stdout,r.stderr); sys.exit(1)
 hits=json.loads(r.stdout)['hits']
 bad=[h for h in hits if h['severity'] in ('high','medium')]
-print('%d HIGH/MEDIUM hits on AGENTS.md + run_all.sh' % len(bad))
-for h in bad: print('  %s %s: %s' % (h['severity'].upper(), h['file'], h['id']))
+print('%d HIGH/MEDIUM hits on AGENTS.md + run_all.sh + README.md' % len(bad))
+for h in bad: print('  %s %s L%s: %s' % (h['severity'].upper(), h['file'], h.get('line'), h['id']))
 sys.exit(1 if bad else 0)"
 
 total=$((pass + fail))

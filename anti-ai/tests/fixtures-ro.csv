@@ -29,3 +29,7 @@ ro,PASS,,"Îmi place cum sună piesa, mai ales refrenul."
 ro,PASS,,Am pus problema pe masă și am vorbat două ore.
 ro,PASS,,"Cartea e groasă, dar se citește repede."
 ro,PASS,,"Plouă de dimineață, așa că iau umbrela."
+ro,FAIL,ro.lumea,"În lumea actuală, echipele schimbă uneltele în fiecare an."
+ro,FAIL,metaphor.romanian_arme,Toate armele pe care le folosește managerul sunt tăceri scurte.
+ro,PASS,,Armata a mutat armele din depozit înainte de iarnă.
+ro,PASS,,Un bărbat sincer spune de la început cât costă lucrarea.

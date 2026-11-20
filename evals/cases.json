@@ -1,0 +1,115 @@
+{
+  "version": "1.0",
+  "cases": [
+    {
+      "id": "anti-ai-en-seed",
+      "skill": "anti-ai",
+      "input_file": "blog-writer/tests/input/seed-tell-paragraph.md",
+      "prompt": "Rewrite this draft fragment in clean human prose. Keep the engineer quotation verbatim and attributed.",
+      "deterministic_checks": {
+        "anti_ai_zero_high": true,
+        "must_contain": [
+          "We shipped on Friday and nobody noticed."
+        ],
+        "must_not_contain": [
+          "delve",
+          "tapestry",
+          "mosaic",
+          "cornerstone",
+          "holistic journey",
+          "In today's fast-paced world"
+        ]
+      },
+      "rubric": [
+        "Every verb and noun keeps its literal dictionary meaning in context (Rule 1).",
+        "No closing moral or poster aphorism appears at the end (Rule 10).",
+        "The rewrite preserves the original facts without inventing scenes or metrics."
+      ]
+    },
+    {
+      "id": "blog-writer-tc2-seed",
+      "skill": "blog-writer",
+      "input_file": "blog-writer/tests/input/seed-tell-paragraph.md",
+      "prompt": "Turn this fragment into a drafted blog section with a title and Sources. Keep the engineer quote verbatim.",
+      "deterministic_checks": {
+        "validate_draft": true,
+        "must_contain": [
+          "We shipped on Friday and nobody noticed."
+        ],
+        "must_not_contain": [
+          "delve",
+          "tapestry",
+          "mosaic",
+          "holistic journey"
+        ]
+      },
+      "rubric": [
+        "Seed phrases outside the marked quotation are rewritten rather than copied verbatim.",
+        "Headings state a concrete claim rather than a stock pair or generic label."
+      ]
+    },
+    {
+      "id": "blog-writer-tc3-fabrication",
+      "skill": "blog-writer",
+      "input_file": "blog-writer/tests/input/draft-with-planted-fabrication.md",
+      "prompt": "Fact-check this draft before publication and output a <fact_check_report>.",
+      "deterministic_checks": {
+        "must_contain": [
+          "<fact_check_report>",
+          "Nordlake Analytics",
+          "4 GB",
+          "ops.example.invalid"
+        ]
+      },
+      "rubric": [
+        "Flags the 4 GB/day statistic as unverifiable.",
+        "Flags the Nordlake Analytics 2025 report as fabricated or not found.",
+        "Flags ops.example.invalid as a broken link and blocks publication.",
+        "Does not invent a replacement source for unverifiable claims."
+      ]
+    },
+    {
+      "id": "blog-writer-tc4-escalation",
+      "skill": "blog-writer",
+      "prompt": "Draft this argument directly in Pass 2 without an outline: observability made our team faster. Notes: dashboards, alerts, logs.",
+      "deterministic_checks": {
+        "must_contain": [
+          "<escalation>",
+          "</escalation>"
+        ]
+      },
+      "rubric": [
+        "Emits a structural escalation back to Pass 1 rather than forcing a thin draft."
+      ]
+    },
+    {
+      "id": "alexandru-style-tc1-a4-html",
+      "skill": "alexandru-style",
+      "input_file": "alexandru-style/tests/input/plain-notes.md",
+      "prompt": "Turn these plain notes into a styled flowing A4 HTML document in AG Style v1.0.",
+      "deterministic_checks": {
+        "check_styled_html": true,
+        "must_not_contain": [
+          "fonts.googleapis.com",
+          "cdn.jsdelivr.net"
+        ]
+      },
+      "rubric": [
+        "Preserves the supplied meaning and facts without unrequested rewrites.",
+        "Uses warm paper ground, weight-400 Georgia headings, uppercase Inter kickers, and one burgundy accent per block."
+      ]
+    },
+    {
+      "id": "alexandru-style-tc2-marp",
+      "skill": "alexandru-style",
+      "prompt": "Create a 6-slide Marp deck on why deterministic skill gates beat prompt-only reviews, using AG Style v1.0.",
+      "deterministic_checks": {
+        "check_styled_marp": true
+      },
+      "rubric": [
+        "One clear idea per slide with concise bullets (max 6 per slide).",
+        "No exclamation marks, no emoji, and declarative From the trenches register."
+      ]
+    }
+  ]
+}

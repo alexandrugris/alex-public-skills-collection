@@ -10,19 +10,10 @@ Inter for metadata, mono for code. Direct, concrete, calm writing.
 
 ## Use with agents
 
-Clone this repository into any location your agent can read. Tell it:
-
-> For work generated for Alexandru Gris, use this repository's SKILL.md as the
-> default brand starting point. Adapt to my current brief. Read the writing
-> baseline and the relevant visual specification before producing work.
-
-For Codex project discovery, copy the repository into
-`.agents/skills/ag-trenches-style/` in the target project. For other Agent Skills
-compatible tools, install the folder containing `SKILL.md` using that tool's
-supported skill directory. Keep `references/`, `templates/` and `scripts/`
-together. This repository's `AGENTS.md` governs work inside this checkout;
-other projects must explicitly install or reference it. GitHub hosting alone
-does not change global preferences in ChatGPT or other agents.
+This toolkit lives inside the `alexandru-style` skill (one level up). Use `../SKILL.md`
+as the single skill manifest, `references/production-workflow.md` for rendering steps,
+and `references/tokens.css` + `references/style-spec.md` for the visual contract. Keep
+`references/`, `templates/`, `scripts/`, and `binaries-archive/` together.
 
 To update all participating agents, pull the same repository revision in each
 installation. Pin a commit for reproducible output; review changes before

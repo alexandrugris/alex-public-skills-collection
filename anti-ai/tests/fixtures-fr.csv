@@ -30,3 +30,6 @@ fr,PASS,,"Paris est calme en août, presque vide."
 fr,PASS,,"Il pleut depuis ce matin, je prends le métro."
 fr,PASS,,"Le client a signé ce matin, on démarre lundi."
 fr,PASS,,Elle parle trois langues et travaille vite.
+fr,FAIL,metaphor.french_armes,Les armes du consultant sont trois tableaux et un délai court.
+fr,PASS,,Un collègue honnête signale les erreurs avant la mise en ligne.
+fr,PASS,,"L'armée entretient ses armes avant chaque sortie."

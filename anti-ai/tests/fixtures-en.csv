@@ -43,3 +43,48 @@ en,FAIL,grammar.passive,Managers are told to inspire.
 en,FAIL,grammar.passive,The questions get labelled as resistance.
 en,PASS,,He tells the managers to project confidence in every meeting.
 en,PASS,,"HR never states who will be let go, or by what criteria."
+en,FAIL,chat.willing,I am happy to help with your deployment plan.
+en,FAIL,chat.hope_helps,I hope this helps you sort out the schedule.
+en,FAIL,chat.let_me_know,Let me know if you want a follow-up draft.
+en,FAIL,chat.further_ado,"Without further ado, here are the quarterly numbers."
+en,FAIL,chat.dive_in,Let us skip the preface and let's dive in right now.
+en,FAIL,chat.feel_free,Feel free to reach out whenever the numbers land.
+en,FAIL,chat.praise_point,"That is not it, actually that's a great point about latency."
+en,FAIL,chat.ai_disclaimer,"As an AI language model, I cannot check your production server."
+en,FAIL,chat.fast_paced,"In today's fast-paced world, teams ship code every hour."
+en,FAIL,inf.delve,We need to delve into the memory leak before Friday.
+en,FAIL,inf.tapestry,The product is a tapestry of small design choices.
+en,FAIL,inf.testament,The uptime log is a testament to patient engineering.
+en,FAIL,inf.pivotal,That outage marked a pivotal moment for the billing team.
+en,FAIL,inf.seamless,The migration gave users a seamless checkout experience.
+en,FAIL,inf.leverage,We can leverage the existing queue for audit events.
+en,FAIL,inf.harness,Teams should harness browser caching to cut bandwidth.
+en,FAIL,inf.unlock,Better indexing will unlock faster reports for finance.
+en,FAIL,inf.showcase,The demo will showcase our new retry loop.
+en,FAIL,inf.underscore,These numbers underscore why backups matter.
+en,FAIL,inf.groundbreaking,The patch was a groundbreaking change for the parser.
+en,FAIL,inf.ever_evolving,Security rules shift in an ever-evolving market.
+en,FAIL,inf.symphony,Good testing is the cornerstone of reliable releases.
+en,FAIL,inf.earns_its,This architecture earns its complexity under load.
+en,FAIL,inf.plays_role,Caching plays a crucial role in keeping latency flat.
+en,FAIL,inf.serves_as,The manifest serves as the entry point for every skill.
+en,FAIL,inf.navigate_complexities,New managers must navigate the complexities of budget season.
+en,FAIL,inf.deep_dive,Tomorrow we publish a deep dive on disk scheduling.
+en,FAIL,inf.more_than_just,A changelog is more than just a list of commits.
+en,FAIL,hedge.important_to,It is important to note that the cache expires in ten minutes.
+en,FAIL,hedge.experts,Many experts say the protocol will replace polling.
+en,FAIL,hedge.studies,Studies show that shorter meetings save two hours a week.
+en,FAIL,hedge.recent_data,"According to recent data, cold starts dropped by half."
+en,FAIL,str.binary_not_but,"This tool is not just a linter, but a training loop."
+en,FAIL,str.binary_is_is,Speed is not luck. It is discipline.
+en,FAIL,str.binary_point,"The point is not to write faster, it is to write clearly."
+en,FAIL,weight.load_bearing,That single assumption is load-bearing for the whole forecast.
+en,FAIL,weight.carries_weight,The opening paragraph carries the weight of the whole essay.
+en,FAIL,weight.grant_confer,External benchmarks lend credibility to the pricing page.
+en,FAIL,weight.earn_admiration,A clean rollback earns the respect of on-call engineers.
+en,FAIL,chat.common_thread,There is a common thread across all five outage reports.
+en,FAIL,inflated.mere,The checklist is not a mere formality before launch.
+en,FAIL,metaphor.weapons,The weapons he describes are all subtractions.
+en,PASS,,The steel bridge carries the weight of three loaded trucks.
+en,PASS,,The army moved its weapons out of the northern depot.
+en,PASS,,She is an honest broker who shares every bid with both sides.

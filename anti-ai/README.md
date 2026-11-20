@@ -17,8 +17,9 @@ these in a thousand words; human writing trips almost none (see
 
 ## Usage
 
-    python3 check_tells.py <file-or-dir> [...] [--json] [--cat chat,inflated] [--severity high] [--density]
-    python3 check_tells.py --fixtures tests/fixtures-en.csv tests/fixtures-ro.csv tests/fixtures-fr.csv
+    python3 check_tells.py <file-or-dir> [...] [--json] [--cat chat,inflated] [--severity high] [--lang en|ro|fr] [--density]
+    python3 check_tells.py --fixtures tests/fixtures-en.csv tests/fixtures-ro.csv tests/fixtures-fr.csv [--json]
+    python3 scripts/examples.py query --lang en --topic "leadership" --limit 5
 
 The "--fixtures" mode is the regression gate: synthetic trap sentences per language
 (MUST-FAIL rows must fire their pattern, MUST-PASS rows must fire nothing) so per-language
@@ -28,16 +29,17 @@ Verdicts:
 
 - **FAIL** (exit report): at least one HIGH hit. Almost surely machine-drafted text, or
   prose with heavy tells. Fix before publishing.
-- **REVIEW**: MEDIUM hits present. Can be perfectly good human writing: judge by hand.
+- **REVIEW**: MEDIUM hits present (zero HIGH). Can be perfectly good human writing: judge by hand.
 - **PASS**: nothing above LOW.
 
-The scanner reports exemptions, never silently dropped: quoted text and literal context (a
-word is allowed when the sentence is about the physical thing: "a bridge that carries
-the weight of three trucks" is fine).
+The scanner reports exemptions, never silently dropped: quoted text, person references for
+honesty words, and literal context (a word is allowed when the sentence is about the
+physical thing: "a bridge that carries the weight of three trucks" is fine). For Markdown
+files, it masks YAML frontmatter, fenced code blocks, and URLs before scanning prose.
 
 ## The pattern file
 
-`patterns.json` (468 patterns, versioned) is the canonical blocklist. Categories:
+`patterns.json` (versioned, see the `version` field inside the file) is the canonical blocklist. Categories:
 `metaphor` (words without literal meaning), `weight` ("carries the weight of",
 "anchors", "underpins", "grants"...), `inflated` (corporate inflation), `hedge`,
 `honesty` (self-certified sincerity, allowed when describing a person), `vague` (empty
@@ -65,7 +67,7 @@ numbers.
 
 ## Calibration evidence
 
-The FAIL/REVIEW split wgate checks both directions:
+The FAIL/REVIEW split checks both directions:
 
 | Corpus | Verdict |
 |---|---|
@@ -78,6 +80,11 @@ Unedited human text wins REVIEW, not PASS: single blocklist words at low density
 ("holistic", "cutting edge", "important") are noise; density and empty second clauses
 are the tells. Read `references/human-benchmarks.md` before you cut anything a REVIEW
 verdict flags.
+
+## Corrections database (learning from edits)
+
+- `examples/corrections.jsonl` - real bad-to-good rewrites with reasons, rules, and tags
+- `scripts/examples.py` - retrieve top-K examples before drafting (`query`), log new human edits (`add`), list scanner blind spots (`gaps`), and validate in CI (`validate`)
 
 ## Portable rule set
 

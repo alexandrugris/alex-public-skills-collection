@@ -15,6 +15,7 @@ import pathlib
 import re
 import shutil
 import subprocess
+import sys
 
 from fonts import font_css
 
@@ -40,13 +41,13 @@ def inline_tokens(html: str) -> str:
     html = html.replace("TOKENS_PATH", TOKENS.as_uri())
     html = re.sub(
         r'<link[^>]+href="[^"]*tokens\.css"[^>]*>',
-        block,
+        lambda _: block,
         html,
     )
     # A file:// link may still be present if the template used a relative path.
     html = re.sub(
         r'<link[^>]+href="(?!\w+:)[^"]*tokens\.css"[^>]*>',
-        block,
+        lambda _: block,
         html,
     )
     return html

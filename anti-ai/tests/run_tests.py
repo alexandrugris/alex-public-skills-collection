@@ -1,4 +1,4 @@
-"""anti-ai full test run: trilingual trap-corpus gate + self-scan of the skill docs.
+"""anti-ai full test run: trilingual trap-corpus gate, heuristics, examples DB, and doc self-scan.
 
 Run from anywhere:
     python3 tests/run_tests.py
@@ -12,6 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SCANNER = ROOT / "check_tells.py"
+EXAMPLES_CLI = ROOT / "scripts" / "examples.py"
 LANGS = ("en", "ro", "fr")
 
 
@@ -22,40 +23,45 @@ def scanner(args):
 
 
 def gate():
-    """Every MUST-FAIL row fires, every MUST-PASS row stays clean."""
+    """Every MUST-FAIL row fires, every MUST-PASS row stays clean (exact counts)."""
     csvs = [str(ROOT / "tests" / ("fixtures-%s.csv" % lang)) for lang in LANGS]
-    r = scanner(["--fixtures"] + csvs)
-    out = r.stdout
-    must_fail_ok = "MUST-FAIL fired" in out and "100%" in out.split("MUST-FAIL")[1].split("|")[0]
-    must_pass_ok = "MUST-PASS clean" in out and "100%" in out.split("MUST-PASS")[1].split("|")[0]
-    print(out.strip())
-    if not must_fail_ok:
-        print("gate: MUST-FAIL rows missing their patterns")
+    r = scanner(["--fixtures"] + csvs + ["--json"])
+    if not r.stdout.strip():
+        print(r.stderr.strip())
         return False
-    if not must_pass_ok:
-        print("gate: MUST-PASS rows firing false hits")
-        return False
-    return True
+    res = json.loads(r.stdout)
+    fired, must_fail = res["fired"], res["must_fail"]
+    clean, must_pass = res["clean"], res["must_pass"]
+    print(
+        "fixtures: MUST-FAIL fired %d/%d (%.1f%%) | MUST-PASS clean %d/%d (%.1f%%)"
+        % (fired, must_fail, res["fire_rate"], clean, must_pass, res["clean_rate"])
+    )
+    for prob in res["problems"]:
+        print("  " + prob)
+    ok = (
+        r.returncode == 0
+        and must_fail > 0
+        and must_pass > 0
+        and fired == must_fail
+        and clean == must_pass
+    )
+    if not ok:
+        print("gate: exact 100% MUST-FAIL and MUST-PASS requirement not met")
+    return ok
 
 
 def self_scan():
     """The skill's own docs carry 0 active HIGH/MEDIUM hits (LOW house notes are fine)."""
-    r = scanner(["--json", str(ROOT)])
+    md_files = sorted(str(p) for p in ROOT.rglob("*.md"))
+    r = scanner(["--json", "--severity", "medium"] + md_files)
     if r.returncode != 0:
         print(r.stdout, r.stderr)
         return False
     hits = json.loads(r.stdout)["hits"]
-    docs = sorted(
-        {h["file"] for h in hits if Path(h["file"]).suffix == ".md"}
-    )
-    bad = [
-        h
-        for h in hits
-        if Path(h["file"]).suffix == ".md" and h["severity"] in ("high", "medium")
-    ]
+    bad = [h for h in hits if h["severity"] in ("high", "medium")]
     for h in bad:
-        print("self-scan %s: %s %s" % (h["severity"].upper(), h["file"], h["id"]))
-    print("self-scan: %d docs scanned, %d active HIGH/MEDIUM hits" % (len(docs), len(bad)))
+        print("self-scan %s: %s L%s %s" % (h["severity"].upper(), h["file"], h.get("line"), h["id"]))
+    print("self-scan: %d docs scanned, %d active HIGH/MEDIUM hits" % (len(md_files), len(bad)))
     return not bad
 
 
@@ -72,15 +78,31 @@ def heuristics():
     return True
 
 
+def examples_gate():
+    """Corrections database passes schema and zero-HIGH checks."""
+    r = subprocess.run(
+        [sys.executable, str(EXAMPLES_CLI), "validate"],
+        capture_output=True, text=True,
+    )
+    print(r.stdout.strip())
+    if r.returncode != 0:
+        if r.stderr.strip():
+            print(r.stderr.strip())
+        return False
+    return True
+
+
 def main():
-    results = []
-    results.append(("fixtures gate", gate()))
-    results.append(("heuristics gate", heuristics()))
-    results.append(("doc self-scan", self_scan()))
+    results = [
+        ("fixtures gate", gate()),
+        ("heuristics gate", heuristics()),
+        ("examples gate", examples_gate()),
+        ("doc self-scan", self_scan()),
+    ]
     print("")
     ok = True
     for name, passed in results:
-        print("%-14s %s" % (name, "PASS" if passed else "FAIL"))
+        print("%-15s %s" % (name, "PASS" if passed else "FAIL"))
         ok = ok and passed
     sys.exit(0 if ok else 1)
 

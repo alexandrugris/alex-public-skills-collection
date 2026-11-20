@@ -4,7 +4,8 @@ Write like an edited human, not a model. Spoken register in any language: write 
 the way you would say it out loud, then edit. Every word must have literal meaning, so no
 metaphors whose dictionary sense breaks in context: no "weapons" for strategy, no
 "load-bearing", no "carries weight" in any form ("carries the weight of", "punches
-above its weight"), no "anchors", "grants", "fosters". Simple English, one or two
+above its weight"), no "anchors", "grants", "fosters". When you cut a metaphor, expand it
+into the concrete actor and mechanism instead of leaving a hole. Simple English, one or two
 syllable words: "use" not "utilize", "show" not "demonstrate", "many" not "numerous",
 "get" not "obtain", "to" not "in order to". In Romanian: "a da" not "a furniza",
 "a face" not "a efectua", "pentru" not "în vederea". In French: "faire" not "effectuer",
@@ -18,6 +19,9 @@ register for simple facts (no "the question waiting on your desk tonight", "the 
 thickens", "here is the twist"). No filler openers ("There is a common thread", "In
 today's fast-paced world", "Let's dive in", "It is important to note that"). No hedge
 clusters ("essentially" and "albeit" and "in different guises"). No moral at the end,
-end on an image or a fact. Core sentences 12-22 words, varied; enumerations may run
-longer, but not everywhere; zero em-dashes; colon as the pause; headings are declarative
-sentences with a period. Deliver the rewritten text first, plain, then nothing else.
+end on an image or a fact. Say what a thing is, not what it is not; frame advice as a
+conditional rather than an order; keep active voice with the actor in the subject, and
+render scenes through physical detail and observable behavior rather than emotion labels.
+Core sentences 12-22 words, varied; enumerations may run longer, but not everywhere;
+zero em-dashes; colon as the pause; headings are declarative sentences with a period.
+Deliver the rewritten text first, plain, then nothing else.

@@ -23,6 +23,7 @@ import json
 import os
 import re
 import sys
+import unicodedata
 from collections import Counter, defaultdict
 
 BASE = os.path.dirname(os.path.abspath(__file__))
@@ -31,6 +32,31 @@ if not os.path.exists(LIST_PATH):
     LIST_PATH = os.path.join(os.path.dirname(BASE), "references", "patterns.json")
 EXT = {".md", ".txt", ".html", ".json", ".rst", ".org", ".csv"}
 SKIP_DIRS = {".git", "node_modules", "__pycache__", ".openclaw", ".backups"}
+SEV_RANK = {"low": 0, "medium": 1, "high": 2}
+WORD_RE = re.compile(r"[A-Za-z\u00C0-\u024F\u1E00-\u1EFF']+")
+
+
+def _fold(text):
+    """Strip diacritics (NFKD) and lowercase so RO/FR exemptions match reliably."""
+    decomposed = unicodedata.normalize("NFKD", text)
+    return "".join(c for c in decomposed if unicodedata.category(c) != "Mn").lower()
+
+
+def _blank_preserve_lines(match):
+    return "".join("\n" if ch == "\n" else " " for ch in match.group(0))
+
+
+_FRONTMATTER_RE = re.compile(r"\A---\r?\n.*?\r?\n---(?:\r?\n|\Z)", re.S)
+_FENCE_RE = re.compile(r"(?m)^([ \t]{0,3}(?:`{3,}|~{3,}))[^\n]*\n.*?\n[ \t]{0,3}\1[ \t]*$", re.S)
+_URL_RE = re.compile(r"https?://[^\s)\]>\"']+")
+
+
+def mask_non_prose(text):
+    """Blank Markdown YAML frontmatter, fenced code blocks, and URLs while preserving line numbers."""
+    text = _FRONTMATTER_RE.sub(_blank_preserve_lines, text)
+    text = _FENCE_RE.sub(_blank_preserve_lines, text)
+    text = _URL_RE.sub(_blank_preserve_lines, text)
+    return text
 
 
 def load_list():
@@ -72,24 +98,27 @@ PERSON_NOUNS = (
     "apprentice", "volunteer", "neighbour", "neighbor", "stranger",
     "everyone", "someone", "anyone", "he", "she", "they", "him", "her",
     "them", "his", "hers", "their", "our", "us", "we",
-    # RO / FR person nouns (same exemption logic)
-    "prieten", "prietene", "om", "omul", "femeie", "femeia", "barbat", "coleg",
-    "colega", "angajat", "angajatul", "profesor", "client", "clientul",
-    "partener", "adversar", "autor", "autorul", "scriitor", "jucator",
-    "vecin", "vecinul", "straina", "autorul", "mama", "tata", "copil",
-    "ami", "amie", "homme", "femme", "collegue", "collègue", "partenaire",
+    # RO / FR person nouns (matched after diacritic folding)
+    "prieten", "prietena", "prietene", "om", "omul", "femeie", "femeia",
+    "barbat", "barbatul", "coleg", "colega", "angajat", "angajatul",
+    "profesor", "client", "clientul", "partener", "adversar", "autor",
+    "autorul", "scriitor", "jucator", "vecin", "vecinul", "strain", "straina",
+    "mama", "tata", "copil",
+    "ami", "amie", "homme", "femme", "collegue", "partenaire",
     "auteur", "voisin", "inconnu", "lecteur", "locuteur", "dirigeant",
 )
-_PERSON_RE = re.compile(r"\b(?:" + "|".join(PERSON_NOUNS) + r")\b", re.I)
+_PERSON_RE = re.compile(
+    r"\b(?:" + "|".join(sorted({_fold(w) for w in PERSON_NOUNS})) + r")\b"
+)
 EXEMPT_CATS = {"honesty"}
 
 
 def person_follows(before, after):
-    """True if the match refers to a person.
-    'honest broker' / 'his honest assessment' / 'her honest assessment' -> allowed;
+    """True if the match refers to a person (Unicode/diacritic safe).
+    'honest broker' / 'his honest assessment' / 'un collègue honnête' -> allowed;
     'the honest answer is' / 'to be honest' -> not."""
-    head = " ".join(re.findall(r"[A-Za-z']+", after)[:2]).lower()
-    tail = " ".join(re.findall(r"[A-Za-z']+", before)[-2:]).lower()
+    head = " ".join(_fold(w) for w in WORD_RE.findall(after)[:2])
+    tail = " ".join(_fold(w) for w in WORD_RE.findall(before)[-2:])
     return bool(_PERSON_RE.search(head) or _PERSON_RE.search(tail))
 
 
@@ -112,22 +141,44 @@ def in_quotes(pos, spans):
     return any(a <= pos < b for a, b in spans)
 
 
+def _keep_hit(hit, cats=None, min_sev=None):
+    if cats and hit.get("cat") not in cats:
+        return False
+    if min_sev and SEV_RANK.get(hit.get("severity"), 0) < SEV_RANK.get(min_sev, 0):
+        return False
+    return True
+
+
+def _lang_allowed(item_lang, target_lang):
+    if not target_lang or target_lang == "all":
+        return True
+    il = (item_lang or "any").lower()
+    if il == "any":
+        return True
+    return il == target_lang.lower()
+
+
 EXEMPT_LOG = []
 
 
-def scan(text, data, cats=None, min_sev=None):
-    sev_rank = {"low": 0, "medium": 1, "high": 2}
+def scan(text, data, cats=None, min_sev=None, lang=None):
     hits = []
     del EXEMPT_LOG[:]
     spans = quote_spans(text)
     for item in data["phrases"]:
-        if cats and item["cat"] not in cats:
+        if not _lang_allowed(item.get("lang"), lang):
             continue
-        if min_sev and sev_rank.get(item["severity"], 0) < sev_rank.get(min_sev, 0):
+        if not _keep_hit(item, cats, min_sev):
             continue
         for match in item["re"].finditer(text):
             if in_quotes(match.start(), spans):
                 EXEMPT_LOG.append({"id": item["id"], "why": "quoted",
+                                   "match": match.group(0)[:60]})
+                continue
+            before = text[max(0, match.start() - 45):match.start()]
+            after = text[match.end():match.end() + 80]
+            if item["cat"] in EXEMPT_CATS and person_follows(before, after):
+                EXEMPT_LOG.append({"id": item["id"], "why": "person",
                                    "match": match.group(0)[:60]})
                 continue
             markers = item.get("literal")
@@ -136,10 +187,10 @@ def scan(text, data, cats=None, min_sev=None):
                 a_raw = text[match.end():match.end() + 40]
                 b_raw = re.split(r"[.!?:;\n]", b_raw)[-1]
                 a_raw = re.split(r"[.!?:;\n]", a_raw)[0]
-                w_before = " ".join(re.findall(r"[A-Za-z']+", b_raw)[-3:]).lower()
-                w_after = " ".join(re.findall(r"[A-Za-z']+", a_raw)[:3]).lower()
+                w_before = " ".join(_fold(w) for w in WORD_RE.findall(b_raw)[-3:])
+                w_after = " ".join(_fold(w) for w in WORD_RE.findall(a_raw)[:3])
                 near = w_before + " " + w_after
-                if any(re.search(r"\b" + re.escape(mk) + r"\b", near) for mk in markers):
+                if any(re.search(r"\b" + re.escape(_fold(mk)) + r"\b", near) for mk in markers):
                     EXEMPT_LOG.append({"id": item["id"], "why": "literal",
                                        "match": match.group(0)[:60]})
                     continue
@@ -152,8 +203,8 @@ def scan(text, data, cats=None, min_sev=None):
                     "fix": item["fix"],
                     "line": line_of(text, match.start()),
                     "match": match.group(0)[:120],
-                    "after": text[match.end():match.end() + 80],
-                    "before": text[max(0, match.start() - 45):match.start()],
+                    "after": after,
+                    "before": before,
                 }
             )
     return hits
@@ -386,7 +437,7 @@ def house_style_notes(text, path):
     return notes
 
 
-def run_fixtures(paths, data):
+def run_fixtures(paths, data, as_json=False):
     must_fail = must_pass = fired = clean = 0
     problems = []
     for path in paths:
@@ -399,8 +450,10 @@ def run_fixtures(paths, data):
         for row in rows:
             expect = (row.get("expect") or "").strip().upper()
             exid = (row.get("exid") or "").strip()
+            row_lang = (row.get("lang") or "").strip().lower()
+            target_lang = row_lang if row_lang in ("en", "ro", "fr") else None
             text = row.get("text") or ""
-            hits = scan(text, data)
+            hits = scan(text, data, lang=target_lang)
             ids = sorted({h["id"] for h in hits})
             if expect == "FAIL":
                 must_fail += 1
@@ -422,13 +475,33 @@ def run_fixtures(paths, data):
                     problems.append("%s GHOST %s: %r" % (path, ",".join(ids), text[:70]))
     fire_rate = 100.0 * fired / max(must_fail, 1)
     clean_rate = 100.0 * clean / max(must_pass, 1)
-    print("fixtures: MUST-FAIL fired %d/%d (%.0f%%) | MUST-PASS clean %d/%d (%.0f%%)"
-          % (fired, must_fail, fire_rate, clean, must_pass, clean_rate))
-    for p in problems:
-        print("  " + p)
     verdict = "PASS" if (must_fail and must_pass and fire_rate >= 90 and clean_rate == 100) else "FAIL"
-    print("VERDICT: %s" % verdict)
+    if as_json:
+        print(json.dumps({
+            "must_fail": must_fail,
+            "fired": fired,
+            "must_pass": must_pass,
+            "clean": clean,
+            "fire_rate": round(fire_rate, 2),
+            "clean_rate": round(clean_rate, 2),
+            "problems": problems,
+            "verdict": verdict,
+        }, ensure_ascii=False, indent=2))
+    else:
+        print("fixtures: MUST-FAIL fired %d/%d (%.0f%%) | MUST-PASS clean %d/%d (%.0f%%)"
+              % (fired, must_fail, fire_rate, clean, must_pass, clean_rate))
+        for p in problems:
+            print("  " + p)
+        print("VERDICT: %s" % verdict)
     return verdict
+
+
+def compute_verdict(by_sev):
+    if by_sev.get("high", 0):
+        return "FAIL"
+    if by_sev.get("medium", 0):
+        return "REVIEW"
+    return "PASS"
 
 
 def main():
@@ -437,15 +510,19 @@ def main():
     ap.add_argument("--json", action="store_true")
     ap.add_argument("--cat", help="comma separated categories")
     ap.add_argument("--severity", choices=["low", "medium", "high"])
+    ap.add_argument("--lang", choices=["all", "en", "ro", "fr"], default="all",
+                    help="scope language-specific rules (default: all)")
     ap.add_argument("--density", action="store_true", help="hits per 1000 words")
+    ap.add_argument("--fail-on", choices=["high", "medium"],
+                    help="exit 1 if verdict reaches this severity")
     ap.add_argument("--fixtures", nargs="+", help="trap corpus CSVs (lang,expect,exid,text)")
     args = ap.parse_args()
 
     data = load_list()
 
     if args.fixtures:
-        run_fixtures(args.fixtures, data)
-        return
+        verdict = run_fixtures(args.fixtures, data, as_json=args.json)
+        sys.exit(0 if verdict == "PASS" else 1)
     if not args.paths:
         ap.error("give files/directories, or --fixtures <csv> [...]")
 
@@ -454,41 +531,41 @@ def main():
     all_hits = []
     total_words = 0
     exempt_count = 0
+    person_exempt_count = 0
     for path in iter_files(args.paths):
         try:
             with open(path, encoding="utf-8", errors="replace") as fh:
-                text = fh.read()
+                raw_text = fh.read()
         except OSError as exc:
             print("cannot read %s: %s" % (path, exc), file=sys.stderr)
             continue
-        total_words += len(re.findall(r"[A-Za-zÀ-ÿ]+", text))
-        for hit in scan(text, data, cats, args.severity):
+        text = mask_non_prose(raw_text) if path.lower().endswith(".md") else raw_text
+        total_words += len(WORD_RE.findall(text))
+        for hit in scan(text, data, cats, args.severity, lang=args.lang):
             hit["file"] = path
             all_hits.append(hit)
         for ex in EXEMPT_LOG:
-            exempt_count += 1
-        for note in structural_heuristics(text, path):
+            if ex.get("why") == "person":
+                person_exempt_count += 1
+            else:
+                exempt_count += 1
+        extra = (
+            structural_heuristics(text, path)
+            + parallel_list_notes(text, path)
+            + mirrored_summary_notes(text, path)
+            + house_style_notes(text, path)
+        )
+        for note in extra:
+            if args.lang in ("ro", "fr") and note["id"] in ("house.word_len", "house.long_words"):
+                continue
+            if not _keep_hit(note, cats, args.severity):
+                continue
             note["file"] = path
             all_hits.append(note)
-        for note in (parallel_list_notes(text, path)
-                     + mirrored_summary_notes(text, path)
-                     + house_style_notes(text, path)):
-            note["file"] = path
-            all_hits.append(note)
-
-    allowed = [
-        h for h in all_hits
-        if h.get("cat") in EXEMPT_CATS
-        and person_follows(h.get("before", ""), h.get("after", ""))
-    ]
-    all_hits = [
-        h for h in all_hits
-        if not (h["cat"] in EXEMPT_CATS
-                and person_follows(h.get("before", ""), h.get("after", "")))
-    ]
 
     by_cat = Counter(h["cat"] for h in all_hits)
     by_sev = Counter(h["severity"] for h in all_hits)
+    verdict = compute_verdict(by_sev)
 
     if args.json:
         print(
@@ -498,50 +575,52 @@ def main():
                     "by_category": dict(by_cat),
                     "by_severity": dict(by_sev),
                     "words": total_words,
-                    "exempt": exempt_count,
+                    "exempt": exempt_count + person_exempt_count,
+                    "verdict": verdict,
                 },
                 ensure_ascii=False,
                 indent=2,
             )
         )
-        return
-
-    if not all_hits:
+    elif not all_hits:
         print("CLEAN — nicio expresie din listă găsită.")
         print("VERDICT: PASS")
-        return
+    else:
+        grouped = defaultdict(list)
+        for hit in all_hits:
+            grouped[hit["file"]].append(hit)
 
-    grouped = defaultdict(list)
-    for hit in all_hits:
-        grouped[hit["file"]].append(hit)
-
-    for path, hits in grouped.items():
-        print("\n=== %s (%d) ===" % (path, len(hits)))
-        for hit in sorted(hits, key=lambda h: (h["line"], h["id"])):
-            print(
-                "  L%-5d %-7s %-9s %-22s %s"
-                % (
-                    hit["line"],
-                    hit["severity"],
-                    hit["cat"],
-                    hit.get("match", "")[:22],
-                    hit["label"],
+        for path, hits in grouped.items():
+            print("\n=== %s (%d) ===" % (path, len(hits)))
+            for hit in sorted(hits, key=lambda h: (h["line"], h["id"])):
+                print(
+                    "  L%-5d %-7s %-9s %-22s %s"
+                    % (
+                        hit["line"],
+                        hit["severity"],
+                        hit["cat"],
+                        hit.get("match", "")[:22],
+                        hit["label"],
+                    )
                 )
-            )
-            if hit.get("fix"):
-                print("           fix: %s" % hit["fix"])
+                if hit.get("fix"):
+                    print("           fix: %s" % hit["fix"])
 
-    print("\n--- totals ---")
-    print("by category: %s" % dict(by_cat))
-    print("by severity: %s" % dict(by_sev))
-    if allowed:
-        print("allowed (referinta la o persoana): %d" % len(allowed))
-    if exempt_count:
-        print("allowed (citat sau literal): %d" % exempt_count)
-    if args.density and total_words:
-        print("density: %.2f hits / 1000 words (%d words)" % (1000.0 * len(all_hits) / total_words, total_words))
-    hi = by_sev.get("high", 0)
-    print("VERDICT: %s" % ("FAIL" if hi else ("REVIEW" if all_hits else "PASS")))
+        print("\n--- totals ---")
+        print("by category: %s" % dict(by_cat))
+        print("by severity: %s" % dict(by_sev))
+        if person_exempt_count:
+            print("allowed (referinta la o persoana): %d" % person_exempt_count)
+        if exempt_count:
+            print("allowed (citat sau literal): %d" % exempt_count)
+        if args.density and total_words:
+            print("density: %.2f hits / 1000 words (%d words)" % (1000.0 * len(all_hits) / total_words, total_words))
+        print("VERDICT: %s" % verdict)
+
+    if args.fail_on == "high" and verdict == "FAIL":
+        sys.exit(1)
+    if args.fail_on == "medium" and verdict in ("FAIL", "REVIEW"):
+        sys.exit(1)
 
 
 if __name__ == "__main__":
