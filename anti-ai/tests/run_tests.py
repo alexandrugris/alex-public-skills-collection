@@ -78,6 +78,19 @@ def heuristics():
     return True
 
 
+def randomized_retrieval():
+    """Seeded retrieval is repeatable and different seeds vary the sample."""
+    r = subprocess.run(
+        [sys.executable, str(ROOT / "tests" / "test_examples_randomization.py")],
+        capture_output=True, text=True,
+    )
+    print(r.stdout.strip())
+    if r.returncode != 0:
+        print(r.stderr.strip())
+        return False
+    return True
+
+
 def examples_gate():
     """Corrections database passes schema and zero-HIGH checks."""
     r = subprocess.run(
@@ -97,6 +110,7 @@ def main():
         ("fixtures gate", gate()),
         ("heuristics gate", heuristics()),
         ("examples gate", examples_gate()),
+        ("randomized retrieval", randomized_retrieval()),
         ("doc self-scan", self_scan()),
     ]
     print("")
