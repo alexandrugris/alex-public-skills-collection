@@ -36,6 +36,8 @@ For French and Romanian, retrieval fills unused slots with English examples, lab
 
 1. Run `python3 "<SKILLS_DIR>/anti-ai/check_tells.py" "<draft.md>"` and `python3 "<SKILL_DIR>/tests/validate_draft.py" "<draft.md>"`. Fix every HIGH hit before moving to Step 5. For MEDIUM (`REVIEW`) hits, judge by hand against `human-benchmarks.md`: isolated human passives or a single earned `"important"` at low density (~1-2 per post) can stay when the next clause states the concrete mechanism; clusters of MEDIUM tells get rewritten.
 2. Complete the manual Clean-Scan Sign-off even on a PASS scan (regexes only know registered patterns):
+   - **Concept-inventory audit:** every technical, domain, or researcher concept in the prose (no undefined shorthand like `"product work"`) matches the `concept_inventory` shown before drafting, is defined in plain words where it first appears, and links its primary source.
+   - **Scene & continuity check:** the opening scene is ample and lived-in (not a 2-sentence AI summary), shows concrete artifacts, names who asks whom, renders observable room behavior and reactions, and never cites a timing or fact in the analysis that did not happen in the scene. Multi-item roadmaps (3+ parallel shifts) use bullet points.
    - The title is short and direct (no two-part ", and what..." AI suspense tails), and every heading states a concrete claim the text supports, not a stock pair.
    - Each verb and noun keeps its dictionary sense in context (Rule 1).
    - No standalone filler transition survives ("The levels move together."), and every section ends on a consequence or fact, not a moral.
