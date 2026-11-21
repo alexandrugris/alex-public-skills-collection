@@ -1,7 +1,7 @@
 # Corrections and Voice Databases (`examples/`)
 
 - `corrections.jsonl` contains the primary `BAD -> GOOD -> WHY` examples. Corrections take priority when examples disagree.
-- `writing_samples.jsonl` contains the original upload, including duplicate and clipped passages.
+- `writing_samples.jsonl` uses the original upload format (one `text` and `topic` record per line). It keeps the complete sentences from the reviewed passages.
 - `writing_samples_index.json` lists the reviewed passages eligible for retrieval. The index stores SHA-256 hashes of the UTF-8 text with its language and register.
 
 ## Why JSONL
