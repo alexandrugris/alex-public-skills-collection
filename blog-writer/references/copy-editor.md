@@ -10,13 +10,11 @@ Alexandru's site voice: building things, learning by doing, writing to understan
 
 The measured house style and versioned blocklist live in the sibling `anti-ai` skill (`<SKILLS_DIR>/anti-ai/references/anti-ai-short.md` for the quick rule set, `<SKILLS_DIR>/anti-ai/references/anti-ai-prompt.md` for full rules, and `<SKILLS_DIR>/anti-ai/check_tells.py` for mechanical checks, where `<SKILL_DIR>` is the `blog-writer` directory and `<SKILLS_DIR>` is its parent). Where this file and `anti-ai` differ, `anti-ai` wins.
 
-Before drafting, pull up to 10 relevant past rewrites (`BAD -> GOOD -> WHY` from `corrections.jsonl`) plus 6 positive voice anchors (verbatim human passages from `voice_samples.jsonl` matched by topic and scene role) for dual few-shot calibration:
+Before drafting, retrieve corrections as the primary guide and up to two supplementary writing samples. Use the brief's language, topic, and register:
 
-    python3 "<SKILLS_DIR>/anti-ai/scripts/examples.py" query --lang <en|ro|fr> --topic "<topic>" --limit 10
+    python3 "<SKILLS_DIR>/anti-ai/scripts/examples.py" query --lang <en|ro|fr> --topic "<topic>" --limit 10 --register <analytical|personal|fiction>
 
-Retrieval samples by default among the strongest matches while favoring higher-ranked examples. Use the positive voice anchors strictly for sentence cadence, word length, question hooks, and scene texture — never cite or import them as external facts. The command prints the random seed to stderr; pass `--seed <integer>` to reproduce a selection, or `--no-randomize` for strict top-K ranking.
-
-For French and Romanian, retrieval fills unused slots with English examples, labeled `en`. Apply their editorial principles, while writing natural prose in the requested language. Do not copy or literally translate their wording.
+Use the samples for style in the requested register. Take facts from the sources and the brief. Keep the language literal and use established terms. If a passage feels flat, find a specific observation, decision, or consequence in the material. For French and Romanian, English examples may illustrate how to order ideas. Use natural phrasing in the target language. Pass `--seed <integer>` to reproduce selection, or `--no-randomize` for strict ranking.
 
 ## Task
 

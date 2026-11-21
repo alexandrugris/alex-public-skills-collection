@@ -59,13 +59,13 @@ goala; densitatea e discriminatorul, nu aparitia izolata.
   (2) "termen - explicatie" nu e em-dash, e sintaxa de lista; (3) proza needitata
   castiga REVIEW, nu FAIL: FAIL-ul apare la sabloane, nu la imperfectiune.
 
-## Corpus uman D: fragmente tematice (1.806 pasaje, 39.014 cuvinte; 981 pasaje maximale in `examples/voice_samples.jsonl`)
+## Corpus uman D: fragmente tematice (1.806 pasaje, 39.014 cuvinte)
 
 - 6 teme: `leadership` (572), `fiction` (421), `management` (343), `engineering` (180), `product` (156), `life` (134).
 - Lungime per pasaj (1-2 propozitii): min 9 cuvinte, mediana 20, medie 21,6, max 41.
-- Scanner v0.15.2: **99,45% fara HIGH** (doar 10 pasaje / 7 propozitii unice din 1.806 ating un sablon HIGH din era veche: 3 binare "not only...but", 1 metafora arhitecturala, 1 adverb de sinceritate, 1 "merely").
+- Rezultatul din auditul initial: **99,45% fara HIGH** (doar 10 pasaje / 7 propozitii unice din 1.806 ating un sablon HIGH din era veche: 3 binare "not only...but", 1 metafora arhitecturala, 1 adverb de sinceritate, 1 "merely").
 - Rata MEDIUM (`REVIEW`): 21,2% din pasaje (dominata de 4 reguli firesti in proza de lucru la densitate mica: pasive izolate, propozitii imperative scurte si doua adjective din categoria vague).
-- Utilizare in pipeline: cele 981 de pasaje maximale cu 0 HIGH stau in `examples/voice_samples.jsonl` si sunt extrase automat de `scripts/examples.py query` (6 mostre pozitive de ritm si cadenta langa cele 10 perechi `BAD -> GOOD`).
+- Sursa integrala este `examples/writing_samples.jsonl`. Scriptul alege pana la doua pasaje verificate din index.
 
 ## Tabel verdicturi
 
@@ -75,4 +75,4 @@ goala; densitatea e discriminatorul, nu aparitia izolata.
 | Uman A (blog) | om, publicat | 9 REVIEW / 4 FAIL in era recenta | 0,4 |
 | Uman B (memo) | om, intern | REVIEW | 0 |
 | Uman C (work doc) | om, intern, needitat | REVIEW | 0 |
-| Uman D (1.806 pasaje) | om, 6 teme (`voice_samples.jsonl`) | 99,45% PASS/REVIEW (0 HIGH in DB) | 0,25 |
+| Uman D (1.806 pasaje) | om, 6 teme (`writing_samples.jsonl`) | 99,45% PASS/REVIEW in auditul initial | 0,25 |

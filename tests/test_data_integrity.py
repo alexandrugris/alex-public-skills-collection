@@ -74,17 +74,30 @@ class TestDataIntegrity(unittest.TestCase):
         gap_data = json.loads(g.stdout)
         self.assertGreaterEqual(gap_data["uncaught_count"], 1)
 
-        voice_db = REPO_ROOT / "anti-ai" / "examples" / "voice_samples.jsonl"
-        self.assertTrue(voice_db.is_file(), "Missing anti-ai/examples/voice_samples.jsonl")
-        voice_rows = [json.loads(line) for line in voice_db.read_text(encoding="utf-8").splitlines() if line.strip()]
-        self.assertGreaterEqual(len(voice_rows), 900)
+    def test_writing_sample_retrieval_respects_register_and_relevance(self):
+        cli = REPO_ROOT / "anti-ai" / "scripts" / "examples.py"
 
-        qc = subprocess.run(
-            [sys.executable, str(cli), "query", "--lang", "en", "--topic", "engineering", "--limit", "3", "--voice-samples", "4"],
-            capture_output=True, text=True,
-        )
-        self.assertEqual(qc.returncode, 0, qc.stderr)
-        self.assertIn("positive voice anchors", qc.stdout)
+        def samples(lang, topic, *flags):
+            result = subprocess.run(
+                [sys.executable, str(cli), "query", "--lang", lang, "--topic", topic,
+                 "--limit", "0", "--seed", "42", *flags],
+                capture_output=True, text=True,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            return [line for line in result.stdout.splitlines() if line.startswith("[")]
+
+        engineering = samples("en", "engineering")
+        self.assertEqual(len(engineering), 2)
+        self.assertTrue(all("analytical" in line and "fiction" not in line for line in engineering))
+        self.assertEqual(engineering, samples("en", "engineering"))
+        fiction = samples("en", "fiction")
+        self.assertEqual(len(fiction), 2)
+        self.assertTrue(all(" | fiction | " in line for line in fiction))
+        for lang in ("en", "fr", "ro"):
+            self.assertEqual(samples(lang, "jurisprudence"), [])
+        for lang in ("fr", "ro"):
+            self.assertEqual(samples(lang, "engineering"), engineering)
+        self.assertEqual(samples("en", "engineering", "--voice-samples", "0"), [])
 
     def test_design_system_tokens_match_canonical_css(self):
         tokens_css = (REPO_ROOT / "alexandru-style" / "brand" / "references" / "tokens.css").read_text(encoding="utf-8")

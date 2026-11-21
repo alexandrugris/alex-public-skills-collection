@@ -16,8 +16,7 @@ Voice profile (Alex, measured on alexandrugris.ro and on 90 posts spanning 2008-
 `references/alex-style.md`.
 Calibration benchmarks (human corpora; third-party sources anonymized):
 `references/human-benchmarks.md`.
-Corrections and voice databases (bad-to-good rewrites plus 981 selected human voice samples):
-`examples/corrections.jsonl` and `examples/voice_samples.jsonl`, managed by `scripts/examples.py` (see `examples/README.md`).
+Corrections live in `examples/corrections.jsonl`. The supplementary writing samples come from `examples/writing_samples.jsonl` (see `examples/README.md`).
 
 ## Audit (fast)
 
@@ -38,9 +37,9 @@ Guardrail: during prose tasks, if a rule fires on your draft, fix the text and n
 
 ## Write and learn from edits
 
-1. **Retrieve relevant past rewrites and positive voice samples before drafting or revising** (top 10 `BAD -> GOOD` rewrites plus 6 topic-matched human voice samples for cadence and scene texture):
-   `python3 "<SKILL_DIR>/scripts/examples.py" query --lang en --topic "<topic or tags>" --limit 10`
-   French and Romanian queries fill unused slots with examples labeled `en`. Apply their editorial principles and write naturally in the requested language; do not copy or literally translate their wording.
+1. **Retrieve corrections before drafting or revising.** Use up to ten corrections as the primary guide and up to two reviewed writing samples as supplementary examples.
+   `python3 "<SKILL_DIR>/scripts/examples.py" query --lang <en|ro|fr> --topic "<topic or tags>" --limit 10 --register <analytical|personal|fiction>`
+   Retrieval follows the requested language and register. For French and Romanian, English examples may illustrate how to order ideas. Wording follows the language guidance, uses established terms, and stays literal.
 2. **Apply the rules while drafting, then scan and fix what the scanner reports.**
    House rhythm: a sentence built as an enumeration (2+ items, or a semicolon series) may run long, the clause stays 12-22 words, and it must not become every sentence.
    Keep facts, numbers, and quotations unchanged.

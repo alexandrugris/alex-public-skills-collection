@@ -1,10 +1,8 @@
 # Corrections and Voice Databases (`examples/`)
 
-This folder holds two JSONL files managed by `scripts/examples.py`:
-- `corrections.jsonl`: real AI-drafted passages alongside the author's rewrites and reasons (`BAD -> GOOD -> WHY`).
-- `voice_samples.jsonl`: 981 selected, deduplicated human passages across six topics (`leadership`, `fiction`, `management`, `engineering`, `product`, `life`) and five structural roles (`observation`, `scene`, `question_hook`, `tradeoff`, `colon_pivot`), verified at 0 HIGH hits.
-
-The goal is simple: the skill calibrates both what to avoid (`corrections.jsonl`) and what authentic human cadence looks like (`voice_samples.jsonl`) without bloating `SKILL.md`.
+- `corrections.jsonl` contains the primary `BAD -> GOOD -> WHY` examples. Corrections take priority when examples disagree.
+- `writing_samples.jsonl` contains the original upload, including duplicate and clipped passages.
+- `writing_samples_index.json` lists the reviewed passages eligible for retrieval. The index stores SHA-256 hashes of the UTF-8 text with its language and register.
 
 ## Why JSONL
 
@@ -26,21 +24,11 @@ Schema fields in `corrections.jsonl`:
 - `scanner_caught`: boolean, set automatically by `scripts/examples.py add`
 - `status`: `logged`, `promoted_fixture`, `promoted_pattern`, or `few_shot_only`
 
-Schema fields in `voice_samples.jsonl`:
+## Query and maintenance
 
-- `id`: unique key (`vs-NNNN`)
-- `lang`: `en`, `ro`, or `fr`
-- `topics`: non-empty list of topic tags (`leadership`, `fiction`, `management`, `engineering`, `product`, `life`)
-- `role`: `observation`, `scene`, `question_hook`, `tradeoff`, or `colon_pivot`
-- `words`: word count
-- `med_hits`: count of MEDIUM notes (0 HIGH required for every entry)
-- `text`: verbatim human passage used as a cadence and rhythm reference
-
-## Closed learning loop
-
-1. **Retrieve before drafting or revising (dual few-shot calibration):**
-   `python3 scripts/examples.py query --lang en --topic "leadership silence" --limit 10`
-   Pulls up to 10 `BAD -> GOOD` rewrites plus 6 topic-matched positive voice samples (including 1 scene snippet for opening texture; pass `--voice-samples 0` to omit voice samples).
+1. **Retrieve before drafting or revising.**
+   `python3 scripts/examples.py query --lang en --topic "leadership silence" --limit 10 --register analytical`
+   Compact output includes up to two reviewed writing samples that match the topic and register. Choose `analytical`, `personal`, or `fiction`. For French and Romanian, relevant English samples may fill unused places. Use `--voice-samples 0` for corrections alone. JSON output contains corrections only.
 2. **Capture after a human edit:**
    `python3 scripts/examples.py add --lang en --bad "..." --good "..." --why "..." --rules 1,1b --tags metaphor`
    Runs `check_tells.py` on both strings and rejects any `good` rewrite that triggers a HIGH tell.
@@ -51,4 +39,4 @@ Schema fields in `voice_samples.jsonl`:
    `python3 scripts/examples.py promote-fixtures --dry-run`
 5. **Validate in CI:**
    `python3 scripts/examples.py validate`
-   Verifies schema and asserts 0 HIGH hits across every `good` rewrite in `corrections.jsonl` and every passage in `voice_samples.jsonl`.
+   Verifies schema and asserts 0 HIGH hits across every `good` rewrite in `corrections.jsonl` and every indexed passage in `writing_samples.jsonl`. To add a passage, review the full text and add its hash and metadata to the index.
