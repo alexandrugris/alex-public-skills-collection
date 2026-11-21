@@ -42,6 +42,7 @@ Mix channels so the research is not an echo chamber of SEO summaries:
 2. **First-person experience:** distinguish claims about Alexandru's own work (no external source needed) from assertions about the world (source required). Never invent or embellish lived experience.
 3. **Link hygiene:** record the exact URL opened in this session, never a guessed, truncated, or reconstructed link. Broken or unverified links are blocking findings in Step 5.
 4. **Scope recency deliberately:** constrain search dates for "current" facts (prices, software versions, recent events); search wider for concepts, psychology, and history.
+5. **Exact author wording only (no synthetic frameworks):** never invent unverified lists, triads, or coaching heuristics and attribute them to an author, and never import outside concepts that do not belong to the brief's sources. Use each author's exact terms and link every concept to its opened primary source.
 
 ## Research brief format
 

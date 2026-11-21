@@ -20,7 +20,7 @@ Never default to a listicle. If sections read like interchangeable parallel item
 5. **Evidence slots**: in the outline, mark where each sourced claim, personal experience, and counter-argument goes. Counter-arguments get a real slot, not a strawman.
 6. **Endings** land on consequence: what changes now, what the reader does next. No "In conclusion", no restated summary.
 7. Preserve research-brief `[NEEDS SOURCE]` gaps as explicit gap warnings in the structural brief; never paper over them.
-8. **Concept inventory**: list the exact concepts the essay will explain and verify that every listed concept is introduced, explained, and linked in the outline. Do not introduce unannounced concepts late in the essay or invent throwaway foil concepts ("A principle says X; a gate says Y") that the essay never otherwise discusses.
+8. **Concept inventory (no hallucinations, no new concepts)**: list the exact concepts from the opened primary sources that the essay will explain, using the authors' exact terms and primary links. Never import unrequested outside frameworks or invent synthetic triads, numbered checklists, or unverified premises. Verify that every listed concept is introduced, explained, and linked in the outline.
 9. **Briefs carry intent, not just shape.** For every section, write one line of voice intent: what the reader should feel or realize at that point, and the rhythm or edge worth preserving. Structure handoffs lose everything left unsaid.
 
 ## Structural brief format
