@@ -14,6 +14,7 @@ must give way to the concrete thing. No acceptable figure of speech.
 - "The weapons he describes are all subtractions" -> "Everything he describes is a subtraction"
 - "weapons" is allowed only when the sentence is actually about "weapons".
 - Prefer "sustain" or "handle" over "bear" unless talking about an actual bear ("bear the loss" -> "sustain the loss").
+- A model or software system cannot "eat", "digest", or "feel": state what the model actually replaces or makes obsolete ("when the model will eat it" -> "what survives stronger models").
 Quotations are exempt: a quoted metaphor stays, but it must be marked as a quotation and
 attributed.
 

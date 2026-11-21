@@ -80,6 +80,7 @@ Use these exact variable names and hex values. Keep `brand/references/tokens.css
 5. **Left-ruled pull quotes** — 4px solid rule (burgundy for emphasis), italic serif in muted ink. The one block allowed to interrupt the measure.
 6. **Invisible-until-hover underline** — links are unremarkable until hovered; the rule appears on hover, 4px below.
 7. **Photography scrim** — a 90° gradient (`--green-deep`) keeps type readable over a full-bleed image. One shadow, one scrim.
+8. **Orthogonal diagram connectors** — diagrams use straight 90-degree angled lines and arrows, never oblique diagonal lines.
 
 ## 4 · Space & structure
 
