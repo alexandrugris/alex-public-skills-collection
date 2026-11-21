@@ -449,6 +449,30 @@ class TestGlobalSymlinkPortability(unittest.TestCase):
             )
             self.assertEqual(r4.returncode, 0, r4.stdout + r4.stderr)
 
+    def test_examples_query_randomizes_by_default_and_reproduces_with_seed(self):
+        ex_cli = REPO_ROOT / "anti-ai" / "scripts" / "examples.py"
+        r1 = subprocess.run(
+            [sys.executable, str(ex_cli), "query", "--lang", "en", "--limit", "5", "--format", "json"],
+            capture_output=True, text=True,
+        )
+        self.assertEqual(r1.returncode, 0, r1.stdout + r1.stderr)
+        self.assertIn("random seed:", r1.stderr)
+        seed_val = r1.stderr.split("random seed:")[1].strip().splitlines()[0].strip()
+
+        r2 = subprocess.run(
+            [sys.executable, str(ex_cli), "query", "--lang", "en", "--limit", "5", "--seed", seed_val, "--format", "json"],
+            capture_output=True, text=True,
+        )
+        self.assertEqual(r2.returncode, 0, r2.stdout + r2.stderr)
+        self.assertEqual(json.loads(r1.stdout), json.loads(r2.stdout))
+
+        r3 = subprocess.run(
+            [sys.executable, str(ex_cli), "query", "--lang", "en", "--limit", "5", "--no-randomize", "--format", "json"],
+            capture_output=True, text=True,
+        )
+        self.assertEqual(r3.returncode, 0, r3.stdout + r3.stderr)
+        self.assertNotIn("random seed:", r3.stderr)
+
 
 if __name__ == "__main__":
     unittest.main()

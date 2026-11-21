@@ -367,14 +367,15 @@ def main() -> int:
     p_q.add_argument("--format", choices=["compact", "json"], default="compact")
     p_q.add_argument(
         "--randomize",
-        action="store_true",
-        help="sample among the top-ranked candidates; prints a seed for reproduction",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="sample among the top-ranked candidates (default: enabled; pass --no-randomize for deterministic top-K)",
     )
     p_q.add_argument(
         "--seed",
         type=int,
         default=None,
-        help="random seed; supplying it enables randomization and makes selection reproducible",
+        help="random seed for reproducible sampling",
     )
     p_q.set_defaults(func=cmd_query)
 
