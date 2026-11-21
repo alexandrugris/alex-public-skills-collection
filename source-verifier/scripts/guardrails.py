@@ -22,15 +22,23 @@ import hashlib
 import json
 import re
 import sys
+import tempfile
 from pathlib import Path
 
 SOURCES_HDR_RE = re.compile(r"(?m)^##\s+Sources\s*$")
-WORD_RE = re.compile(r"[A-Za-z0-9]+(?:'[A-Za-z0-9]+)?")
+FRONTMATTER_RE = re.compile(r"\A---[ \t]*\r?\n.*?\r?\n---[ \t]*(?:\r?\n|\Z)", re.DOTALL)
+WORD_RE = re.compile(r"[^\W_]+(?:['’][^\W_]+)*", re.UNICODE)
+INLINE_LINK_RE = re.compile(r"\[([^\]]+)\]\((?:[^()\s]+|\([^()\s]*\))+\)")
+
+
+def strip_frontmatter(text: str) -> str:
+    return FRONTMATTER_RE.sub("", text, count=1)
 
 
 def extract_body(text: str) -> str:
-    m = SOURCES_HDR_RE.search(text)
-    return text[: m.start()] if m else text
+    cleaned = strip_frontmatter(text)
+    m = SOURCES_HDR_RE.search(cleaned)
+    return cleaned[: m.start()] if m else cleaned
 
 
 def extract_anchors(text: str) -> dict:
@@ -39,25 +47,44 @@ def extract_anchors(text: str) -> dict:
 
     title = ""
     h2_headings: list[str] = []
-    opening_paragraph = ""
+    opening_lines: list[str] = []
+    in_opening = False
+    opening_done = False
 
     for raw in lines:
         s = raw.strip()
         if not s:
+            if in_opening:
+                in_opening = False
+                opening_done = True
             continue
         if s.startswith("# ") and not title:
+            if in_opening:
+                in_opening = False
+                opening_done = True
             title = s[2:].strip()
             continue
         if s.startswith("## "):
+            if in_opening:
+                in_opening = False
+                opening_done = True
             h2_headings.append(s[3:].strip())
             continue
-        if not opening_paragraph:
-            if s.startswith("*") and s.endswith("*") and len(s) > 2:
+        if s == "---" or s.startswith("#"):
+            if in_opening:
+                in_opening = False
+                opening_done = True
+            continue
+        if not opening_done:
+            if not in_opening and s.startswith("*") and s.endswith("*") and len(s) > 2:
                 continue
-            opening_paragraph = s
+            in_opening = True
+            opening_lines.append(s)
+
+    opening_paragraph = " ".join(opening_lines)
 
     # Strip URLs inside markdown links so fixing a DOI/URL does not penalize body token diff
-    prose_without_urls = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", body)
+    prose_without_urls = INLINE_LINK_RE.sub(r"\1", body)
     tokens = [w.lower() for w in WORD_RE.findall(prose_without_urls)]
 
     return {
@@ -115,7 +142,7 @@ def check_against_snapshot(
             }
         )
 
-    sim = difflib.SequenceMatcher(None, snapshot["body_tokens"], rev["body_tokens"]).ratio()
+    sim = difflib.SequenceMatcher(None, snapshot["body_tokens"], rev["body_tokens"], autojunk=False).ratio()
     diff_ratio = 1.0 - sim
     if diff_ratio > max_diff_ratio:
         violations.append(
@@ -142,13 +169,25 @@ def check_against_snapshot(
     }
 
 
+def default_snapshot_path(draft_path: Path) -> Path:
+    resolved = str(draft_path.resolve())
+    digest = hashlib.sha256(resolved.encode("utf-8")).hexdigest()[:10]
+    safe_stem = re.sub(r"[^A-Za-z0-9._-]+", "_", draft_path.stem).strip("_") or "draft"
+    return Path(tempfile.gettempdir()) / f"source-verifier-{safe_stem}-{digest}.snapshot.json"
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="Anti-collapse anchor and diff-budget guardrails.")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
     sp_snap = sub.add_parser("snapshot", help="Freeze anchor snapshot before verification loop")
     sp_snap.add_argument("draft", help="Path to Markdown draft")
-    sp_snap.add_argument("-o", "--output", required=True, help="Path to write snapshot JSON")
+    sp_snap.add_argument(
+        "-o",
+        "--output",
+        default=None,
+        help="Path to write snapshot JSON (defaults to a temp file in the system temp dir)",
+    )
 
     sp_chk = sub.add_parser("check", help="Check revised draft against frozen snapshot")
     sp_chk.add_argument("snapshot", help="Path to snapshot JSON")
@@ -165,7 +204,7 @@ def main() -> int:
             print(f"File not found: {p}", file=sys.stderr)
             return 2
         snap = extract_anchors(p.read_text(encoding="utf-8"))
-        out = Path(args.output)
+        out = Path(args.output) if args.output else default_snapshot_path(p)
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(json.dumps(snap, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
         print(f"SNAPSHOT OK: {out} (words={snap['body_word_count']}, h2={len(snap['h2_headings'])})")

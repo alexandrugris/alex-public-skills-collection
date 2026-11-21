@@ -50,6 +50,31 @@ check "source-verifier clean draft passes pre-audit" ok \
 check "source-verifier bad citations still fail pre-audit" fail \
   python3 source-verifier/scripts/audit_sources.py source-verifier/tests/input/bad-citations.md
 
+check "source-verifier guardrails allow surgical fix" ok \
+  python3 -c "import pathlib,subprocess,sys,tempfile
+with tempfile.TemporaryDirectory() as td:
+  d=pathlib.Path(td)
+  base=pathlib.Path('source-verifier/tests/expected/clean-verified.md').read_text(encoding='utf-8')
+  snap=d/'snap.json'
+  rev=d/'rev.md'
+  rev.write_text(base.replace('AMLE 9(1)','AMLE 9(1), 44-60'),encoding='utf-8')
+  r1=subprocess.run([sys.executable,'source-verifier/scripts/guardrails.py','snapshot','source-verifier/tests/expected/clean-verified.md','-o',str(snap)],capture_output=True,text=True)
+  r2=subprocess.run([sys.executable,'source-verifier/scripts/guardrails.py','check',str(snap),str(rev)],capture_output=True,text=True)
+  print(r1.stdout+r2.stdout+r1.stderr+r2.stderr)
+  sys.exit(0 if r1.returncode==0 and r2.returncode==0 else 1)"
+
+check "source-verifier guardrails block essay collapse (must FAIL)" fail \
+  python3 -c "import pathlib,subprocess,sys,tempfile
+with tempfile.TemporaryDirectory() as td:
+  d=pathlib.Path(td)
+  snap=d/'snap.json'
+  rev=d/'collapsed.md'
+  rev.write_text('# Holding environments need fair systems.\n\nRewritten opening.\n\n## Holding and identity workspaces.\n\nCut.\n',encoding='utf-8')
+  subprocess.run([sys.executable,'source-verifier/scripts/guardrails.py','snapshot','source-verifier/tests/expected/clean-verified.md','-o',str(snap)],check=True,capture_output=True,text=True)
+  r2=subprocess.run([sys.executable,'source-verifier/scripts/guardrails.py','check',str(snap),str(rev)],capture_output=True,text=True)
+  print(r2.stdout+r2.stderr)
+  sys.exit(r2.returncode)"
+
 check "AG style sample page passes checker" ok \
   python3 alexandru-style/tests/check_styled.py alexandru-style/tests/expected/sample-page.html
 

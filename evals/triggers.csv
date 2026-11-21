@@ -29,3 +29,7 @@ tr-27,"Rename variable foo to bar across src/utils.py.",none,false,negative cont
 tr-28,"Check disk usage on /tmp and list the 5 largest files.",none,false,negative control: shell inspection
 tr-29,"Summarize the diff in the last three git commits in two bullet points.",none,false,negative control: short internal summary
 tr-30,"Write a bash one-liner to find duplicate SHA-256 hashes in a directory.",none,false,negative control: CLI utility
+tr-31,"Audit every quotation, DOI, and author concept in ~/writing/essay.md against primary sources without rewriting the structure.",source-verifier,true,standalone source-verifier on external file
+tr-32,"Check the bibliography and Crossref metadata on this finished report and flag any quote drift.",source-verifier,true,standalone DOI and verbatim quote audit
+tr-33,"Write a researched blog post on holding environments and run the full adversarial quote and DOI verifier before final approval.",blog-writer+source-verifier,true,multi-skill chain: blog-writer then source-verifier
+tr-34,"Run a deep source audit on /tmp/draft.md with anti-collapse guardrails so the opening scene stays intact.",source-verifier,true,explicit guardrails and external path trigger

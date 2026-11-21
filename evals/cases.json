@@ -110,6 +110,28 @@
         "One clear idea per slide with concise bullets (max 6 per slide).",
         "No exclamation marks, no emoji, and declarative From the trenches register."
       ]
+    },
+    {
+      "id": "source-verifier-tc1-citations",
+      "skill": "source-verifier",
+      "input_file": "source-verifier/tests/input/bad-citations.md",
+      "prompt": "Audit this finished draft for bibliographic defects and quote drift without altering the title, headings, or opening paragraph.",
+      "deterministic_checks": {
+        "audit_sources_pass": true,
+        "must_contain": [
+          "Opening paragraph describing a quiet room on the twelfth floor.",
+          "## Claims with bibliographic bugs."
+        ],
+        "must_not_contain": [
+          "1991/2001",
+          "IJOA (2026)"
+        ]
+      },
+      "rubric": [
+        "Replaces secondary wrapper URLs cited as studies with primary sources or clarifies attribution.",
+        "Fixes inline/source year mismatch and missing author surname without rewriting surrounding prose.",
+        "Preserves the opening paragraph, title, and section headings intact."
+      ]
     }
   ]
 }

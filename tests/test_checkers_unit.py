@@ -290,6 +290,165 @@ class TestSourceVerifierUnit(unittest.TestCase):
             self.assertIn("word_count_shrinkage", rules)
             self.assertIn("diff_budget_exceeded", rules)
 
+    def test_trilingual_quotes_code_masking_and_institutional_authors(self):
+        sys.path.insert(0, str(REPO_ROOT / "source-verifier" / "scripts"))
+        import audit_sources as A
+
+        doc = (
+            "---\n"
+            "title: Multilingual test\n"
+            "---\n\n"
+            "# Title.\n\n"
+            "Opening scene line one\n"
+            "with a second wrapped line saying \"not a citation quote\".\n\n"
+            "## Body.\n\n"
+            "See [OECD report](https://www.oecd.org/skills/) (2020) and "
+            "[Wikipedia entry](http://en.wikipedia.org/wiki/Holding_(psychology)). "
+            "Curly quote: “a social context that reduces disturbing affect”. "
+            "Romanian: „un spațiu sigur pentru gândire”. "
+            "French: « un espace qui contient l'angoisse ». "
+            "Inline code `\"not a quote at all\"` stays ignored.\n\n"
+            "```python\n"
+            'msg = "code fence quote should not be extracted"\n'
+            "```\n\n"
+            "## Sources\n\n"
+            "- [OECD (2020), \"Skills Outlook\"](https://www.oecd.org/skills)\n"
+            "- [Wikipedia (2024), \"Holding (psychology)\"](https://en.wikipedia.org/wiki/Holding_(psychology))\n"
+        )
+        res = A.audit_markdown(doc, online=False)
+        self.assertEqual(res["verdict"], "PASS", res["blocking"])
+        # Exactly 3 non-opening prose quotes (curly EN, RO, FR); opening quote & code quotes excluded
+        verbatim = res["quotes_to_verify"]
+        self.assertEqual(len(verbatim), 3, verbatim)
+        self.assertTrue(any("spațiu" in q["text"] and q["word_count"] == 5 for q in verbatim))
+        self.assertTrue(any("angoisse" in q["text"] for q in verbatim))
+
+    def test_crossref_years_accept_print_or_online_year(self):
+        sys.path.insert(0, str(REPO_ROOT / "source-verifier" / "scripts"))
+        import audit_sources as A
+
+        msg = {
+            "issued": {"date-parts": [[2017, 7, 12]]},
+            "published-online": {"date-parts": [[2017, 7, 12]]},
+            "published-print": {"date-parts": [[2018, 9]]},
+        }
+        years = A.extract_crossref_years(msg)
+        self.assertEqual(years, ["2018", "2017"])
+
+    def test_guardrails_frontmatter_wrapped_opening_and_default_temp_snapshot(self):
+        doc = (
+            "---\n"
+            "title: Frontmatter test\n"
+            "---\n\n"
+            "# Real title.\n\n"
+            "First line of the opening scene\n"
+            "continues onto a second wrapped line.\n\n"
+            "## Section one.\n\n"
+            "Body text stays unchanged across the verification loop.\n"
+        )
+        with tempfile.TemporaryDirectory() as td:
+            draft = Path(td) / "essay.md"
+            draft.write_text(doc, encoding="utf-8")
+            # Default snapshot without -o writes into system temp dir, not draft's folder
+            r_snap = subprocess.run(
+                [sys.executable, str(self.guardrails), "snapshot", str(draft)],
+                capture_output=True, text=True,
+            )
+            self.assertEqual(r_snap.returncode, 0, r_snap.stdout + r_snap.stderr)
+            snap_path = Path(r_snap.stdout.split("SNAPSHOT OK: ")[1].split(" (")[0].strip())
+            try:
+                self.assertTrue(snap_path.is_file())
+                self.assertNotEqual(snap_path.parent.resolve(), draft.parent.resolve())
+                # Mutating line 2 of the wrapped opening paragraph must fail
+                mutated = Path(td) / "mutated.md"
+                mutated.write_text(
+                    doc.replace("continues onto a second wrapped line.", "rewritten second line."),
+                    encoding="utf-8",
+                )
+                r_chk = subprocess.run(
+                    [sys.executable, str(self.guardrails), "check", "--json", str(snap_path), str(mutated)],
+                    capture_output=True, text=True,
+                )
+                self.assertEqual(r_chk.returncode, 1)
+                rules = {v["rule"] for v in json.loads(r_chk.stdout)["violations"]}
+                self.assertIn("opening_scene_mutated", rules)
+            finally:
+                if snap_path.exists():
+                    snap_path.unlink()
+
+
+class TestGlobalSymlinkPortability(unittest.TestCase):
+    """Verify all four skills run cleanly from an unrelated CWD via global symlinks on external files."""
+
+    def test_all_four_skills_work_via_global_symlinks_from_external_cwd(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            global_skills = root / "global-skills"
+            global_skills.mkdir()
+            for skill in ("anti-ai", "blog-writer", "source-verifier", "alexandru-style"):
+                (global_skills / skill).symlink_to(REPO_ROOT / skill)
+
+            work_dir = root / "user-writing"
+            work_dir.mkdir()
+            ext_draft = work_dir / "external-essay.md"
+            ext_draft.write_text(
+                (REPO_ROOT / "source-verifier" / "tests" / "expected" / "clean-verified.md").read_text(encoding="utf-8"),
+                encoding="utf-8",
+            )
+            ext_html = work_dir / "external-page.html"
+            ext_html.write_text(
+                (REPO_ROOT / "alexandru-style" / "tests" / "expected" / "sample-page.html").read_text(encoding="utf-8"),
+                encoding="utf-8",
+            )
+
+            # 1. anti-ai scanner + examples query from outside repo
+            r1 = subprocess.run(
+                [sys.executable, str(global_skills / "anti-ai" / "check_tells.py"), "--json", str(ext_draft)],
+                cwd=str(work_dir), capture_output=True, text=True,
+            )
+            self.assertEqual(r1.returncode, 0, r1.stdout + r1.stderr)
+            r1b = subprocess.run(
+                [sys.executable, str(global_skills / "anti-ai" / "scripts" / "examples.py"), "query", "--lang", "en", "--limit", "5"],
+                cwd=str(work_dir), capture_output=True, text=True,
+            )
+            self.assertEqual(r1b.returncode, 0, r1b.stdout + r1b.stderr)
+
+            # 2. blog-writer validate_draft (discovers sibling anti-ai via global skills dir)
+            r2 = subprocess.run(
+                [sys.executable, str(global_skills / "blog-writer" / "tests" / "validate_draft.py"), "--json", str(ext_draft)],
+                cwd=str(work_dir), capture_output=True, text=True,
+            )
+            self.assertEqual(r2.returncode, 0, r2.stdout + r2.stderr)
+
+            # 3. source-verifier audit_sources + guardrails (temp snapshot) from outside repo
+            r3 = subprocess.run(
+                [sys.executable, str(global_skills / "source-verifier" / "scripts" / "audit_sources.py"), "--json", str(ext_draft)],
+                cwd=str(work_dir), capture_output=True, text=True,
+            )
+            self.assertEqual(r3.returncode, 0, r3.stdout + r3.stderr)
+            r3s = subprocess.run(
+                [sys.executable, str(global_skills / "source-verifier" / "scripts" / "guardrails.py"), "snapshot", str(ext_draft)],
+                cwd=str(work_dir), capture_output=True, text=True,
+            )
+            self.assertEqual(r3s.returncode, 0, r3s.stdout + r3s.stderr)
+            snap_path = Path(r3s.stdout.split("SNAPSHOT OK: ")[1].split(" (")[0].strip())
+            try:
+                r3c = subprocess.run(
+                    [sys.executable, str(global_skills / "source-verifier" / "scripts" / "guardrails.py"), "check", str(snap_path), str(ext_draft)],
+                    cwd=str(work_dir), capture_output=True, text=True,
+                )
+                self.assertEqual(r3c.returncode, 0, r3c.stdout + r3c.stderr)
+            finally:
+                if snap_path.exists():
+                    snap_path.unlink()
+
+            # 4. alexandru-style check_styled from outside repo
+            r4 = subprocess.run(
+                [sys.executable, str(global_skills / "alexandru-style" / "tests" / "check_styled.py"), "--json", str(ext_html)],
+                cwd=str(work_dir), capture_output=True, text=True,
+            )
+            self.assertEqual(r4.returncode, 0, r4.stdout + r4.stderr)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -25,9 +25,12 @@ import sys
 import urllib.error
 import urllib.request
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urlsplit, urlunsplit
 
 SCANNER_CANDIDATES = [
+    # Logical sibling first (works when skills are symlinked/copied individually into ~/.codex/skills or ~/.claude/skills)
+    Path(os.path.abspath(__file__)).parent.parent.parent / "anti-ai" / "check_tells.py",
+    # Physical sibling fallback (works inside the cloned repo)
     Path(__file__).resolve().parent.parent.parent / "anti-ai" / "check_tells.py",
 ]
 
@@ -35,9 +38,20 @@ BANNED_HEADING_RE = re.compile(
     r"^#{2,6}\s+(?:Introduction|Conclusion|Key takeaways?|What is .+\?)\s*$",
     re.MULTILINE | re.IGNORECASE,
 )
-URL_RE = re.compile(r"https?://[^\s)\]>\"']+")
-MD_LINK_RE = re.compile(r"\[[^\]]+\]\((https?://[^)\s]+)\)")
+URL_RE = re.compile(r"https?://(?:[^\s()\[\]>\"']|\([^\s()]*\))+")
+MD_LINK_RE = re.compile(r"\[[^\]]+\]\((https?://(?:[^()\s]+|\([^()\s]*\))+)\)")
 PLACEHOLDER_HOSTS = {"example.com", "example.org", "example.net", "localhost", "127.0.0.1"}
+
+
+def normalize_url(url):
+    raw = url.strip().rstrip(".,;:")
+    parts = urlsplit(raw)
+    scheme = "https" if parts.scheme.lower() in ("http", "https") else parts.scheme.lower()
+    netloc = parts.netloc.lower()
+    if netloc == "dx.doi.org":
+        netloc = "doi.org"
+    path = parts.path.rstrip("/") if parts.path and parts.path != "/" else parts.path
+    return urlunsplit((scheme, netloc, path, parts.query, parts.fragment))
 
 
 def find_scanner():
@@ -100,15 +114,15 @@ def validate_text(text, draft_path, verify_urls=False):
         body_text = text[:sources.start()]
         tail = text[sources.end():]
         links = MD_LINK_RE.findall(tail)
-        source_urls = {u.rstrip(".,;:") for u in links}
+        source_urls = {normalize_url(u) for u in links}
         if not source_urls:
             problems.append("Sources section holds no markdown links")
 
-        inline_urls = {u.rstrip(".,;:") for u in MD_LINK_RE.findall(body_text)}
-        missing_in_sources = sorted(inline_urls - source_urls)
+        inline_links = [u.rstrip(".,;:") for u in MD_LINK_RE.findall(body_text)]
+        missing_in_sources = sorted({u for u in inline_links if normalize_url(u) not in source_urls})
         for u in missing_in_sources:
             problems.append("inline body URL missing from `## Sources`: %s" % u)
-        if not inline_urls and source_urls:
+        if not inline_links and source_urls:
             warnings.append("no inline markdown links in body (only in `## Sources`)")
 
     if verify_urls:

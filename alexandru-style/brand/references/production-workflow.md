@@ -25,12 +25,12 @@ Preserve factual meaning and supplied wording during visual-only restyling.
 
 ## Rendering and visual inspection
 
-Never deliver a rendered PDF or deck without inspecting its page images:
+Never deliver a rendered PDF or deck without inspecting its page images (`<SKILL_DIR>` = `alexandru-style` directory; inputs and outputs can live anywhere on disk):
 
 ```sh
-python3 alexandru-style/brand/scripts/render.py doc.html out.pdf --png-dir shots/
-python3 alexandru-style/brand/scripts/shoot.py page.html shots/page.png --full
-python3 alexandru-style/brand/scripts/deck_shots.py deck.pptx shots/
+python3 "<SKILL_DIR>/brand/scripts/render.py" doc.html out.pdf --png-dir shots/
+python3 "<SKILL_DIR>/brand/scripts/shoot.py" page.html shots/page.png --full
+python3 "<SKILL_DIR>/brand/scripts/deck_shots.py" deck.pptx shots/
 ```
 
 Check every page image at reading size:

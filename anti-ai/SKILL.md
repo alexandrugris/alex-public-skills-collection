@@ -21,14 +21,16 @@ Corrections database (real bad-to-good rewrites for progressive few-shot retriev
 
 ## Audit (fast)
 
-    python3 check_tells.py <file-or-dir> [--json] [--cat chat,inflated] [--severity high] [--lang en|ro|fr]
+Paths below treat `<SKILL_DIR>` as the folder holding this `SKILL.md`, while `<file-or-dir>` accepts any path on disk:
+
+    python3 "<SKILL_DIR>/check_tells.py" <file-or-dir> [--json] [--cat chat,inflated] [--severity high] [--lang en|ro|fr]
 
 Regression gate (trilingual trap corpus, one CSV per language):
 
-    python3 check_tells.py --fixtures tests/fixtures-en.csv tests/fixtures-ro.csv tests/fixtures-fr.csv
+    python3 "<SKILL_DIR>/check_tells.py" --fixtures "<SKILL_DIR>/tests/fixtures-en.csv" "<SKILL_DIR>/tests/fixtures-ro.csv" "<SKILL_DIR>/tests/fixtures-fr.csv"
 
 Requirement: every MUST-FAIL row fires its pattern, every MUST-PASS row fires nothing. Full run (fixtures, heuristics, corrections DB, and self-scan of these docs):
-`python3 tests/run_tests.py`.
+`python3 "<SKILL_DIR>/tests/run_tests.py"`.
 
 Verdicts: FAIL (any HIGH hit), REVIEW (MEDIUM hits present, zero HIGH), PASS otherwise (including LOW-only hits).
 The scanner reports exemptions: quoted text, literal physical context, and honesty words referring to a person. For Markdown files, it masks YAML frontmatter, fenced code blocks, and URLs before scanning prose.
@@ -37,11 +39,11 @@ Guardrail: during prose tasks, if a rule fires on your draft, fix the text and n
 ## Write and learn from edits
 
 1. **Retrieve relevant past rewrites before drafting or revising** (top 10: topic matches plus general structural/taste constructs):
-   `python3 scripts/examples.py query --lang en --topic "<topic or tags>" --limit 10`
+   `python3 "<SKILL_DIR>/scripts/examples.py" query --lang en --topic "<topic or tags>" --limit 10`
 2. **Apply the rules while drafting, then scan and fix what the scanner reports.**
    House rhythm: a sentence built as an enumeration (2+ items, or a semicolon series) may run long, the clause stays 12-22 words, and it must not become every sentence.
    Keep facts, numbers, and quotations unchanged.
    FAIL = heavy tells, almost surely AI-drafted. REVIEW can be good human writing: read `references/human-benchmarks.md` before you cut a flagged sentence.
 3. **Capture new human rewrites into the database.** When the user rewrites a sentence or explains why a draft sounds machine-written, offer to log it:
-   `python3 scripts/examples.py add --lang <en|ro|fr> --bad "..." --good "..." --why "..." --rules <ids> --tags <tags>`
-   Periodically run `python3 scripts/examples.py gaps` to turn recurring uncaught misses into new rules or patterns.
+   `python3 "<SKILL_DIR>/scripts/examples.py" add --lang <en|ro|fr> --bad "..." --good "..." --why "..." --rules <ids> --tags <tags>`
+   Periodically run `python3 "<SKILL_DIR>/scripts/examples.py" gaps` to turn recurring uncaught misses into new rules or patterns.

@@ -68,6 +68,18 @@ def grade_artifact(case: dict, artifact: Path) -> dict:
             "detail": "; ".join(out.get("problems", [])) or "PASS",
         })
 
+    if checks.get("audit_sources_pass"):
+        r = subprocess.run(
+            [sys.executable, str(REPO_ROOT / "source-verifier" / "scripts" / "audit_sources.py"), "--json", str(artifact)],
+            capture_output=True, text=True,
+        )
+        out = json.loads(r.stdout) if r.stdout.strip() else {"blocking": [{"detail": "auditor error"}]}
+        results.append({
+            "check": "audit_sources_pass",
+            "pass": r.returncode == 0,
+            "detail": "; ".join(b.get("rule", b.get("detail", "")) for b in out.get("blocking", [])) or "PASS",
+        })
+
     for needle in checks.get("must_contain", []):
         results.append({
             "check": f"must_contain:{needle}",

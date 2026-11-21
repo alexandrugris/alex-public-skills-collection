@@ -14,10 +14,11 @@ For every `blocking` ticket in `<verification_ledger>`, execute exactly one move
 
 - **Never panic-delete**: Do not delete an entire paragraph or argument because a citation was secondary or a quote drifted. Upgrade the link to the primary DOI/paper or switch to `DEQUOTE_PARAPHRASE`.
 - **No academic footnote bloat**: Keep inline links clean and readable; put full bibliographic metadata (volume, issue, pages, publisher) in `## Sources`, not crammed into body prose.
-- **Guardrail gate after every loop**:
-  1. Run `python3 source-verifier/scripts/guardrails.py check <snapshot.json> <revised.md>`.
-  2. If `guardrails.py` returns `FAIL` (dropped heading, altered opening scene, word-count drop `>10%`, or body token diff `>15%`), **roll back** and re-apply only the minimal span fixes.
-  3. Run `python3 anti-ai/check_tells.py <revised.md>` (must pass with 0 HIGH) and `python3 blog-writer/tests/validate_draft.py <revised.md>` (must pass).
+- **Guardrail gate after every loop** (`<SKILL_DIR>` = `source-verifier` directory, `<SKILLS_DIR>` = its parent directory, `<revised.md>` = absolute path to the draft on disk):
+  1. Run `python3 "<SKILL_DIR>/scripts/guardrails.py" check "<snapshot.json>" "<revised.md>"` (mandatory).
+  2. If `guardrails.py` returns `FAIL` (dropped heading, altered opening paragraph, word-count drop `>10%`, or body token diff `>15%`), **roll back** and re-apply only the minimal span fixes.
+  3. Run `python3 "<SKILL_DIR>/scripts/audit_sources.py" "<revised.md>" [--online]` to confirm zero mechanical blocking defects remain.
+  4. **Optional sibling gates:** if `<SKILLS_DIR>/anti-ai/check_tells.py` exists, run `python3 "<SKILLS_DIR>/anti-ai/check_tells.py" "<revised.md>"` (must pass with 0 HIGH). If this audit was invoked from `blog-writer` (Step 5b) or targets a blog article and `<SKILLS_DIR>/blog-writer/tests/validate_draft.py` exists, run it too.
 - **Stopping rule**:
   - If Loop 1 has `0 blocking` findings: done.
   - If Loop 1 had fixes or rebuttals: send **only** `<custodian_response>` + the revised draft to Loop 2 (delta-only check).

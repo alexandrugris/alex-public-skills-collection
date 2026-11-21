@@ -30,11 +30,13 @@ flowchart TB
     SV -->|"voice check after surgical fix"| AA
     BW <-->|"medium constraints & overflow cuts"| AS
     AS -->|"lint kickers, ledes, captions"| AA
-    AA --> GATE["bash run_all.sh<br/>11 controls + tests/ unit suite"]
+    AA --> GATE["bash run_all.sh<br/>13 controls + tests/ unit suite"]
     BW --> GATE
     SV --> GATE
     AS --> GATE
 ```
+
+Symlink all four skill folders into any agent's global skills directory (such as `~/.codex/skills/` or `~/.claude/skills/`) to run them on drafts anywhere on disk: each `SKILL.md` resolves its scripts via `<SKILL_DIR>` and sibling skills via `<SKILLS_DIR>`, with no dependency on this repository as the working directory.
 
 ## Execution flow: writing an article end to end
 
@@ -44,7 +46,7 @@ When a task spans content and presentation, these skills work in one shared sess
 flowchart LR
     B["1. Brief<br/>idea, reader, depth=deep,<br/>target medium, 1st-person vs external"] --> R["2. Deep Research loop (3-4 rounds)<br/>10-15+ opened sources: primary, blogs,<br/>Wikipedia leads, YouTube + 2-3 critiques"]
     R --> P1["3. Pass 1: Dev editor<br/>archetype + medium rules<br/>-> <structural_brief>"]
-    P1 --> Q["4a. Few-shot retrieval<br/>examples.py query (top 3-5)<br/>from corrections.jsonl"]
+    P1 --> Q["4a. Few-shot retrieval<br/>examples.py query (top 10)<br/>from corrections.jsonl"]
     Q --> P2["4b. Pass 2: Copy editor<br/>prose in voice"]
     P2 -->|"<escalation> on bad outline"| P1
     P2 --> L["4c. anti-ai lint<br/>check_tells.py + sign-off"]

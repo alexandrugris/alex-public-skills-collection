@@ -10,10 +10,12 @@ Apply Alexandru Gris's personal design system to any styled artifact: documents,
 
 ## Workflow
 
+Resolve `<SKILL_DIR>` to the directory containing this `SKILL.md` and `<SKILLS_DIR>` to its parent directory; input and output deliverables can live anywhere on disk.
+
 1. Read `design-system.md` for the exact colors, typography, motifs, space, per-medium rules, and anti-patterns. For production PDF/HTML/PPTX rendering, also consult `brand/references/production-workflow.md` and `brand/references/style-spec.md`.
 2. Apply AG Style as the default visual treatment unless the user explicitly asks for another brand or theme. Preserve supplied wording on visual-only restyling tasks.
 3. Use the format-specific recipe below.
-4. Run `python3 tests/check_styled.py <deliverable>` on HTML pages and Marp decks before delivery; inspect rendered page PNGs for PDFs and slide decks.
+4. Run `python3 "<SKILL_DIR>/tests/check_styled.py" "<deliverable>"` on HTML pages and Marp decks before delivery; inspect rendered page PNGs for PDFs and slide decks.
 5. If the site style changes, update `brand/references/tokens.css` first (single source of truth), then sync `design-system.md` in the same commit.
 
 ## Format recipes
@@ -24,9 +26,9 @@ Apply Alexandru Gris's personal design system to any styled artifact: documents,
 
 **Standalone presenter deck (HTML).** Fixed 1280x720 stage centered and scaled to the viewport with CSS transform; slides cross-fade via `.active`; arrow keys, space, and swipe navigate; `F` toggles fullscreen; thin burgundy progress bar at the top and muted counter bottom right; full-height burgundy spine bar on the left edge; print CSS (one slide per page) so browser print yields a styled PDF.
 
-**PDF / document.** Start from [the flowing A4 article template](brand/templates/article.html) (or `brand/templates/document.html` for fixed page counts) and follow [the print recipe](brand/references/style-spec.md#72-document--pdf). Put the author directly below the title, with publication date if supplied. Add a role or reading time only if requested. Render with `python3 alexandru-style/brand/scripts/render.py INPUT.html OUTPUT.pdf --png-dir PREVIEWS` from the repo root, and inspect every rendered page PNG before delivery.
+**PDF / document.** Start from [the flowing A4 article template](brand/templates/article.html) (or `brand/templates/document.html` for fixed page counts) and follow [the print recipe](brand/references/style-spec.md#72-document--pdf). Put the author directly below the title, with publication date if supplied. Add a role or reading time only if requested. Render with `python3 "<SKILL_DIR>/brand/scripts/render.py" INPUT.html OUTPUT.pdf --png-dir PREVIEWS` from any working directory, and inspect every rendered page PNG before delivery.
 
-**PPTX deck.** Copy `brand/scripts/build_deck.py` for working edits (it pulls its palette directly from `brand/references/tokens.css`), generate the `.pptx`, and render slide previews with `brand/scripts/deck_shots.py`.
+**PPTX deck.** Copy `<SKILL_DIR>/brand/scripts/build_deck.py` for working edits (it pulls its palette directly from `brand/references/tokens.css`), generate the `.pptx`, and render slide previews with `python3 "<SKILL_DIR>/brand/scripts/deck_shots.py"`.
 
 **Markdown document canvas.** Markdown limits styling: carry over structure and voice instead. Kicker lines in the form `FROM THE TRENCHES · TOPIC · DATE` above the title, quiet uppercase section notes, middle-dot separators, and no leaked CSS tokens.
 
@@ -34,7 +36,7 @@ Apply Alexandru Gris's personal design system to any styled artifact: documents,
 
 ## Tests
 
-`tests/test-cases.md` holds the five cases with pass conditions; `python3 tests/check_styled.py <file>` is the static bar for HTML and Marp deliverables.
+`tests/test-cases.md` holds the five cases with pass conditions; `python3 "<SKILL_DIR>/tests/check_styled.py" "<file>"` is the static bar for HTML and Marp deliverables.
 
 ## Brand toolkit (`brand/`)
 
@@ -51,4 +53,4 @@ Apply Alexandru Gris's personal design system to any styled artifact: documents,
 - Headings weight 400, never bold; express hierarchy through size and tracking. Uppercase is always Inter — never a serif in all-caps.
 - Burgundy (`#8D2829`) appears once per visual block: kickers, rules, and accents, never large fills. No gradients on type, no text shadows, no emoji, no decorative rules above 3px. Shadows only on the hero copy card over a full-bleed image.
 - Hairlines are 1px solid (`#D8D4CA`), never dashed, never doubled. Body copy left-aligned, ragged right — never centered.
-- For prose voice rules, defer to the `anti-ai` skill (`../anti-ai/references/anti-ai-short.md`); keep copy declarative, middle-dot labels, and zero exclamation marks.
+- For prose voice rules, defer to the sibling `anti-ai` skill (`<SKILLS_DIR>/anti-ai/references/anti-ai-short.md`, when installed); keep copy declarative, middle-dot labels, and zero exclamation marks.

@@ -20,15 +20,24 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
-INLINE_LINK_RE = re.compile(r"\[([^\]]+)\]\((https?://[^)\s]+)\)")
+INLINE_LINK_RE = re.compile(r"\[([^\]]+)\]\((https?://(?:[^()\s]+|\([^()\s]*\))+)\)")
 SOURCES_HDR_RE = re.compile(r"(?m)^##\s+Sources\s*$")
 YEAR_RE = re.compile(r"\b(19\d{2}|20\d{2})\b")
 DUAL_YEAR_RE = re.compile(r"\((19\d{2}|20\d{2})\s*/\s*(19\d{2}|20\d{2})\)")
-ACRONYM_AUTHOR_RE = re.compile(r"^[A-Z]{2,8}\s*\((19\d{2}|20\d{2})\)")
+ACRONYM_AUTHOR_RE = re.compile(r"^([A-Z]{2,8})\s*\((19\d{2}|20\d{2})\)")
 DOI_URL_RE = re.compile(r"^https?://(?:dx\.)?doi\.org/(.+)$", re.I)
 VALID_DOI_RE = re.compile(r"^10\.\d{4,9}/[^\s\"<>]+$")
-QUOTE_RE = re.compile(r'"([^"\n]{2,300})"')
+QUOTE_RE = re.compile(
+    r'"([^"\n]{2,300})"'
+    r'|“([^”\n]{2,300})”'
+    r'|„([^”"“\n]{2,300})[”"“]'
+    r'|«\s*([^»\n]{2,300}?)\s*»'
+)
+WORD_RE = re.compile(r"[^\W_]+(?:['’-][^\W_]+)*", re.UNICODE)
 STUDY_LABEL_RE = re.compile(r"\b(study|paper|article|research|monograph|working paper)\b", re.I)
+FENCE_RE = re.compile(r"(?ms)^(`{3,}|~{3,})[^\n]*\n.*?^\1[ \t]*$")
+INLINE_CODE_RE = re.compile(r"`[^`\n]+`")
+FRONTMATTER_RE = re.compile(r"\A---[ \t]*\r?\n.*?\r?\n---[ \t]*(?:\r?\n|\Z)", re.DOTALL)
 
 PLACEHOLDER_HOSTS = ("example.com", "example.org", "example.net", ".invalid", "localhost")
 SECONDARY_WRAPPER_HOSTS = (
@@ -41,6 +50,43 @@ SECONDARY_WRAPPER_HOSTS = (
     "podcasts.apple.com",
     "open.spotify.com",
 )
+INSTITUTIONAL_AUTHORS = {
+    "ACM", "AMA", "APA", "BIS", "CDC", "CERN", "CISA", "ECB", "EPA", "ESA",
+    "EU", "FDA", "FED", "IEEE", "IETF", "ILO", "IMF", "ISO", "NASA", "NATO",
+    "NIST", "NSA", "OECD", "OWASP", "UN", "UNESCO", "UNICEF", "W3C", "WEF",
+    "WHO", "WTO",
+}
+
+
+def _blank_preserve_lines(match: re.Match) -> str:
+    return "".join("\n" if ch == "\n" else " " for ch in match.group(0))
+
+
+def mask_code(text: str) -> str:
+    """Blank fenced and inline code blocks while keeping 1-indexed line numbers intact."""
+    masked = FENCE_RE.sub(_blank_preserve_lines, text)
+    return INLINE_CODE_RE.sub(_blank_preserve_lines, masked)
+
+
+def strip_frontmatter(text: str) -> tuple[str, int]:
+    """Strip leading YAML frontmatter, returning (remaining_text, skipped_line_count)."""
+    m = FRONTMATTER_RE.match(text)
+    if not m:
+        return text, 0
+    prefix = m.group(0)
+    return text[m.end() :], prefix.count("\n")
+
+
+def normalize_url(url: str) -> str:
+    """Normalize equivalent URLs (http/https, dx.doi.org/doi.org, trailing slash) for matching."""
+    raw = url.strip().rstrip(".,;:")
+    parts = urllib.parse.urlsplit(raw)
+    scheme = "https" if parts.scheme.lower() in ("http", "https") else parts.scheme.lower()
+    netloc = parts.netloc.lower()
+    if netloc == "dx.doi.org":
+        netloc = "doi.org"
+    path = parts.path.rstrip("/") if parts.path and parts.path != "/" else parts.path
+    return urllib.parse.urlunsplit((scheme, netloc, path, parts.query, parts.fragment))
 
 
 def split_body_and_sources(text: str) -> tuple[str, str, int]:
@@ -56,15 +102,25 @@ def split_body_and_sources(text: str) -> tuple[str, str, int]:
 
 def find_opening_paragraph_lines(body: str) -> set[int]:
     """Return 1-indexed line numbers belonging to the opening narrative paragraph."""
-    lines = body.splitlines()
-    for idx, raw in enumerate(lines, start=1):
+    cleaned, offset = strip_frontmatter(body)
+    lines = cleaned.splitlines()
+    opening: set[int] = set()
+    in_opening = False
+    for idx, raw in enumerate(lines, start=offset + 1):
         s = raw.strip()
-        if not s or s.startswith("#"):
+        if not s:
+            if in_opening:
+                break
             continue
-        if s.startswith("*") and s.endswith("*") and len(s) > 2:
+        if s.startswith("#") or s == "---":
+            if in_opening:
+                break
             continue
-        return {idx}
-    return set()
+        if not in_opening and s.startswith("*") and s.endswith("*") and len(s) > 2:
+            continue
+        in_opening = True
+        opening.add(idx)
+    return opening
 
 
 def parse_sources(sources_text: str, start_line: int) -> list[dict]:
@@ -88,6 +144,7 @@ def parse_sources(sources_text: str, start_line: int) -> list[dict]:
                 "line": line_no,
                 "label": label,
                 "url": url,
+                "normalized_url": normalize_url(url),
                 "doi": doi,
                 "years": years,
             }
@@ -97,7 +154,8 @@ def parse_sources(sources_text: str, start_line: int) -> list[dict]:
 
 def parse_inline_links(body: str) -> list[dict]:
     links = []
-    for line_no, raw in enumerate(body.splitlines(), start=1):
+    masked = mask_code(body)
+    for line_no, raw in enumerate(masked.splitlines(), start=1):
         for m in INLINE_LINK_RE.finditer(raw):
             label, url = m.group(1).strip(), m.group(2).strip()
             after = raw[m.end() : m.end() + 45]
@@ -111,6 +169,7 @@ def parse_inline_links(body: str) -> list[dict]:
                     "line": line_no,
                     "label": label,
                     "url": url,
+                    "normalized_url": normalize_url(url),
                     "years": label_years or paren_years,
                 }
             )
@@ -119,13 +178,15 @@ def parse_inline_links(body: str) -> list[dict]:
 
 def extract_quotes(body: str) -> list[dict]:
     opening_lines = find_opening_paragraph_lines(body)
+    cleaned, offset = strip_frontmatter(body)
+    masked = mask_code(cleaned)
     quotes = []
-    for line_no, raw in enumerate(body.splitlines(), start=1):
+    for line_no, raw in enumerate(masked.splitlines(), start=offset + 1):
         if raw.strip().startswith("#"):
             continue
         for m in QUOTE_RE.finditer(raw):
-            q = m.group(1).strip()
-            words = re.findall(r"[A-Za-z0-9'-]+", q)
+            q = next((g for g in m.groups() if g is not None), "").strip()
+            words = WORD_RE.findall(q)
             quotes.append(
                 {
                     "line": line_no,
@@ -136,6 +197,18 @@ def extract_quotes(body: str) -> list[dict]:
                 }
             )
     return quotes
+
+
+def extract_crossref_years(msg: dict) -> list[str]:
+    """Collect valid publication years from Crossref print, online, and issued date fields."""
+    years: list[str] = []
+    for field in ("published-print", "published-online", "issued", "published"):
+        parts = msg.get(field, {}).get("date-parts", [])
+        if parts and parts[0] and parts[0][0]:
+            y = str(parts[0][0])
+            if y not in years:
+                years.append(y)
+    return years
 
 
 def query_crossref(doi: str, timeout: float = 8.0) -> tuple[dict | None, str | None]:
@@ -168,7 +241,7 @@ def audit_markdown(text: str, online: bool = False) -> dict:
     warnings: list[dict] = []
     crossref_records: list[dict] = []
 
-    sources_by_url = {s["url"]: s for s in sources}
+    sources_by_url = {s["normalized_url"]: s for s in sources}
 
     if inline_links and sources_start < 0:
         blocking.append(
@@ -183,6 +256,7 @@ def audit_markdown(text: str, online: bool = False) -> dict:
     # Check inline links
     for lnk in inline_links:
         url = lnk["url"]
+        norm_url = lnk["normalized_url"]
         host = urllib.parse.urlparse(url).netloc.lower()
         if any(ph in host for ph in PLACEHOLDER_HOSTS) or "TODO" in url or "TBD" in url:
             blocking.append(
@@ -193,7 +267,7 @@ def audit_markdown(text: str, online: bool = False) -> dict:
                     "detail": f"Placeholder or invalid URL: {url}",
                 }
             )
-        if sources_start >= 0 and url not in sources_by_url:
+        if sources_start >= 0 and norm_url not in sources_by_url:
             blocking.append(
                 {
                     "code": "BIB_MISMATCH",
@@ -211,8 +285,8 @@ def audit_markdown(text: str, online: bool = False) -> dict:
                     "detail": f"Inline label {lnk['label']!r} claims a study/paper but links to secondary/wrapper host {host} ({url}).",
                 }
             )
-        if url in sources_by_url and lnk["years"]:
-            src = sources_by_url[url]
+        if norm_url in sources_by_url and lnk["years"]:
+            src = sources_by_url[norm_url]
             if src["years"]:
                 missing_years = [y for y in lnk["years"] if y not in src["years"]]
                 if missing_years:
@@ -248,7 +322,8 @@ def audit_markdown(text: str, online: bool = False) -> dict:
                     "detail": f"Dual-year conflation in `## Sources` ({label!r}); cite the exact edition/publication year.",
                 }
             )
-        if ACRONYM_AUTHOR_RE.match(label):
+        acr_m = ACRONYM_AUTHOR_RE.match(label)
+        if acr_m and acr_m.group(1) not in INSTITUTIONAL_AUTHORS:
             blocking.append(
                 {
                     "code": "BIB_MISMATCH",
@@ -283,7 +358,7 @@ def audit_markdown(text: str, online: bool = False) -> dict:
                     warnings.append({"rule": err, "line": src["line"], "doi": doi})
                 elif msg:
                     authors = [a.get("family", "") for a in msg.get("author", []) if a.get("family")]
-                    issued = msg.get("issued", {}).get("date-parts", [[None]])[0][0]
+                    cr_years = extract_crossref_years(msg)
                     title = (msg.get("title") or [""])[0]
                     container = (msg.get("container-title") or [""])[0]
                     crossref_records.append(
@@ -291,7 +366,8 @@ def audit_markdown(text: str, online: bool = False) -> dict:
                             "line": src["line"],
                             "doi": doi,
                             "authors": authors,
-                            "year": str(issued) if issued else None,
+                            "year": cr_years[0] if cr_years else None,
+                            "years": cr_years,
                             "title": title,
                             "container": container,
                         }
@@ -305,13 +381,13 @@ def audit_markdown(text: str, online: bool = False) -> dict:
                                 "detail": f"Crossref lead author {authors[0]!r} not found in `## Sources` label {label!r}.",
                             }
                         )
-                    if issued and src["years"] and str(issued) not in src["years"]:
+                    if cr_years and src["years"] and not any(y in cr_years for y in src["years"]):
                         blocking.append(
                             {
                                 "code": "BIB_MISMATCH",
                                 "rule": "crossref_year_mismatch",
                                 "line": src["line"],
-                                "detail": f"Crossref year {issued} does not match `## Sources` years {src['years']} for {doi}.",
+                                "detail": f"Crossref year(s) {cr_years} do not match `## Sources` years {src['years']} for {doi}.",
                             }
                         )
 

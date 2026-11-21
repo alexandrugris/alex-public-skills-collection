@@ -8,11 +8,11 @@ Alexandru's site voice: building things, learning by doing, writing to understan
 
 ## Source of truth for prose rules
 
-The measured house style and versioned blocklist live in the `anti-ai` skill (`../anti-ai/references/anti-ai-short.md` for the quick rule set, `../anti-ai/references/anti-ai-prompt.md` for full rules, and `../anti-ai/check_tells.py` for mechanical checks). Where this file and `anti-ai` differ, `anti-ai` wins.
+The measured house style and versioned blocklist live in the sibling `anti-ai` skill (`<SKILLS_DIR>/anti-ai/references/anti-ai-short.md` for the quick rule set, `<SKILLS_DIR>/anti-ai/references/anti-ai-prompt.md` for full rules, and `<SKILLS_DIR>/anti-ai/check_tells.py` for mechanical checks, where `<SKILL_DIR>` is the `blog-writer` directory and `<SKILLS_DIR>` is its parent). Where this file and `anti-ai` differ, `anti-ai` wins.
 
 Before drafting, pull up to 10 relevant past rewrites (topic matches plus general structural/taste constructs) for few-shot calibration:
 
-    python3 ../anti-ai/scripts/examples.py query --lang <en|ro|fr> --topic "<topic>" --limit 10
+    python3 "<SKILLS_DIR>/anti-ai/scripts/examples.py" query --lang <en|ro|fr> --topic "<topic>" --limit 10
 
 ## Task
 
@@ -30,7 +30,7 @@ Before drafting, pull up to 10 relevant past rewrites (topic matches plus genera
 
 ## Lint and Clean-Scan Sign-off
 
-1. Run `python3 ../anti-ai/check_tells.py <draft.md>` (and `python3 tests/validate_draft.py <draft.md>`). Fix every HIGH hit before moving to Step 5.
+1. Run `python3 "<SKILLS_DIR>/anti-ai/check_tells.py" "<draft.md>"` and `python3 "<SKILL_DIR>/tests/validate_draft.py" "<draft.md>"`. Fix every HIGH hit before moving to Step 5.
 2. Complete the manual Clean-Scan Sign-off even on a PASS scan (regexes only know registered patterns):
    - The title is short and direct (no two-part ", and what..." AI suspense tails), and every heading states a concrete claim the text supports, not a stock pair.
    - Each verb and noun keeps its dictionary sense in context (Rule 1).
