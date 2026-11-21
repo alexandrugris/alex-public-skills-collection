@@ -174,8 +174,7 @@ state directly what the person studies and what it explains in the room.
 - Em-dashes: 0
 - Colon used as the pause (Bucha: the answer arrives with an army.)
 - First person: "rare" (2 times in 29 sentences)
-- Headings: declarative sentences with a final period (Europe wrote the answer down two
-  centuries ago.)
+- Titles and headings: keep titles short and direct with no two-part ", and what..." AI suspense tails ("Packaging taste as code"); declarative headings with a final period (Europe wrote the answer down two centuries ago.)
 - Concrete nouns over abstract categories (freedom has a flag)
 - Filenames and script paths belong in tables or bullet lists, while narrative paragraphs stay focused on explanations and links to articles
 - Bilingual EN/FR only where the site itself is bilingual

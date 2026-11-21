@@ -32,7 +32,7 @@ Before drafting, pull up to 10 relevant past rewrites (topic matches plus genera
 
 1. Run `python3 ../anti-ai/check_tells.py <draft.md>` (and `python3 tests/validate_draft.py <draft.md>`). Fix every HIGH hit before moving to Step 5.
 2. Complete the manual Clean-Scan Sign-off even on a PASS scan (regexes only know registered patterns):
-   - The title and every heading state a concrete claim the text supports, not a stock pair.
+   - The title is short and direct (no two-part ", and what..." AI suspense tails), and every heading states a concrete claim the text supports, not a stock pair.
    - Each verb and noun keeps its dictionary sense in context (Rule 1).
    - No standalone filler transition survives ("The levels move together."), and every section ends on a consequence or fact, not a moral.
 
