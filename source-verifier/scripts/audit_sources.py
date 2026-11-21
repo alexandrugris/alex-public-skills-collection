@@ -199,6 +199,13 @@ def extract_quotes(body: str) -> list[dict]:
     return quotes
 
 
+def normalize_name(text: str) -> str:
+    """Fold diacritics and curly apostrophes/dashes for Crossref author matching."""
+    folded = unicodedata.normalize("NFKD", text)
+    ascii_ish = "".join(ch for ch in folded if not unicodedata.combining(ch))
+    return ascii_ish.replace("’", "'").replace("‘", "'").replace("–", "-").replace("—", "-").lower()
+
+
 def extract_crossref_years(msg: dict) -> list[str]:
     """Collect valid publication years from Crossref print, online, and issued date fields."""
     years: list[str] = []
@@ -372,7 +379,7 @@ def audit_markdown(text: str, online: bool = False) -> dict:
                             "container": container,
                         }
                     )
-                    if authors and authors[0].lower() not in label.lower():
+                    if authors and normalize_name(authors[0]) not in normalize_name(label):
                         blocking.append(
                             {
                                 "code": "BIB_MISMATCH",
