@@ -121,14 +121,7 @@ paragraph and twice in the next ("...silence. ...why the room goes silent ...mis
 Compare each noun against a dictionary in context, then each adjective, then the
 sentence that carries no information gets cut.
 
-**13. Say what it is, not what it is not.** A sentence opening with "X is/was not Y" makes the
-reader guess the positive: state the positive and the reason. Same for disguised negations
-("stops looking like X; it starts looking like Y") and negated or "rather than" tails that
-dismiss a strawman ("starts from the person, not the org chart" -> "starts from the
-person"; "its purpose is context hygiene rather than prompt cleverness" -> "its purpose is
-context hygiene"). A contrast or negation that carries real information or belongs to a
-cited author's argument ("a context-management strategy rather than a source of new model
-intelligence") is fine.
+**13. Lead with and explain what it IS, never what it is NOT.** Sentences such as "X did not start as Y; it grew out of Z", "I did not do X; I did Y", or "X is/was not Y" are **FORBIDDEN**: never open with or explain what something isn't or what you didn't do. Lead with and explain what it is, what happened, and what you did. Same for disguised negations ("stops looking like X; it starts looking like Y") and negated or "rather than" tails that dismiss a strawman ("starts from the person, not the org chart" -> "starts from the person"; "its purpose is context hygiene rather than prompt cleverness" -> "its purpose is context hygiene"). A contrast that belongs to a cited author's substantive argument ("a context-management strategy rather than a source of new model intelligence") is fine. Every claim also stays concrete: replace abstractions ("the future collapses") with the observable mechanism ("when the output reads like AI, it becomes quickly boring, stale, and attention dissipates").
 
 **14. Advice reads as conditional, not as an order.** "Put two researchers in that room"
 -> "If you put two researchers in that room, the silence changes meaning." Imperatives
@@ -148,7 +141,7 @@ criteria.").
 Literary scenes are explicit, not summarized: describe the room, the objects, the light,
 who stands and who sits, and render every feeling as observable behavior - where people
 look, what they do with their hands, what they actually say. "People are afraid" alone is
-a label; "everyone has already done the math on their own salary" is a scene.
+a label; "faces stiffen in the front rows, and at the back hands grip paper coffee cups" is a scene.
 
 Active voice dominates: the actor sits in the subject ("He tells the managers to project
 confidence"). Passive only when the actor is truly unknown, and even then name the

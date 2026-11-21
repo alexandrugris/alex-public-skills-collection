@@ -1,6 +1,6 @@
 {
-  "version": "0.15.0",
-  "updated": "2026-11-20",
+  "version": "0.15.1",
+  "updated": "2026-11-21",
   "categories": {
     "chat": "Resturi de chatbot",
     "inflated": "Vocabular umflat",
@@ -10428,6 +10428,24 @@
       "regex": "\\b(?:am|is|are|was|were|be|been|being|get|gets|got|getting) (?!(?:allowed|banned|forbidden|permitted|required|quoted|exempt|listed|included|marked|noted|called|named|meant|intended|described|defined|located|situated|known|measured|calibrated|counted|based|derived|used)\\b)(?:[a-z]{3,}ed|[a-z]*(?:told|given|taken|written|spoken|chosen|shown|seen|made|said|sent|built|bought|brought|thought|caught|paid|sold|held|kept|left|gone|born|fallen|eaten|forgotten)\\b)\\b",
       "label": "posibil pasiv (auxiliar + participiu)",
       "fix": "Actorul in subiect: 'He tells the managers...' in loc de 'Managers are told...'. Pasiv doar cand actorul e cu adevarat necunoscut; si atunci numeste-l: 'HR never states...'."
+    },
+    {
+      "id": "metaphor.done_the_math",
+      "cat": "metaphor",
+      "lang": "any",
+      "severity": "high",
+      "regex": "\\b(?:do|did|done|doing)\\s+the\\s+math\\b",
+      "label": "done the math (dead metaphor)",
+      "fix": "Spune actul concret: calculated, compared, counted."
+    },
+    {
+      "id": "inflated.hardest",
+      "cat": "inflated",
+      "lang": "any",
+      "severity": "high",
+      "regex": "\\bhardest\\s+(?:tradeoff|trade-off|problem|part|choice|decision|challenge|question|step|piece)\\b",
+      "label": "hardest + abstract noun (AI superlative without personal hardship)",
+      "fix": "Spune mecanismul concret al compromisului sau al blocajului."
     }
   ]
 }

@@ -85,6 +85,9 @@ en,FAIL,weight.earn_admiration,A clean rollback earns the respect of on-call eng
 en,FAIL,chat.common_thread,There is a common thread across all five outage reports.
 en,FAIL,inflated.mere,The checklist is not a mere formality before launch.
 en,FAIL,metaphor.weapons,The weapons he describes are all subtractions.
+en,FAIL,metaphor.done_the_math,"By lunch, everyone on the floor has already done the math on their own salary."
+en,FAIL,inflated.hardest,The hardest tradeoff sits between deterministic code and model rubrics.
 en,PASS,,The steel bridge carries the weight of three loaded trucks.
 en,PASS,,The army moved its weapons out of the northern depot.
 en,PASS,,She is an honest broker who shares every bid with both sides.
+en,PASS,,The payroll team calculated every salary deduction before noon.
