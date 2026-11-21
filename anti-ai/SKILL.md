@@ -40,6 +40,7 @@ Guardrail: during prose tasks, if a rule fires on your draft, fix the text and n
 
 1. **Retrieve relevant past rewrites before drafting or revising** (top 10: topic matches plus general structural/taste constructs):
    `python3 "<SKILL_DIR>/scripts/examples.py" query --lang en --topic "<topic or tags>" --limit 10`
+   French and Romanian queries fill unused slots with examples labeled `en`. Apply their editorial principles and write naturally in the requested language; do not copy or literally translate their wording.
 2. **Apply the rules while drafting, then scan and fix what the scanner reports.**
    House rhythm: a sentence built as an enumeration (2+ items, or a semicolon series) may run long, the clause stays 12-22 words, and it must not become every sentence.
    Keep facts, numbers, and quotations unchanged.

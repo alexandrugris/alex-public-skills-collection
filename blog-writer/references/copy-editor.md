@@ -16,6 +16,8 @@ Before drafting, pull up to 10 relevant past rewrites (topic matches plus genera
 
 Retrieval samples by default among the strongest matches while favoring higher-ranked examples. The command prints the random seed to stderr; pass `--seed <integer>` to reproduce a selection, or `--no-randomize` for strict top-K ranking. Use a recorded seed when comparing drafts or debugging a specific run.
 
+For French and Romanian, retrieval fills unused slots with English examples, labeled `en`. Apply their editorial principles, while writing natural prose in the requested language. Do not copy or literally translate their wording.
+
 ## Task
 
 1. **Honor intent, not just shape.** The structural brief's voice notes state the effect each section must have on the reader. Achieve that effect; do not merely fill the skeleton.
