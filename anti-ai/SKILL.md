@@ -16,8 +16,8 @@ Voice profile (Alex, measured on alexandrugris.ro and on 90 posts spanning 2008-
 `references/alex-style.md`.
 Calibration benchmarks (human corpora; third-party sources anonymized):
 `references/human-benchmarks.md`.
-Corrections database (real bad-to-good rewrites for progressive few-shot retrieval):
-`examples/corrections.jsonl`, managed by `scripts/examples.py` (see `examples/README.md`).
+Corrections and voice databases (bad-to-good rewrites plus 981 selected human voice samples):
+`examples/corrections.jsonl` and `examples/voice_samples.jsonl`, managed by `scripts/examples.py` (see `examples/README.md`).
 
 ## Audit (fast)
 
@@ -38,7 +38,7 @@ Guardrail: during prose tasks, if a rule fires on your draft, fix the text and n
 
 ## Write and learn from edits
 
-1. **Retrieve relevant past rewrites before drafting or revising** (top 10: topic matches plus general structural/taste constructs):
+1. **Retrieve relevant past rewrites and positive voice samples before drafting or revising** (top 10 `BAD -> GOOD` rewrites plus 6 topic-matched human voice samples for cadence and scene texture):
    `python3 "<SKILL_DIR>/scripts/examples.py" query --lang en --topic "<topic or tags>" --limit 10`
    French and Romanian queries fill unused slots with examples labeled `en`. Apply their editorial principles and write naturally in the requested language; do not copy or literally translate their wording.
 2. **Apply the rules while drafting, then scan and fix what the scanner reports.**

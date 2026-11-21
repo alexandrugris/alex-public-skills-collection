@@ -74,6 +74,18 @@ class TestDataIntegrity(unittest.TestCase):
         gap_data = json.loads(g.stdout)
         self.assertGreaterEqual(gap_data["uncaught_count"], 1)
 
+        voice_db = REPO_ROOT / "anti-ai" / "examples" / "voice_samples.jsonl"
+        self.assertTrue(voice_db.is_file(), "Missing anti-ai/examples/voice_samples.jsonl")
+        voice_rows = [json.loads(line) for line in voice_db.read_text(encoding="utf-8").splitlines() if line.strip()]
+        self.assertGreaterEqual(len(voice_rows), 900)
+
+        qc = subprocess.run(
+            [sys.executable, str(cli), "query", "--lang", "en", "--topic", "engineering", "--limit", "3", "--voice-samples", "4"],
+            capture_output=True, text=True,
+        )
+        self.assertEqual(qc.returncode, 0, qc.stderr)
+        self.assertIn("positive voice anchors", qc.stdout)
+
     def test_design_system_tokens_match_canonical_css(self):
         tokens_css = (REPO_ROOT / "alexandru-style" / "brand" / "references" / "tokens.css").read_text(encoding="utf-8")
         design_md = (REPO_ROOT / "alexandru-style" / "design-system.md").read_text(encoding="utf-8")

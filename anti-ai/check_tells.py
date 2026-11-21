@@ -98,14 +98,16 @@ PERSON_NOUNS = (
     "apprentice", "volunteer", "neighbour", "neighbor", "stranger",
     "everyone", "someone", "anyone", "he", "she", "they", "him", "her",
     "them", "his", "hers", "their", "our", "us", "we",
-    # RO / FR person nouns (matched after diacritic folding)
+    "myself", "yourself", "himself", "herself", "ourselves", "yourselves", "themselves",
+    # RO / FR person nouns & reflexives (matched after diacritic folding)
     "prieten", "prietena", "prietene", "om", "omul", "femeie", "femeia",
     "barbat", "barbatul", "coleg", "colega", "angajat", "angajatul",
     "profesor", "client", "clientul", "partener", "adversar", "autor",
     "autorul", "scriitor", "jucator", "vecin", "vecinul", "strain", "straina",
-    "mama", "tata", "copil",
+    "mama", "tata", "copil", "mine", "tine", "sine", "noi", "voi", "ei", "ele",
     "ami", "amie", "homme", "femme", "collegue", "partenaire",
     "auteur", "voisin", "inconnu", "lecteur", "locuteur", "dirigeant",
+    "moi", "toi", "soi", "nous", "vous", "eux", "elles",
 )
 _PERSON_RE = re.compile(
     r"\b(?:" + "|".join(sorted({_fold(w) for w in PERSON_NOUNS})) + r")\b"

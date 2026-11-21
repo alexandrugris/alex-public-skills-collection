@@ -28,6 +28,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DB_PATH = ROOT / "examples" / "corrections.jsonl"
+VOICE_DB_PATH = ROOT / "examples" / "voice_samples.jsonl"
 TESTS_DIR = ROOT / "tests"
 
 sys.path.insert(0, str(ROOT))
@@ -36,6 +37,7 @@ import check_tells as ct  # noqa: E402
 VALID_LANGS = {"en", "ro", "fr"}
 VALID_STATUSES = {"logged", "promoted_fixture", "promoted_pattern", "few_shot_only"}
 REQUIRED_FIELDS = ("id", "date", "lang", "bad", "good", "why")
+VOICE_REQUIRED_FIELDS = ("id", "lang", "topics", "role", "text")
 TOKEN_RE = re.compile(r"[A-Za-z\u00C0-\u024F0-9]+")
 
 
@@ -156,6 +158,59 @@ def weighted_sample(entries: list[dict], limit: int, rng: random.Random) -> list
     return selected
 
 
+def score_voice_sample(sample: dict, q_tokens: Counter, wanted_tags: set[str]) -> float:
+    score = 0.0
+    stopics = {t.lower() for t in sample.get("topics", [])}
+    role = (sample.get("role") or "").lower()
+    score += 3.5 * len(stopics & (wanted_tags | set(q_tokens.keys())))
+    if role in wanted_tags or role in q_tokens:
+        score += 2.5
+    if q_tokens:
+        doc_tokens = Counter(tokenize(sample.get("text", "") + " " + " ".join(stopics)))
+        overlap = sum(min(c, doc_tokens[tok]) for tok, c in q_tokens.items())
+        norm = math.sqrt(sum(doc_tokens.values()) or 1.0)
+        score += (overlap / norm) * 2.5
+    # Prefer zero-medium-hit samples slightly as cleaner positive anchors
+    if sample.get("med_hits", 0) == 0:
+        score += 0.25
+    return score
+
+
+def select_voice_samples(
+    voice_entries: list[dict],
+    q_tokens: Counter,
+    wanted_tags: set[str],
+    limit: int,
+    rng: random.Random | None,
+) -> list[dict]:
+    if limit <= 0 or not voice_entries:
+        return []
+    scored = [(score_voice_sample(s, q_tokens, wanted_tags), s) for s in voice_entries]
+    scored.sort(key=lambda pair: (pair[0], pair[1].get("words", 0)), reverse=True)
+
+    # Reserve at least 1 scene sample (for opening texture) and 1 analytical/tradeoff sample when limit >= 3
+    scenes = [s for _, s in scored if s.get("role") == "scene"]
+    expository = [s for _, s in scored if s.get("role") != "scene"]
+
+    scene_quota = 1 if (limit >= 3 and scenes and "fiction" not in (wanted_tags | set(q_tokens.keys()))) else 0
+    exp_quota = limit - scene_quota
+
+    if rng is not None:
+        picked = weighted_sample(expository, exp_quota, rng)
+        if scene_quota:
+            picked.extend(weighted_sample(scenes, scene_quota, rng))
+    else:
+        picked = expository[:exp_quota]
+        if scene_quota:
+            picked.extend(scenes[:scene_quota])
+
+    if len(picked) < limit:
+        seen = {s["id"] for s in picked}
+        rest = [s for _, s in scored if s["id"] not in seen]
+        picked.extend(weighted_sample(rest, limit - len(picked), rng) if rng is not None else rest[: limit - len(picked)])
+    return picked[:limit]
+
+
 def cmd_query(args: argparse.Namespace) -> int:
     all_entries = load_entries(Path(args.db))
     if args.only_uncaught:
@@ -227,6 +282,16 @@ def cmd_query(args: argparse.Namespace) -> int:
         remaining = args.limit - len(selected)
         selected.extend(weighted_sample(fallback, remaining, rng) if rng is not None else fallback[:remaining])
 
+    voice_selected: list[dict] = []
+    if args.voice_samples > 0:
+        all_v = load_entries(Path(args.voice_db))
+        v_entries = all_v
+        if args.lang and args.lang != "all":
+            v_entries = [v for v in all_v if v.get("lang") == args.lang]
+            if not v_entries and args.lang in {"fr", "ro"}:
+                v_entries = [v for v in all_v if v.get("lang") == "en"]
+        voice_selected = select_voice_samples(v_entries, q_tokens, wanted_tags, args.voice_samples, rng)
+
     if args.format == "json":
         print(json.dumps(selected, ensure_ascii=False, indent=2))
         return 0
@@ -238,6 +303,13 @@ def cmd_query(args: argparse.Namespace) -> int:
         print(f"  BAD : {e['bad']}")
         print(f"  GOOD: {e['good']}")
         print(f"  WHY : {e['why']}")
+
+    if voice_selected:
+        print("\n--- positive voice anchors (cadence & rhythm only; never cite as facts) ---")
+        for v in voice_selected:
+            topics = ",".join(v.get("topics", [])) or "-"
+            role = v.get("role", "observation")
+            print(f"[{v['id']} | {v['lang']} | role:{role} | topics:{topics}] {v['text']}")
     return 0
 
 
@@ -311,6 +383,7 @@ def cmd_promote_fixtures(args: argparse.Namespace) -> int:
 def cmd_validate(args: argparse.Namespace) -> int:
     data = ct.load_list()
     entries = load_entries(Path(args.db))
+    voice_entries = load_entries(Path(args.voice_db))
     problems = []
     seen_ids = set()
 
@@ -339,19 +412,41 @@ def cmd_validate(args: argparse.Namespace) -> int:
                 hit_ids = ",".join(sorted({h["id"] for h in good_hits}))
                 problems.append(f"{eid}: good rewrite triggers HIGH tell(s): {hit_ids}")
 
+    seen_vids = set()
+    for idx, v in enumerate(voice_entries, 1):
+        vid = v.get("id", f"<voice row {idx}>")
+        for field in ("id", "lang", "role", "text"):
+            if not isinstance(v.get(field), str) or not v[field].strip():
+                problems.append(f"{vid}: missing or empty field '{field}'")
+        if not isinstance(v.get("topics"), list) or not v["topics"]:
+            problems.append(f"{vid}: 'topics' must be a non-empty list")
+        if vid in seen_vids:
+            problems.append(f"{vid}: duplicate voice sample id")
+        seen_vids.add(vid)
+        lang = v.get("lang", "")
+        if lang in VALID_LANGS and v.get("text"):
+            v_hits = [h for h in scan_text(v["text"], data, lang) if h["severity"] == "high"]
+            if v_hits:
+                hit_ids = ",".join(sorted({h["id"] for h in v_hits}))
+                problems.append(f"{vid}: voice sample triggers HIGH tell(s): {hit_ids}")
+
     if problems:
         for p in problems:
             print("FAIL " + p)
         print(f"VERDICT: FAIL ({len(problems)} problem(s))")
         return 1
-    print(f"examples: {len(entries)} entries valid, 0 HIGH tells in good rewrites")
+    print(
+        f"examples: {len(entries)} corrections + {len(voice_entries)} voice samples valid, "
+        "0 HIGH tells"
+    )
     print("VERDICT: PASS")
     return 0
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="Manage anti-ai corrections database")
+    ap = argparse.ArgumentParser(description="Manage anti-ai corrections and voice samples databases")
     ap.add_argument("--db", default=str(DB_PATH), help="path to corrections.jsonl")
+    ap.add_argument("--voice-db", default=str(VOICE_DB_PATH), help="path to voice_samples.jsonl")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
     p_add = sub.add_parser("add", help="log a new bad -> good rewrite")
@@ -368,12 +463,18 @@ def main() -> int:
     p_add.add_argument("--force", action="store_true")
     p_add.set_defaults(func=cmd_add)
 
-    p_q = sub.add_parser("query", help="retrieve top-K relevant past rewrites")
+    p_q = sub.add_parser("query", help="retrieve top-K relevant past rewrites and positive voice anchors")
     p_q.add_argument("--lang", choices=["all", "en", "ro", "fr"], default="all")
     p_q.add_argument("--tags", default="")
     p_q.add_argument("--rule", default=None)
     p_q.add_argument("--topic", default="")
     p_q.add_argument("--limit", type=int, default=10)
+    p_q.add_argument(
+        "--voice-samples",
+        type=int,
+        default=6,
+        help="number of positive voice samples to append in compact mode (default: 6; 0 to disable)",
+    )
     p_q.add_argument("--only-uncaught", action="store_true")
     p_q.add_argument("--format", choices=["compact", "json"], default="compact")
     p_q.add_argument(
@@ -399,7 +500,7 @@ def main() -> int:
     p_p.add_argument("--dry-run", action="store_true")
     p_p.set_defaults(func=cmd_promote_fixtures)
 
-    p_v = sub.add_parser("validate", help="validate schema and verify all good rewrites stay clean")
+    p_v = sub.add_parser("validate", help="validate schema and verify all good rewrites and voice samples stay clean")
     p_v.set_defaults(func=cmd_validate)
 
     args = ap.parse_args()
