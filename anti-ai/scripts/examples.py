@@ -157,11 +157,12 @@ def weighted_sample(entries: list[dict], limit: int, rng: random.Random) -> list
 
 
 def cmd_query(args: argparse.Namespace) -> int:
-    entries = load_entries(Path(args.db))
+    all_entries = load_entries(Path(args.db))
+    if args.only_uncaught:
+        all_entries = [e for e in all_entries if not e.get("scanner_caught", False)]
+    entries = all_entries
     if args.lang and args.lang != "all":
         entries = [e for e in entries if e.get("lang") == args.lang]
-    if args.only_uncaught:
-        entries = [e for e in entries if not e.get("scanner_caught", False)]
 
     wanted_tags = {t.strip().lower() for t in (args.tags or "").split(",") if t.strip()}
     q_tokens = Counter(tokenize(args.topic or ""))
@@ -215,6 +216,16 @@ def cmd_query(args: argparse.Namespace) -> int:
             if rng is not None
             else ranked[: args.limit]
         )
+
+    # Prefer all available target-language examples; fill only unused slots in English.
+    if args.lang in {"fr", "ro"} and len(selected) < args.limit:
+        fallback = [e for e in all_entries if e.get("lang") == "en"]
+        fallback.sort(
+            key=lambda e: (sum(score_entry(e, q_tokens, wanted_tags, args.rule)), e.get("date", "")),
+            reverse=True,
+        )
+        remaining = args.limit - len(selected)
+        selected.extend(weighted_sample(fallback, remaining, rng) if rng is not None else fallback[:remaining])
 
     if args.format == "json":
         print(json.dumps(selected, ensure_ascii=False, indent=2))
