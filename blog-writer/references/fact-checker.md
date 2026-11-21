@@ -6,7 +6,7 @@ Read-only verification of the draft, run after the copy pass. Max 2 rounds; repo
 
 1. **Isolate claims**: every external factual claim, metric, technical assertion, historical statement, and cited link in the draft. First-person experience claims need no source, but the internal timeline must not contradict known sources.
 2. **Verify against the research brief first**; for any new external claim introduced in prose, run a fresh web search and fetch the source page rather than assuming.
-3. **Check links**: every cited URL must have been opened in this session and must support the sentence attached to it. Never invent, guess, or reconstruct a URL.
+3. **Check links and concept wording**: every cited URL must have been opened in this session and must support the sentence attached to it. Never invent, guess, or reconstruct a URL. Verify that every named researcher concept uses the author's exact wording and links to its primary source rather than a synthetic paraphrase or relabeled triad.
 4. **Classify findings**:
    - **blocking**: claim contradicted by a source, fabricated/unsupported stat, broken or dead link, invented citation, misrepresentation of a source's finding.
    - **non-blocking**: weak paraphrase of a supported claim, low-credibility (but existing) source, imprecise but not wrong figure.
