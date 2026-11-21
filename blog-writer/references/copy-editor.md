@@ -12,7 +12,9 @@ The measured house style and versioned blocklist live in the sibling `anti-ai` s
 
 Before drafting, pull up to 10 relevant past rewrites (topic matches plus general structural/taste constructs) for few-shot calibration:
 
-    python3 "<SKILLS_DIR>/anti-ai/scripts/examples.py" query --lang <en|ro|fr> --topic "<topic>" --limit 10
+    python3 "<SKILLS_DIR>/anti-ai/scripts/examples.py" query --lang <en|ro|fr> --topic "<topic>" --limit 10 --randomize
+
+Randomized retrieval samples among the strongest matches while favoring higher-ranked examples. The command prints the random seed to stderr; pass `--seed <integer>` to reproduce a selection. Use a recorded seed when comparing drafts or debugging a specific run.
 
 ## Task
 

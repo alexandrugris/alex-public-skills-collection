@@ -19,7 +19,9 @@ import csv
 import datetime as dt
 import json
 import math
+import random
 import re
+import secrets
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -138,6 +140,22 @@ def score_entry(entry: dict, q_tokens: Counter, wanted_tags: set[str], wanted_ru
     return match_score, tiebreak
 
 
+def weighted_sample(entries: list[dict], limit: int, rng: random.Random) -> list[dict]:
+    """Sample from the top 3x candidate pool, favoring higher-ranked entries."""
+    if limit <= 0 or not entries:
+        return []
+    pool = list(entries[: max(limit, limit * 3)])
+    ranked = {entry["id"]: index for index, entry in enumerate(entries)}
+    selected = []
+    while pool and len(selected) < limit:
+        weights = [1.0 / math.sqrt(ranked[e["id"]] + 1) for e in pool]
+        choice = rng.choices(pool, weights=weights, k=1)[0]
+        selected.append(choice)
+        pool.remove(choice)
+    selected.sort(key=lambda entry: ranked[entry["id"]])
+    return selected
+
+
 def cmd_query(args: argparse.Namespace) -> int:
     entries = load_entries(Path(args.db))
     if args.lang and args.lang != "all":
@@ -154,15 +172,27 @@ def cmd_query(args: argparse.Namespace) -> int:
     ]
     scored.sort(key=lambda pair: (pair[0][0] + pair[0][1], pair[1].get("date", "")), reverse=True)
 
+    rng = None
+    seed = None
+    if args.randomize or args.seed is not None:
+        seed = args.seed if args.seed is not None else secrets.randbits(64)
+        rng = random.Random(seed)
+        print(f"random seed: {seed}", file=sys.stderr)
+
     if wanted_tags or q_tokens or args.rule:
         matched = [e for (ms, _), e in scored if ms > 0.0]
-        selected = matched[: args.limit]
+        # Reserve up to two slots for broader examples when alternatives exist.
+        reserve = min(2, max(0, args.limit - 1), max(0, len(entries) - len(matched))) if rng is not None else 0
+        selected = (
+            weighted_sample(matched, args.limit - reserve, rng)
+            if rng is not None
+            else matched[: args.limit]
+        )
         if len(selected) < args.limit:
             # Backfill with diverse general structural/taste constructs (uncaught first)
             seen_ids = {e["id"] for e in selected}
             seen_rules = {r for e in selected for r in e.get("rules", [])}
             rest = [e for _, e in scored if e["id"] not in seen_ids]
-            # Prefer entries that cover new rules and uncaught taste patterns
             rest.sort(
                 key=lambda e: (
                     not e.get("scanner_caught", False),
@@ -171,13 +201,20 @@ def cmd_query(args: argparse.Namespace) -> int:
                 ),
                 reverse=True,
             )
-            for e in rest:
-                if len(selected) >= args.limit:
-                    break
-                selected.append(e)
-                seen_rules.update(e.get("rules", []))
+            remaining = args.limit - len(selected)
+            additions = (
+                weighted_sample(rest, remaining, rng)
+                if rng is not None
+                else rest[:remaining]
+            )
+            selected.extend(additions)
     else:
-        selected = [e for _, e in scored][: args.limit]
+        ranked = [e for _, e in scored]
+        selected = (
+            weighted_sample(ranked, args.limit, rng)
+            if rng is not None
+            else ranked[: args.limit]
+        )
 
     if args.format == "json":
         print(json.dumps(selected, ensure_ascii=False, indent=2))
@@ -328,6 +365,17 @@ def main() -> int:
     p_q.add_argument("--limit", type=int, default=10)
     p_q.add_argument("--only-uncaught", action="store_true")
     p_q.add_argument("--format", choices=["compact", "json"], default="compact")
+    p_q.add_argument(
+        "--randomize",
+        action="store_true",
+        help="sample among the top-ranked candidates; prints a seed for reproduction",
+    )
+    p_q.add_argument(
+        "--seed",
+        type=int,
+        default=None,
+        help="random seed; supplying it enables randomization and makes selection reproducible",
+    )
     p_q.set_defaults(func=cmd_query)
 
     p_g = sub.add_parser("gaps", help="show examples the regex scanner missed")
