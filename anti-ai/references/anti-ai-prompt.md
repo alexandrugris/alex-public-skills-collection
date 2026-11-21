@@ -122,9 +122,12 @@ sentence that carries no information gets cut.
 
 **13. Say what it is, not what it is not.** A sentence opening with "X is/was not Y" makes the
 reader guess the positive: state the positive and the reason. Same for disguised negations
-("stops looking like X; it starts looking like Y") and negated tails that duplicate the
-positive: "starts from the person, not the org chart" -> "starts from the person". A
-negation that carries real information ("an interpreter, not a judge") is fine.
+("stops looking like X; it starts looking like Y") and negated or "rather than" tails that
+dismiss a strawman ("starts from the person, not the org chart" -> "starts from the
+person"; "its purpose is context hygiene rather than prompt cleverness" -> "its purpose is
+context hygiene"). A contrast or negation that carries real information or belongs to a
+cited author's argument ("a context-management strategy rather than a source of new model
+intelligence") is fine.
 
 **14. Advice reads as conditional, not as an order.** "Put two researchers in that room"
 -> "If you put two researchers in that room, the silence changes meaning." Imperatives
@@ -165,7 +168,7 @@ state directly what the person studies and what it explains in the room.
 
 ## 2. House style, measured from the author's published pages
 
-- Average sentence core: 12-22 words; long enumerations pass (the leadership post averages 28.5), but not every sentence may be one
+- Average sentence core: 12-22 words; long enumerations and flowing explanatory multi-clause sentences pass when every clause carries a concrete fact or link, though not every sentence may be one
 - Average word length: under 4.8 letters; under 12 percent of words longer than 9 letters
 - Em-dashes: 0
 - Colon used as the pause (Bucha: the answer arrives with an army.)
@@ -173,6 +176,7 @@ state directly what the person studies and what it explains in the room.
 - Headings: declarative sentences with a final period (Europe wrote the answer down two
   centuries ago.)
 - Concrete nouns over abstract categories (freedom has a flag)
+- Filenames and script paths belong in tables or bullet lists, while narrative paragraphs stay focused on explanations and links to articles
 - Bilingual EN/FR only where the site itself is bilingual
 - Zero model talk, zero self-referential meta, zero closing moral
 
