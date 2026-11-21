@@ -17,6 +17,7 @@ from __future__ import annotations
 import argparse
 import csv
 import datetime as dt
+import hashlib
 import json
 import math
 import random
@@ -28,7 +29,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DB_PATH = ROOT / "examples" / "corrections.jsonl"
-VOICE_DB_PATH = ROOT / "examples" / "voice_samples.jsonl"
+WRITING_DB_PATH = ROOT / "examples" / "writing_samples.jsonl"
+WRITING_INDEX_PATH = ROOT / "examples" / "writing_samples_index.json"
 TESTS_DIR = ROOT / "tests"
 
 sys.path.insert(0, str(ROOT))
@@ -37,7 +39,13 @@ import check_tells as ct  # noqa: E402
 VALID_LANGS = {"en", "ro", "fr"}
 VALID_STATUSES = {"logged", "promoted_fixture", "promoted_pattern", "few_shot_only"}
 REQUIRED_FIELDS = ("id", "date", "lang", "bad", "good", "why")
-VOICE_REQUIRED_FIELDS = ("id", "lang", "topics", "role", "text")
+VOICE_REGISTERS = ("analytical", "personal", "fiction")
+QUERY_STOP_WORDS = set("""
+about after all also and are been but can could dans de des did does for from had
+has have how into les more most not our over par pas pour que qui should than
+that the their them then there these they this those through une was were what
+when where which while who will with would you your care este pentru sunt
+""".split())
 TOKEN_RE = re.compile(r"[A-Za-z\u00C0-\u024F0-9]+")
 
 
@@ -158,57 +166,65 @@ def weighted_sample(entries: list[dict], limit: int, rng: random.Random) -> list
     return selected
 
 
-def score_voice_sample(sample: dict, q_tokens: Counter, wanted_tags: set[str]) -> float:
-    score = 0.0
-    stopics = {t.lower() for t in sample.get("topics", [])}
-    role = (sample.get("role") or "").lower()
-    score += 3.5 * len(stopics & (wanted_tags | set(q_tokens.keys())))
-    if role in wanted_tags or role in q_tokens:
-        score += 2.5
-    if q_tokens:
-        doc_tokens = Counter(tokenize(sample.get("text", "") + " " + " ".join(stopics)))
-        overlap = sum(min(c, doc_tokens[tok]) for tok, c in q_tokens.items())
-        norm = math.sqrt(sum(doc_tokens.values()) or 1.0)
-        score += (overlap / norm) * 2.5
-    # Prefer zero-medium-hit samples slightly as cleaner positive anchors
-    if sample.get("med_hits", 0) == 0:
-        score += 0.25
-    return score
+def load_voice_samples(override: str | None) -> list[dict]:
+    """Resolve the reviewed writing samples by hash in the bundled source."""
+    if override is not None:
+        return load_entries(Path(override))
+
+    index = json.loads(WRITING_INDEX_PATH.read_text(encoding="utf-8"))
+    samples = {}
+    for row in load_entries(WRITING_DB_PATH):
+        text = row["text"]
+        sample_id = hashlib.sha256(text.encode("utf-8")).hexdigest()
+        if sample_id not in index:
+            continue
+        sample = samples.setdefault(
+            sample_id, {"id": sample_id, "text": text, "topics": [], **index[sample_id]}
+        )
+        if row["topic"] not in sample["topics"]:
+            sample["topics"].append(row["topic"])
+
+    missing = index.keys() - samples.keys()
+    if missing:
+        raise ValueError(f"{len(missing)} indexed passages missing from {WRITING_DB_PATH.name}")
+    return [samples[sample_id] for sample_id in index]
 
 
 def select_voice_samples(
-    voice_entries: list[dict],
+    entries: list[dict],
     q_tokens: Counter,
     wanted_tags: set[str],
+    lang: str,
+    register: str,
     limit: int,
     rng: random.Random | None,
 ) -> list[dict]:
-    if limit <= 0 or not voice_entries:
-        return []
-    scored = [(score_voice_sample(s, q_tokens, wanted_tags), s) for s in voice_entries]
-    scored.sort(key=lambda pair: (pair[0], pair[1].get("words", 0)), reverse=True)
+    query_words = (q_tokens.keys() | wanted_tags) - QUERY_STOP_WORDS
+    ranked = []
+    for sample in entries:
+        topics = set(sample["topics"])
+        # Older --voice-db files used the topic and role fields, without a register.
+        sample_register = sample.get("register", "fiction" if "fiction" in topics else "analytical")
+        if sample_register != register:
+            continue
+        topic_matches = topics & query_words
+        text_matches = set(tokenize(sample["text"])) & query_words
+        score = 4 * len(topic_matches) + len(text_matches)
+        if score:
+            ranked.append((score, sample))
 
-    # Reserve at least 1 scene sample (for opening texture) and 1 analytical/tradeoff sample when limit >= 3
-    scenes = [s for _, s in scored if s.get("role") == "scene"]
-    expository = [s for _, s in scored if s.get("role") != "scene"]
+    ranked.sort(key=lambda pair: pair[0], reverse=True)
+    eligible = [sample for _, sample in ranked]
+    if lang == "all":
+        return weighted_sample(eligible, limit, rng) if rng else eligible[:limit]
 
-    scene_quota = 1 if (limit >= 3 and scenes and "fiction" not in (wanted_tags | set(q_tokens.keys()))) else 0
-    exp_quota = limit - scene_quota
-
-    if rng is not None:
-        picked = weighted_sample(expository, exp_quota, rng)
-        if scene_quota:
-            picked.extend(weighted_sample(scenes, scene_quota, rng))
-    else:
-        picked = expository[:exp_quota]
-        if scene_quota:
-            picked.extend(scenes[:scene_quota])
-
-    if len(picked) < limit:
-        seen = {s["id"] for s in picked}
-        rest = [s for _, s in scored if s["id"] not in seen]
-        picked.extend(weighted_sample(rest, limit - len(picked), rng) if rng is not None else rest[: limit - len(picked)])
-    return picked[:limit]
+    native = [sample for sample in eligible if sample["lang"] == lang]
+    selected = weighted_sample(native, limit, rng) if rng else native[:limit]
+    if lang in {"fr", "ro"} and len(selected) < limit:
+        english = [sample for sample in eligible if sample["lang"] == "en"]
+        remaining = limit - len(selected)
+        selected.extend(weighted_sample(english, remaining, rng) if rng else english[:remaining])
+    return selected
 
 
 def cmd_query(args: argparse.Namespace) -> int:
@@ -282,19 +298,20 @@ def cmd_query(args: argparse.Namespace) -> int:
         remaining = args.limit - len(selected)
         selected.extend(weighted_sample(fallback, remaining, rng) if rng is not None else fallback[:remaining])
 
-    voice_selected: list[dict] = []
-    if args.voice_samples > 0:
-        all_v = load_entries(Path(args.voice_db))
-        v_entries = all_v
-        if args.lang and args.lang != "all":
-            v_entries = [v for v in all_v if v.get("lang") == args.lang]
-            if not v_entries and args.lang in {"fr", "ro"}:
-                v_entries = [v for v in all_v if v.get("lang") == "en"]
-        voice_selected = select_voice_samples(v_entries, q_tokens, wanted_tags, args.voice_samples, rng)
-
     if args.format == "json":
         print(json.dumps(selected, ensure_ascii=False, indent=2))
         return 0
+
+    voice_selected = []
+    if args.voice_samples > 0:
+        register = args.register
+        if register is None:
+            fiction = set(q_tokens) == {"fiction"} or "fiction" in wanted_tags
+            register = "fiction" if fiction else "analytical"
+        voice_selected = select_voice_samples(
+            load_voice_samples(args.voice_db), q_tokens, wanted_tags, args.lang,
+            register, args.voice_samples, rng,
+        )
 
     for e in selected:
         rules = ",".join(e.get("rules", [])) or "-"
@@ -305,11 +322,10 @@ def cmd_query(args: argparse.Namespace) -> int:
         print(f"  WHY : {e['why']}")
 
     if voice_selected:
-        print("\n--- positive voice anchors (cadence & rhythm only; never cite as facts) ---")
+        print("\n--- Writing samples (style only; keep corrections primary) ---")
         for v in voice_selected:
             topics = ",".join(v.get("topics", [])) or "-"
-            role = v.get("role", "observation")
-            print(f"[{v['id']} | {v['lang']} | role:{role} | topics:{topics}] {v['text']}")
+            print(f"[{v['lang']} | {register} | topics:{topics}] {v['text']}")
     return 0
 
 
@@ -383,7 +399,11 @@ def cmd_promote_fixtures(args: argparse.Namespace) -> int:
 def cmd_validate(args: argparse.Namespace) -> int:
     data = ct.load_list()
     entries = load_entries(Path(args.db))
-    voice_entries = load_entries(Path(args.voice_db))
+    try:
+        voice_entries = load_voice_samples(args.voice_db)
+    except (OSError, ValueError) as error:
+        print(f"FAIL {error}")
+        return 1
     problems = []
     seen_ids = set()
 
@@ -415,7 +435,7 @@ def cmd_validate(args: argparse.Namespace) -> int:
     seen_vids = set()
     for idx, v in enumerate(voice_entries, 1):
         vid = v.get("id", f"<voice row {idx}>")
-        for field in ("id", "lang", "role", "text"):
+        for field in ("id", "lang", "text"):
             if not isinstance(v.get(field), str) or not v[field].strip():
                 problems.append(f"{vid}: missing or empty field '{field}'")
         if not isinstance(v.get("topics"), list) or not v["topics"]:
@@ -424,7 +444,11 @@ def cmd_validate(args: argparse.Namespace) -> int:
             problems.append(f"{vid}: duplicate voice sample id")
         seen_vids.add(vid)
         lang = v.get("lang", "")
-        if lang in VALID_LANGS and v.get("text"):
+        if lang not in VALID_LANGS:
+            problems.append(f"{vid}: invalid lang '{lang}'")
+        if args.voice_db is None and v.get("register") not in VOICE_REGISTERS:
+            problems.append(f"{vid}: invalid register")
+        if lang in VALID_LANGS and isinstance(v.get("text"), str) and v["text"]:
             v_hits = [h for h in scan_text(v["text"], data, lang) if h["severity"] == "high"]
             if v_hits:
                 hit_ids = ",".join(sorted({h["id"] for h in v_hits}))
@@ -446,7 +470,7 @@ def cmd_validate(args: argparse.Namespace) -> int:
 def main() -> int:
     ap = argparse.ArgumentParser(description="Manage anti-ai corrections and voice samples databases")
     ap.add_argument("--db", default=str(DB_PATH), help="path to corrections.jsonl")
-    ap.add_argument("--voice-db", default=str(VOICE_DB_PATH), help="path to voice_samples.jsonl")
+    ap.add_argument("--voice-db", help="optional path to a custom database of reviewed samples")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
     p_add = sub.add_parser("add", help="log a new bad -> good rewrite")
@@ -463,7 +487,7 @@ def main() -> int:
     p_add.add_argument("--force", action="store_true")
     p_add.set_defaults(func=cmd_add)
 
-    p_q = sub.add_parser("query", help="retrieve top-K relevant past rewrites and positive voice anchors")
+    p_q = sub.add_parser("query", help="retrieve relevant past rewrites and writing samples")
     p_q.add_argument("--lang", choices=["all", "en", "ro", "fr"], default="all")
     p_q.add_argument("--tags", default="")
     p_q.add_argument("--rule", default=None)
@@ -472,9 +496,10 @@ def main() -> int:
     p_q.add_argument(
         "--voice-samples",
         type=int,
-        default=6,
-        help="number of positive voice samples to append in compact mode (default: 6; 0 to disable)",
+        default=2,
+        help="maximum number of writing samples in compact mode (default: 2; 0 to disable)",
     )
+    p_q.add_argument("--register", choices=VOICE_REGISTERS, help="register for writing samples")
     p_q.add_argument("--only-uncaught", action="store_true")
     p_q.add_argument("--format", choices=["compact", "json"], default="compact")
     p_q.add_argument(

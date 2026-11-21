@@ -98,21 +98,23 @@ PERSON_NOUNS = (
     "apprentice", "volunteer", "neighbour", "neighbor", "stranger",
     "everyone", "someone", "anyone", "he", "she", "they", "him", "her",
     "them", "his", "hers", "their", "our", "us", "we",
-    "myself", "yourself", "himself", "herself", "ourselves", "yourselves", "themselves",
-    # RO / FR person nouns & reflexives (matched after diacritic folding)
+    # RO / FR person nouns (matched after diacritic folding)
     "prieten", "prietena", "prietene", "om", "omul", "femeie", "femeia",
     "barbat", "barbatul", "coleg", "colega", "angajat", "angajatul",
     "profesor", "client", "clientul", "partener", "adversar", "autor",
     "autorul", "scriitor", "jucator", "vecin", "vecinul", "strain", "straina",
-    "mama", "tata", "copil", "mine", "tine", "sine", "noi", "voi", "ei", "ele",
+    "mama", "tata", "copil",
     "ami", "amie", "homme", "femme", "collegue", "partenaire",
     "auteur", "voisin", "inconnu", "lecteur", "locuteur", "dirigeant",
-    "moi", "toi", "soi", "nous", "vous", "eux", "elles",
 )
 _PERSON_RE = re.compile(
     r"\b(?:" + "|".join(sorted({_fold(w) for w in PERSON_NOUNS})) + r")\b"
 )
 EXEMPT_CATS = {"honesty"}
+HONEST_ABOUT_ONESELF = re.compile(
+    r"^\s+about\s+(?:myself|yourself|himself|herself|ourselves|yourselves|themselves)\b",
+    re.I,
+)
 
 
 def person_follows(before, after):
@@ -179,7 +181,12 @@ def scan(text, data, cats=None, min_sev=None, lang=None):
                 continue
             before = text[max(0, match.start() - 45):match.start()]
             after = text[match.end():match.end() + 80]
-            if item["cat"] in EXEMPT_CATS and person_follows(before, after):
+            explicit_reflexive = (
+                item["cat"] == "honesty"
+                and match.group(0).casefold().endswith("honest")
+                and HONEST_ABOUT_ONESELF.match(after)
+            )
+            if item["cat"] in EXEMPT_CATS and (explicit_reflexive or person_follows(before, after)):
                 EXEMPT_LOG.append({"id": item["id"], "why": "person",
                                    "match": match.group(0)[:60]})
                 continue
