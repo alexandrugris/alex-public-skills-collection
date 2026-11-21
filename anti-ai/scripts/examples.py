@@ -181,8 +181,10 @@ def cmd_query(args: argparse.Namespace) -> int:
 
     if wanted_tags or q_tokens or args.rule:
         matched = [e for (ms, _), e in scored if ms > 0.0]
+        # Reserve up to two slots for broader examples when alternatives exist.
+        reserve = min(2, max(0, args.limit - 1), max(0, len(entries) - len(matched))) if rng is not None else 0
         selected = (
-            weighted_sample(matched, args.limit, rng)
+            weighted_sample(matched, args.limit - reserve, rng)
             if rng is not None
             else matched[: args.limit]
         )
