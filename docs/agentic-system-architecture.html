@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Alexandru Gris">
+  <title>Agentic Editing Architecture</title>
+  <link rel="stylesheet" href="../alexandru-style/brand/references/tokens.css">
+  <style>
+    .doc-figure {
+      margin: 24px 0 28px;
+      padding: 16px 18px;
+      background: var(--paper-alt);
+      border: 1px solid var(--rule);
+      border-top: 2px solid var(--burgundy);
+    }
+
+    .doc-figure__caption {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted-light);
+      margin-bottom: 10px;
+    }
+
+    .doc-figure svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .doc-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0 26px;
+      font-size: 13.5px;
+      line-height: 1.5;
+    }
+
+    .doc-table th {
+      background: var(--paper-warm);
+      color: var(--ink-deep);
+      font-family: var(--font-sans);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: left;
+      padding: 9px 11px;
+      border-top: 2px solid var(--burgundy);
+      border-bottom: 1px solid var(--rule-strong);
+      font-weight: 400;
+    }
+
+    .doc-table td {
+      padding: 9px 11px;
+      border-bottom: 1px solid var(--rule);
+      vertical-align: top;
+      color: var(--ink);
+    }
+
+    .doc-article p code,
+    .doc-article li code,
+    .doc-article td code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+      background: var(--code-chip-bg);
+      border: 1px solid var(--code-rule);
+      padding: 1px 5px;
+    }
+
+    .doc-article a {
+      color: var(--burgundy);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+
+    .doc-article a:hover {
+      border-bottom-color: var(--burgundy);
+    }
+
+    .doc-colophon {
+      margin-top: 32px;
+      padding-top: 14px;
+      border-top: 1px solid var(--rule);
+      font-family: var(--font-sans);
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    @media print {
+      .doc-figure { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body class="doc doc--flow">
+  <article class="doc-article">
+    <header>
+      <div class="kicker">From the trenches · Agent architecture</div>
+      <h1 class="display-xl doc-title">Agentic Editing Architecture</h1>
+      <div class="doc-byline">
+        <span class="author">Alexandru Gris</span>
+        <time datetime="2026-11-21">2026-11-21</time>
+      </div>
+    </header>
+
+    <h2 class="h2" style="margin-top: 1.5em;">Packaging taste as code</h2>
+
+    <p class="body">Twenty-five rejected sentences sit inside <a href="https://github.com/alexandrugris/alex-public-skills-collection/blob/main/anti-ai/examples/corrections.jsonl">the corrections database</a>, each paired with the rewrite I typed after arguing with my own agent. One entry replaced an abstract mood label about resentment sitting in the warm air with observable room behavior: faces stiffening in the front rows, shoulders dropping at the back, and hands gripping paper coffee cups. A second entry replaced vague press-release phrasing about balancing empathy with accountability across every level of an organization with a concrete manager action: hearing what worries the team and still ending the project that loses money. Every time I rejected a draft line over more than a week of building and editing, the agent logged the pair, checked whether our regex scanner caught it, and encoded the underlying rule into a Markdown guide or a Python test.</p>
+
+    <p class="body">Over the last month, I have read and listened almost exclusively to super-customized AI content: podcasts and technical briefings built solely around my current interests, for an audience of one. Reading and listening as the sole customer feels like the future of media, because generic feeds cannot compete with material built around the exact problem you are ruminating over that morning. Yet when the output reads like AI, it becomes quickly boring, stale, and attention dissipates. To make single-customer content worth reading, I had to package my own editorial taste, research discipline, source verification, and site design into four portable skills: <code>anti-ai</code>, <code>blog-writer</code>, <code>source-verifier</code>, and <code>alexandru-style</code>.</p>
+
+    <p class="body">Building those skills meant choosing between rigid pipelines and autonomous loops, deterministic regexes and model-based judges, always-on instructions and on-demand context, all in a continuous conversation loop with my favourite AI agents. Those choices emerged out of back-and-forth conversations with the AI, often in YOLO mode, and looking back shows how closely that messy loop converged on published best practices because those practices are already baked into modern models and agent runners. To trace how the system works and where it breaks, this post follows five topics in order:</p>
+
+    <ul>
+      <li>How the four skills match Anthropic and OpenAI patterns</li>
+      <li>How the skills and concepts work together</li>
+      <li>Tradeoffs behind every architectural choice</li>
+      <li>When stronger models make these skills useless</li>
+      <li>What survives the next model generation</li>
+    </ul>
+
+    <h2 class="h2">How the four skills match Anthropic and OpenAI patterns</h2>
+
+    <p class="body">Each skill in <code>alex-public-skills-collection</code> follows the <a href="https://agentskills.io/specification">Agent Skills specification</a>, which Anthropic introduced and published as an open standard in late 2025. Under that specification, a skill is a directory holding a <code>SKILL.md</code> manifest plus optional subdirectories for scripts, references, and assets. At session startup, the agent loads only each skill's <code>name</code> and <code>description</code> (roughly 100 tokens per skill) into its system prompt. When a user request matches a skill's description, the agent reads the full <code>SKILL.md</code> and pulls individual reference files only as the task requires them.</p>
+
+    <p class="body">Anthropic calls this three-stage loading pattern "progressive disclosure" in <a href="https://www.anthropic.com/research/equipping-agents-for-the-real-world-with-agent-skills">Equipping agents for the real world with Agent Skills</a>, noting that "agents with a filesystem and code execution tools don't need to read the entirety of a skill into their context window when working on a particular task." As <a href="https://stevekinney.com/writing/agent-skills">Steve Kinney argues</a>, "Agent skills are not a new capability—they're a context management strategy." They govern what enters the model's working memory and when, keeping the top-level routing file thin while storing deep checklists one level down.</p>
+
+    <p class="body">Inside <code>blog-writer</code>, the article pipeline follows what Anthropic's <a href="https://www.anthropic.com/research/building-effective-agents">Building effective agents</a> guide defines as a "prompt chaining" workflow: "Prompt chaining decomposes a task into a sequence of steps, where each LLM call processes the output of the previous one. You can add programmatic checks (see 'gate' in the diagram below) on any intermediate steps to ensure that the process is still on track." A gate check is a deterministic script that runs between model steps. It halts the pipeline when output violates a structural or factual rule, forcing the agent to fix the defect before advancing.</p>
+
+    <p class="body">For verification, our repository separates offline deterministic checks from live model evaluations, matching <a href="https://www.anthropic.com/research/demystifying-evals-for-ai-agents">Anthropic's evals guide</a> (which groups graders into "code-based, model-based, and human" tiers) and <a href="https://developers.openai.com/blog/eval-skills">OpenAI's guide to testing agent skills</a>. In our offline suite, bidirectional controls back every major rule: paired test inputs where known-good drafts and style pages must exit <code>0</code>, while known-bad drafts (such as a tell-laced paragraph, a planted fabrication, or a style anti-sample) must exit non-zero. Testing in both directions catches silent detector rot, where a script stops firing on defects and passes everything by default.</p>
+
+    <p class="body">On the live-evaluation side, OpenAI proposes four goal categories for scoring an agent skill: "Outcome goals" (did the task complete?), "Process goals" (did the agent invoke the skill and follow the intended steps?), "Style goals" (does the output follow your conventions?), and "Efficiency goals" (did it finish without thrashing or excessive token use?). Our current evaluation suite encodes the first three categories: deterministic artifact checks grade outcome goals, source-link and structure checks grade process goals, and the prose linter plus rubric checks grade style goals. We omit efficiency goals (such as counting command executions or capping token budgets per run) in this version and leave them as a manual check during interactive sessions.</p>
+
+    <p class="body">The AI generated every verification script, regression fixture CSV, and evaluation dataset in this repository through iterative feedback with me. Whenever a draft slipped past the scanner or a rule behaved unexpectedly, I described the failure, the agent wrote or updated the Python checker and its test fixtures, and the offline gate locked that fix in place for future runs.</p>
+
+    <h2 class="h2">How the skills and concepts work together</h2>
+
+    <p class="body">A root routing file (<code>AGENTS.md</code>) directs each request to the skill that owns it, and a global gate script (<code>run_all.sh</code>) verifies all four skills before any change ships. When a task spans research, drafting, citation auditing, and styling, all four skills operate inside one shared session context:</p>
+
+    <div class="doc-figure">
+      <div class="doc-figure__caption">Shared-session routing and bidirectional gate topology</div>
+      <svg viewBox="0 0 720 232" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Architecture diagram with orthogonal 90-degree arrows from AGENTS.md to anti-ai, blog-writer, source-verifier, and alexandru-style, all feeding bash run_all.sh">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="#8D2829"/>
+          </marker>
+          <marker id="arrow-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="#686B64"/>
+          </marker>
+        </defs>
+
+        <!-- Router -->
+        <rect x="235" y="10" width="250" height="42" fill="#F2EEE4" stroke="#8D2829" stroke-width="1.5"/>
+        <text x="360" y="29" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#292B28">AGENTS.md</text>
+        <text x="360" y="44" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#686B64">always-on routing &amp; hard rules</text>
+
+        <!-- Four skill nodes -->
+        <rect x="14" y="88" width="160" height="58" fill="#FBFAF7" stroke="#D8D4CA" stroke-width="1"/>
+        <line x1="14" y1="88" x2="174" y2="88" stroke="#8D2829" stroke-width="2.5"/>
+        <text x="94" y="110" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#292B28">anti-ai/</text>
+        <text x="94" y="127" text-anchor="middle" font-family="Inter, sans-serif" font-size="9.5" fill="#686B64">linter + corrections log</text>
+
+        <rect x="190" y="88" width="160" height="58" fill="#FBFAF7" stroke="#D8D4CA" stroke-width="1"/>
+        <line x1="190" y1="88" x2="350" y2="88" stroke="#8D2829" stroke-width="2.5"/>
+        <text x="270" y="110" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#292B28">blog-writer/</text>
+        <text x="270" y="127" text-anchor="middle" font-family="Inter, sans-serif" font-size="9.5" fill="#686B64">6-pass editorial pipeline</text>
+
+        <rect x="368" y="88" width="160" height="58" fill="#FBFAF7" stroke="#D8D4CA" stroke-width="1"/>
+        <line x1="368" y1="88" x2="528" y2="88" stroke="#8D2829" stroke-width="2.5"/>
+        <text x="448" y="110" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#292B28">source-verifier/</text>
+        <text x="448" y="127" text-anchor="middle" font-family="Inter, sans-serif" font-size="9.5" fill="#686B64">quote + concept audit</text>
+
+        <rect x="546" y="88" width="160" height="58" fill="#FBFAF7" stroke="#D8D4CA" stroke-width="1"/>
+        <line x1="546" y1="88" x2="706" y2="88" stroke="#8D2829" stroke-width="2.5"/>
+        <text x="626" y="110" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#292B28">alexandru-style/</text>
+        <text x="626" y="127" text-anchor="middle" font-family="Inter, sans-serif" font-size="9.5" fill="#686B64">layout + PDF rendering</text>
+
+        <!-- Gate -->
+        <rect x="170" y="180" width="380" height="38" fill="#F2EEE4" stroke="#BBB7AE" stroke-width="1"/>
+        <line x1="170" y1="180" x2="550" y2="180" stroke="#8D2829" stroke-width="2"/>
+        <text x="360" y="203" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#292B28">bash run_all.sh (11 controls + 27 unit tests)</text>
+
+        <!-- Orthogonal 90-degree connectors: AGENTS.md -> skills -->
+        <path d="M 360 52 V 68 H 94 V 85" fill="none" stroke="#686B64" stroke-width="1" marker-end="url(#arrow-muted)"/>
+        <path d="M 360 52 V 68 H 270 V 85" fill="none" stroke="#686B64" stroke-width="1" marker-end="url(#arrow-muted)"/>
+        <path d="M 360 52 V 68 H 448 V 85" fill="none" stroke="#686B64" stroke-width="1" marker-end="url(#arrow-muted)"/>
+        <path d="M 360 52 V 68 H 626 V 85" fill="none" stroke="#686B64" stroke-width="1" marker-end="url(#arrow-muted)"/>
+
+        <!-- Horizontal connectors between skills -->
+        <path d="M 176 117 H 188" fill="none" stroke="#8D2829" stroke-width="1.2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+        <path d="M 352 117 H 366" fill="none" stroke="#8D2829" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <path d="M 530 117 H 544" fill="none" stroke="#8D2829" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+        <!-- Orthogonal 90-degree connectors: skills -> run_all.sh -->
+        <path d="M 94 146 V 164 H 230 V 177" fill="none" stroke="#686B64" stroke-width="1" marker-end="url(#arrow-muted)"/>
+        <path d="M 270 146 V 177" fill="none" stroke="#686B64" stroke-width="1" marker-end="url(#arrow-muted)"/>
+        <path d="M 448 146 V 177" fill="none" stroke="#686B64" stroke-width="1" marker-end="url(#arrow-muted)"/>
+        <path d="M 626 146 V 164 H 490 V 177" fill="none" stroke="#686B64" stroke-width="1" marker-end="url(#arrow-muted)"/>
+      </svg>
+    </div>
+
+    <p class="body">Each skill encodes one distinct editorial or engineering role so their concerns stay separate:</p>
+
+    <ul>
+      <li><strong><code>blog-writer</code> (editorial pipeline and blog construction concepts):</strong> Runs six passes in sequence: Brief, multi-round <a href="https://github.com/alexandrugris/alex-public-skills-collection/blob/main/blog-writer/references/research.md">deep research</a> (opening 10–15+ primary sources and 2–3 counter-arguments), <a href="https://github.com/alexandrugris/alex-public-skills-collection/blob/main/blog-writer/references/developmental-editor.md">developmental editing</a> (Pass 1), copy editing (Pass 2), fact-checking, and human approval. Pass 1 enforces core blog-construction concepts. It picks a careful narrative archetype (such as a Trenches story or Explanation) instead of a listicle, announces the roadmap in the intro, matches section headings directly to those ideas, and declares an explicit concept inventory so the draft explains every introduced term. Pass 2 pairs automated tell scanning with a manual <strong>Clean-Scan Sign-off</strong>: reading the draft by hand to verify short direct titles, literal word sense, and concrete endings, because regexes only catch registered patterns. Whenever a <code>HIGH</code> hit fires, the scanner stops the pipeline before fact-checking. The agent rewrites the flagged lines or emits an <code>&lt;escalation&gt;</code> back to Pass 1 if the outline itself forced the cliché. User feedback routes by root cause: structure goes back to Pass 1, wording to Pass 2, and facts to Research.</li>
+      <li><strong><code>anti-ai</code> (deterministic linter and taste memory):</strong> Combines 482 versioned regex patterns (across English, Romanian, and French) with rhythm heuristics (sentence length bands, passive voice, parallel pairs) and returns <code>FAIL</code> on high hits, <code>REVIEW</code> on medium-only hits, or <code>PASS</code>. To capture taste that regexes miss without bloating <code>SKILL.md</code>, a local JSONL database stores bad-to-good rewrite pairs; before each draft, the agent pulls up to 10 relevant rewrites for few-shot calibration, and periodically mines uncaught misses to graduate recurring patterns into rules.</li>
+      <li><strong><code>source-verifier</code> (adversarial citation and concept audit):</strong> Runs an isolated read-only audit on finished drafts before publication. It freezes a structural snapshot (title, headings, opening hash, and word count) and enforces anti-collapse guardrails (capping body edits at a 15% token diff and 10% word shrinkage), so verifying quotes character-for-character and checking concept fidelity never flattens the essay's argument or voice.</li>
+      <li><strong><code>alexandru-style</code> (presentation and layout system):</strong> Separates visual design from prose writing. It supplies per-medium layout rules (flowing A4 print, web pages, and slide decks), enforces orthogonal 90-degree diagram connectors, and validates rendered HTML against a passing sample and a failing anti-sample.</li>
+    </ul>
+
+    <h2 class="h2">Tradeoffs behind every architectural choice</h2>
+
+    <p class="body">Every layer in this system trades token budget, latency, or maintenance effort for predictability. Putting those choices side by side clarifies what each mechanism buys and what it costs:</p>
+
+    <table class="doc-table">
+      <thead>
+        <tr>
+          <th>Architectural choice</th>
+          <th>What it buys</th>
+          <th>What it costs</th>
+          <th>Best practice alignment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Thin <code>SKILL.md</code> + on-demand references</td>
+          <td>Keeps startup context near ~100 tokens per skill; prevents unused rules from crowding working memory</td>
+          <td>Adds tool-call hops; risks routing ambiguity when <code>description</code> triggers overlap</td>
+          <td><a href="https://agentskills.io/specification">Agent Skills spec</a>; <a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices">Anthropic skill-authoring docs</a></td>
+        </tr>
+        <tr>
+          <td>Deterministic regex + AST gates</td>
+          <td>Zero drift across models and runs; fast, cheap, reproducible CI checks</td>
+          <td>Brittle on nuance; 253 medium patterns require human <code>REVIEW</code> judgment</td>
+          <td><a href="https://developers.openai.com/blog/eval-skills">OpenAI evals</a>; <a href="https://www.anthropic.com/research/demystifying-evals-for-ai-agents">Anthropic code-based graders</a></td>
+        </tr>
+        <tr>
+          <td>JSONL corrections DB (top-10 few-shot recall)</td>
+          <td>Learns from real edits in ~700 tokens; clean git diffs; surfaces scanner blind spots</td>
+          <td>Requires manual logging discipline; keyword retrieval can miss structural parallels</td>
+          <td><a href="https://openai.com/index/evals-drive-next-chapter-of-ai/">OpenAI Specify-Measure-Improve</a></td>
+        </tr>
+        <tr>
+          <td>Rigid 6-pass pipeline + isolated <code>source-verifier</code></td>
+          <td>Prevents skipped research, fabricated citations, and verification collapse</td>
+          <td>Higher latency and token cost; heavy for a quick 300-word note</td>
+          <td><a href="https://www.anthropic.com/research/building-effective-agents">Anthropic workflows vs. agents</a></td>
+        </tr>
+        <tr>
+          <td>Bidirectional test controls (<code>run_all.sh</code>)</td>
+          <td>Catches silent detector rot when a MUST-FAIL fixture stops firing</td>
+          <td>Doubles fixture maintenance; every new pattern needs both pass and fail rows</td>
+          <td><a href="https://developers.openai.com/blog/eval-skills">OpenAI negative controls</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="body">The main verification gap sits between deterministic code graders and model-based rubrics. Our regex blocklist catches dead metaphors and filler openers identically across Google's Antigravity, Mistral Large, and ChatGPT. Yet 17 of the 25 entries in the corrections log slipped past the scanner, because regexes cannot tell when a paragraph jumps to a new topic without a bridge or when an abstract phrase hides a missing concrete actor. That is why <code>anti-ai</code> splits verdicts into <code>FAIL</code>, <code>REVIEW</code>, and <code>PASS</code>, pairing deterministic gates with few-shot examples and the manual Clean-Scan Sign-off.</p>
+
+    <p class="body">A second tradeoff sits in skill routing. <a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices">Anthropic's skill-authoring docs</a> explain that a skill's <code>description</code> field is how the model selects the right skill from potentially 100+ candidates. As <a href="https://stevekinney.com/writing/agent-skills">Steve Kinney observes</a>, "composition is not deterministic. Two runs of the same prompt can trigger different skill combinations depending on subtle phrasing differences, context window state, or even how many other skills are loaded." Our routing evaluation suite tests positive and negative triggers across 30 prompts to measure that drift explicitly.</p>
+
+    <h2 class="h2">When stronger models make these skills useless</h2>
+
+    <p class="body">Every hand-crafted wrapper eventually meets Rich Sutton's <a href="http://www.incompleteideas.net/IncIdeas/BitterLesson.html">Bitter Lesson</a>: across seventy years of AI research, "general methods that leverage computation are ultimately the most effective, and by a large margin," specifically search and learning, while systems packed with human domain heuristics plateau. In <a href="https://www.anthropic.com/research/demystifying-evals-for-ai-agents">Anthropic's evals post</a>, the authors note that frontier models already discover creative policy loopholes that outgrow static evaluation suites. Similarly, <a href="https://agent-hypervisor.ai/posts/bitter-lesson-of-agentic-coding/">agent-hypervisor's review of agentic coding</a> documents how rigid multi-step wrappers often turn into dead weight once base models learn to plan reliably over long horizons.</p>
+
+    <p class="body">By that logic, three layers of this repository have a finite shelf life:</p>
+
+    <ul>
+      <li><strong>Word-level blocklists:</strong> as post-training moves models away from overused transition clichés, or as models match a user's style from a handful of samples in-context, keeping 482 regexes to ban individual stock phrases becomes redundant.</li>
+      <li><strong>Prescriptive step-by-step chaining:</strong> once a single model reliably plans structure, retrieves primary sources, checks its own flow, and avoids unannounced concepts in one pass, splitting Brief, Pass 1, and Pass 2 into separate scripted stages only adds latency.</li>
+      <li><strong>Formatting and token hand-holding:</strong> stronger multimodal models can inspect a rendered PDF screenshot directly and adjust spacing without needing a checklist of layout rules.</li>
+    </ul>
+
+    <p class="body">Yet <a href="https://www.dbreunig.com/2025/08/01/does-the-bitter-lesson-have-limits.html">as Drew Breunig argues</a>, the Bitter Lesson depends on having crisp, quantifiable objectives (like chess and Go) and cheap compute. Where organizational processes or editorial quality resist clean mathematical reduction, pure scaling hits practical limits: Stockfish beating Leela with a tiny, focused model inside a specialized search pipeline shows that domain structure still wins when compute or data hits a ceiling.</p>
+
+    <h2 class="h2">What survives the next model generation</h2>
+
+    <p class="body">Because personal writing and real-world fact checking lack the crisp win conditions of chess or Go, three pieces of this architecture will stay useful even when models are far stronger:</p>
+
+    <ol>
+      <li><strong>Idiosyncratic personal taste:</strong> a general model optimizes for an average reader, whereas my preference for 15-word sentences, zero em-dashes, flowing explanatory paragraphs, and concrete room details is arbitrary and personal. Even a superintelligent model needs a compact representation of <em>my</em> taste, whether in a corrections log or a fine-tuned adapter, before creating single-customer content.</li>
+      <li><strong>External ground-truth verification:</strong> scaling parameters does not tell a model whether a URL returns HTTP 404 today or whether a quote appears in a YouTube transcript, although modern agent runners are already very good at catching these once they inspect the source. Deterministic tool checks verify the external environment rather than compensating for weak reasoning.</li>
+      <li><strong>Private context and provenance:</strong> a model cannot guess unpublished reading notes or local brand tokens without reading them from disk. Progressive disclosure remains useful simply because private context is infinite and attention is still finite.</li>
+    </ol>
+
+    <p class="body">OpenAI's <a href="https://openai.com/index/evals-drive-next-chapter-of-ai/">evals playbook</a> summarizes the core habit behind all of this: "Don't hope for 'great.' Specify it, measure it, and improve toward it." For builders designing agentic systems today, the practical rule is to invest in the pieces that survive model upgrades (verification scripts, negative-control evals, and a clean log of your own taste) while keeping the multi-step prompt workflow modular enough to delete the day a stronger model no longer needs it.</p>
+
+    <h2 class="h2">Sources</h2>
+
+    <ul class="list-clean doc-sources">
+      <li><a href="https://agentskills.io/specification">Agent Skills specification</a></li>
+      <li><a href="https://www.anthropic.com/research/equipping-agents-for-the-real-world-with-agent-skills">Anthropic Engineering: Equipping agents for the real world with Agent Skills</a></li>
+      <li><a href="https://www.anthropic.com/research/building-effective-agents">Anthropic Research: Building effective agents</a></li>
+      <li><a href="https://www.anthropic.com/research/demystifying-evals-for-ai-agents">Anthropic Engineering: Demystifying evals for AI agents</a></li>
+      <li><a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices">Anthropic Platform Docs: Skill authoring best practices</a></li>
+      <li><a href="https://developers.openai.com/blog/eval-skills">OpenAI Developers: Testing agent skills systematically with evals</a></li>
+      <li><a href="https://openai.com/index/evals-drive-next-chapter-of-ai/">OpenAI: How evals drive the next chapter in AI for businesses</a></li>
+      <li><a href="http://www.incompleteideas.net/IncIdeas/BitterLesson.html">Rich Sutton: The Bitter Lesson</a></li>
+      <li><a href="https://www.dbreunig.com/2025/08/01/does-the-bitter-lesson-have-limits.html">Drew Breunig: Does the Bitter Lesson Have Limits?</a></li>
+      <li><a href="https://stevekinney.com/writing/agent-skills">Steve Kinney: Agent Skills, Stripped of Hype</a></li>
+      <li><a href="https://agent-hypervisor.ai/posts/bitter-lesson-of-agentic-coding/">Agent Hypervisor: The Bitter Lesson of Agentic Coding</a></li>
+      <li><a href="https://github.com/alexandrugris/alex-public-skills-collection/blob/main/anti-ai/examples/corrections.jsonl">alex-public-skills-collection: Corrections database (corrections.jsonl)</a></li>
+      <li><a href="https://github.com/alexandrugris/alex-public-skills-collection/blob/main/blog-writer/references/research.md">alex-public-skills-collection: Research pass (research.md)</a></li>
+      <li><a href="https://github.com/alexandrugris/alex-public-skills-collection/blob/main/blog-writer/references/developmental-editor.md">alex-public-skills-collection: Developmental editor (developmental-editor.md)</a></li>
+    </ul>
+
+    <div class="doc-colophon">
+      Written and verified with blog-writer, anti-ai v0.15.1, source-verifier, and AG Style v1.0.
+    </div>
+  </article>
+</body>
+</html>
