@@ -23,6 +23,7 @@ Execute passes in order. Each pass uses its reference file. Research findings, d
 | 3 | **Pass 1: Developmental editor** | `references/developmental-editor.md` | `<structural_brief>` with Diataxis/Trenches archetype, argument spine, evidence slots, voice notes, and preserved gaps. |
 | 4 | **Pass 2: Copy editor** | `references/copy-editor.md` | Full prose in voice. Pull up to 10 exemplars (topic matches + general constructs) via `python3 ../anti-ai/scripts/examples.py query --limit 10`, run `python3 ../anti-ai/check_tells.py <draft>`, fix every HIGH hit, and complete the Clean-Scan Sign-off checklist. |
 | 5 | **Fact-check loop** (max 2 rounds) | `references/fact-checker.md` | `<fact_check_report>`. Blocking findings (contradictions, broken links, fabrications) route back to the pass that owns them; non-blocking findings go to the gate. |
+| 5b | **Deep source audit (optional)** | `../source-verifier/SKILL.md` | Ask Alexandru whether to run the standalone `source-verifier` skill (character-level quote audit, Crossref/DOI verification, concept fidelity, max 2 adversarial loops with anti-collapse guardrails). Skip if he declines. |
 | 6 | **Review gate** | (human approval) | Present draft, source list, fixed/open findings, and content gaps. Nothing is final before Alexandru approves. |
 
 ### Routing and learning rules
@@ -30,6 +31,7 @@ Execute passes in order. Each pass uses its reference file. Research findings, d
 - **Seed fragments:** treat fragments Alexandru supplies (including whole seed paragraphs) as drafts to revise; keep verbatim only passages he explicitly marks as quotations.
 - **Escalation:** if Pass 2 returns `<escalation>`, route back to Pass 1 instead of accepting a forced draft.
 - **Feedback routing:** classify user feedback by root cause before routing ("this intro is boring" is usually structural -> Pass 1; wording -> Pass 2; factual -> Research/Fact-check), then re-run Step 5.
+- **Optional adversarial verification:** before Step 6 on research-backed drafts, explicitly ask Alexandru if he wants to invoke `source-verifier` so heavy quote/DOI auditing happens when needed without slowing down lighter posts.
 - **Capture edits:** when Alexandru rewrites a sentence or rejects AI phrasing at the gate, offer to log the pair via `python3 ../anti-ai/scripts/examples.py add` so future drafts learn from it.
 
 ## Tests

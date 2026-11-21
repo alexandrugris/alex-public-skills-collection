@@ -9,7 +9,8 @@ Core linters, draft gates, the corrections database, and unit tests run offline 
 | Skill | Job | Mechanical gate |
 |---|---|---|
 | [anti-ai](./anti-ai/) | Multilingual (EN/RO/FR) prose linter (`patterns.json` + `check_tells.py`), measured house voice, human benchmarks, and a JSONL corrections database (`examples/`) | `python3 anti-ai/tests/run_tests.py` |
-| [blog-writer](./blog-writer/) | Six-pass article pipeline: brief, multi-round deep research (10-15+ opened sources), developmental edit, copy edit in voice, fact-check loop, human review gate | `python3 blog-writer/tests/validate_draft.py <draft.md>` |
+| [blog-writer](./blog-writer/) | Six-pass article pipeline: brief, multi-round deep research (10-15+ opened sources), developmental edit, copy edit in voice, fact-check loop, optional deep source audit prompt, human review gate | `python3 blog-writer/tests/validate_draft.py <draft.md>` |
+| [source-verifier](./source-verifier/) | Standalone adversarial citation, quotation, DOI/Crossref, and concept verifier (max 2 loops) with anti-collapse heading/opening and diff-budget guardrails (`audit_sources.py` + `guardrails.py`) | `python3 source-verifier/scripts/audit_sources.py <draft.md>` |
 | [alexandru-style](./alexandru-style/) | AG Style v1.0 design system from alexandrugris.ro (`design-system.md`) plus the merged production toolkit in `brand/` (`tokens.css`, templates, render scripts) | `python3 alexandru-style/tests/check_styled.py <file>` |
 
 ## Architecture
@@ -21,19 +22,23 @@ flowchart TB
     U["User request"] --> AG["AGENTS.md routing"]
     AG -->|"De-AI / humanize / audit"| AA["anti-ai/<br/>SKILL.md · patterns.json · check_tells.py<br/>references/ · examples/corrections.jsonl"]
     AG -->|"Write / revise / fact-check article"| BW["blog-writer/<br/>SKILL.md · 4 pass references<br/>tests/validate_draft.py"]
+    AG -->|"Audit quotes, DOIs, concepts"| SV["source-verifier/<br/>SKILL.md · verifier & custodian protocols<br/>scripts/audit_sources.py · guardrails.py"]
     AG -->|"Style HTML, PDF, Marp, PPTX, table"| AS["alexandru-style/<br/>SKILL.md · design-system.md<br/>brand/tokens.css · render scripts"]
 
     BW <-->|"few-shot query + lint gate"| AA
+    BW -.->|"optional pre-publish audit (asks user)"| SV
+    SV -->|"voice check after surgical fix"| AA
     BW <-->|"medium constraints & overflow cuts"| AS
     AS -->|"lint kickers, ledes, captions"| AA
-    AA --> GATE["bash run_all.sh<br/>9 controls + tests/ (24 unit tests)"]
+    AA --> GATE["bash run_all.sh<br/>11 controls + tests/ unit suite"]
     BW --> GATE
+    SV --> GATE
     AS --> GATE
 ```
 
 ## Execution flow: writing an article end to end
 
-When a task spans content and presentation, all three skills work in one shared session context rather than as blind one-way steps: `alexandru-style` supplies medium constraints up front (paragraph cadence, kicker/lede shape, slide bullet caps), `blog-writer` runs multi-round research and drafting, `anti-ai` calibrates voice and blocks AI tells, and any layout overflow during rendering routes back to `blog-writer` Pass 2 without dropping sources.
+When a task spans content and presentation, these skills work in one shared session context rather than as blind one-way steps: `alexandru-style` supplies medium constraints up front (paragraph cadence, kicker/lede shape, slide bullet caps), `blog-writer` runs multi-round research and drafting, `anti-ai` calibrates voice and blocks AI tells, `source-verifier` runs an optional 2-loop adversarial check of every quote, DOI, and concept when requested, and any layout overflow during rendering routes back to `blog-writer` Pass 2 without dropping sources.
 
 ```mermaid
 flowchart LR
@@ -47,7 +52,8 @@ flowchart LR
     L -->|"0 HIGH"| FC["5. Fact-check loop<br/>max 2 rounds"]
     FC -->|"Dead link / contradiction"| R
     FC -->|"Span wording fix"| P2
-    FC -->|"0 blocking"| RG["6. Human review gate<br/>draft + sources + gaps"]
+    FC -->|"0 blocking"| SV["5b. Optional source-verifier<br/>ask user -> fresh verifier +<br/>guardrails (max 2 loops)"]
+    SV -->|"Surgical fix / pass / skip"| RG["6. Human review gate<br/>draft + sources + gaps"]
     RG -->|"Feedback routed by cause"| P1
     RG -->|"User edits prose"| DB["Log rewrite<br/>examples.py add"]
     RG -->|"Approved + styled output"| ST["7. alexandru-style<br/>HTML / A4 PDF / deck<br/>+ check_styled.py"]
@@ -63,7 +69,7 @@ flowchart LR
 4. **Calibrate, Draft, and Lint in Pass 2 (Step 4).**
    - **4a (`examples.py query`):** Right before writing prose, Pass 2 queries `anti-ai/examples/corrections.jsonl` with `--limit 10` (~700 tokens). It pulls topic-matched rewrites first and backfills remaining slots with diverse general structural/taste constructs (mirrored summaries, leading negations, passive voice, scenes, closing morals) so those patterns stay fresh without bloating `SKILL.md`.
    - **4b–4c (Draft + `check_tells.py`):** Pass 2 writes the draft, runs `anti-ai/check_tells.py` and `blog-writer/tests/validate_draft.py`, fixes every HIGH hit, and checks headings, literal word sense, and endings by hand.
-5. **Run the Fact-Check Loop (Step 5, max 2 rounds).** Every external claim and URL faces read-only verification. Unverifiable claims leave the draft or get recast; the pipeline never invents a replacement link.
+5. **Run the Fact-Check Loop (Step 5, max 2 rounds), then Ask About `source-verifier` (Step 5b).** Every external claim and URL faces read-only verification. Unverifiable claims leave the draft or get recast; the pipeline never invents a replacement link. Before the review gate, `blog-writer` asks whether to run the standalone `source-verifier` skill for a context-isolated quote, DOI/Crossref, and concept audit guarded by `guardrails.py`.
 6. **Approve at the Review Gate, then Style (Steps 6–7).** Nothing ships before your sign-off. When `alexandru-style` renders the HTML/A4 PDF/deck, any new UI copy (kickers, ledes, captions) goes through `anti-ai`, any overflow cuts route back to Pass 2, and `alexandru-style/tests/check_styled.py` verifies the output.
 
 ## Worked example: Gianpiero Petriglieri on leadership

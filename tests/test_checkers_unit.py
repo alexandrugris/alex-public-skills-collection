@@ -205,5 +205,91 @@ class TestCheckStyledUnit(unittest.TestCase):
         self.assertTrue(any("max 6" in p for p in probs))
 
 
+class TestSourceVerifierUnit(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.auditor = REPO_ROOT / "source-verifier" / "scripts" / "audit_sources.py"
+        cls.guardrails = REPO_ROOT / "source-verifier" / "scripts" / "guardrails.py"
+
+    def test_clean_fixture_passes_and_extracts_quotes(self):
+        p = REPO_ROOT / "source-verifier" / "tests" / "expected" / "clean-verified.md"
+        r = subprocess.run([sys.executable, str(self.auditor), "--json", str(p)], capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        out = json.loads(r.stdout)
+        self.assertEqual(out["verdict"], "PASS")
+        self.assertGreaterEqual(out["counts"]["quotes_needing_verbatim_check"], 1)
+
+    def test_bad_citations_fixture_catches_all_four_defects(self):
+        p = REPO_ROOT / "source-verifier" / "tests" / "input" / "bad-citations.md"
+        r = subprocess.run([sys.executable, str(self.auditor), "--json", str(p)], capture_output=True, text=True)
+        self.assertEqual(r.returncode, 1)
+        out = json.loads(r.stdout)
+        rules = {b["rule"] for b in out["blocking"]}
+        for expected in (
+            "secondary_source_as_study",
+            "inline_source_year_mismatch",
+            "dual_year_conflation",
+            "missing_author_in_sources",
+        ):
+            self.assertIn(expected, rules, f"Missing expected rule {expected}; got {rules}")
+
+    def test_guardrails_allow_surgical_fix_and_block_collapse(self):
+        base = (
+            "# Title.\n\n"
+            "The opening scene sits on the twelfth floor while the projector hums.\n\n"
+            "## First section.\n\n"
+            "In their [2010 paper](https://example.org/p), Petriglieri defines a holding environment as a social context "
+            "that reduces disturbing affect and facilitates sense making for every worker in the room during uncertainty.\n\n"
+            "## Second section.\n\n"
+            "Kets de Vries explains how collusive relationships weaken reality testing in executive teams under pressure.\n\n"
+            "## Sources\n\n"
+            "- [Petriglieri (2010)](https://example.org/p)\n"
+        )
+        with tempfile.TemporaryDirectory() as td:
+            td_path = Path(td)
+            draft = td_path / "draft.md"
+            snap = td_path / "snap.json"
+            draft.write_text(base, encoding="utf-8")
+
+            r_snap = subprocess.run(
+                [sys.executable, str(self.guardrails), "snapshot", str(draft), "-o", str(snap)],
+                capture_output=True, text=True,
+            )
+            self.assertEqual(r_snap.returncode, 0, r_snap.stdout + r_snap.stderr)
+
+            # Surgical URL + tiny quote fix passes
+            surgical = td_path / "surgical.md"
+            surgical.write_text(
+                base.replace("https://example.org/p", "https://doi.org/10.5465/amle.2010.48661190")
+                    .replace("a social context", '"a social context"'),
+                encoding="utf-8",
+            )
+            r_ok = subprocess.run(
+                [sys.executable, str(self.guardrails), "check", "--json", str(snap), str(surgical)],
+                capture_output=True, text=True,
+            )
+            self.assertEqual(r_ok.returncode, 0, r_ok.stdout + r_ok.stderr)
+
+            # Dropping a section heading + panic deletion fails
+            collapsed = td_path / "collapsed.md"
+            collapsed.write_text(
+                "# Title.\n\n"
+                "Changed opening scene.\n\n"
+                "## First section.\n\n"
+                "Shortened.\n",
+                encoding="utf-8",
+            )
+            r_bad = subprocess.run(
+                [sys.executable, str(self.guardrails), "check", "--json", str(snap), str(collapsed)],
+                capture_output=True, text=True,
+            )
+            self.assertEqual(r_bad.returncode, 1)
+            rules = {v["rule"] for v in json.loads(r_bad.stdout)["violations"]}
+            self.assertIn("missing_headings", rules)
+            self.assertIn("opening_scene_mutated", rules)
+            self.assertIn("word_count_shrinkage", rules)
+            self.assertIn("diff_budget_exceeded", rules)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -44,6 +44,12 @@ check "seed-tell paragraph still fires (must FAIL)" fail \
 check "planted-fabrication draft still fails gate" fail \
   python3 blog-writer/tests/validate_draft.py blog-writer/tests/input/draft-with-planted-fabrication.md
 
+check "source-verifier clean draft passes pre-audit" ok \
+  python3 source-verifier/scripts/audit_sources.py source-verifier/tests/expected/clean-verified.md
+
+check "source-verifier bad citations still fail pre-audit" fail \
+  python3 source-verifier/scripts/audit_sources.py source-verifier/tests/input/bad-citations.md
+
 check "AG style sample page passes checker" ok \
   python3 alexandru-style/tests/check_styled.py alexandru-style/tests/expected/sample-page.html
 
