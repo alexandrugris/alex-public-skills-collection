@@ -37,7 +37,7 @@ Use the samples for style in the requested register. Take facts from the sources
    - **Concept-inventory audit:** every technical, domain, or researcher concept in the prose (no undefined shorthand like `"product work"`) matches the `concept_inventory` shown before drafting, is defined in plain words where it first appears, and links its primary source.
    - **Scene & continuity check:** the opening scene is ample and lived-in (not a 2-sentence AI summary), shows concrete artifacts, names who asks whom, renders observable room behavior and reactions, and never cites a timing or fact in the analysis that did not happen in the scene. Multi-item roadmaps (3+ parallel shifts) use bullet points that state direct claims (never `"how/what/why"` syllabus teasers).
    - **Direct-lead check:** no thematic introductory wrapper sentences survive before facts or sections; enumeration lead-ins stay short, personal, and free of pre-explanation, with tight active phrasing instead of participial padding.
-   - The title is short and direct (no two-part ", and what..." AI suspense tails), and every heading states a concrete claim the text supports, not a stock pair.
+   - **Spoiler-title check:** the H1 and every H2 state the takeaway directly so reading only the titles gives the full gist of the article — no cliffhanger topics (`Management when coordination gets cheap`), no mystery counts (`in two directions`, `Four forces`), no two-part `", and what..."` suspense tails, and no stock pairs.
    - Each verb and noun keeps its dictionary sense in context (Rule 1).
    - No standalone filler transition survives ("The levels move together."), and every section ends on a consequence or fact, not a moral.
 
