@@ -33,3 +33,6 @@ tr-31,"Audit every quotation, DOI, and author concept in ~/writing/essay.md agai
 tr-32,"Check the bibliography and Crossref metadata on this finished report and flag any quote drift.",source-verifier,true,standalone DOI and verbatim quote audit
 tr-33,"Write a researched blog post on holding environments and run the full adversarial quote and DOI verifier before final approval.",blog-writer+source-verifier,true,multi-skill chain: blog-writer then source-verifier
 tr-34,"Run a deep source audit on /tmp/draft.md with anti-collapse guardrails so the opening scene stays intact.",source-verifier,true,explicit guardrails and external path trigger
+tr-35,"Create an architecture diagram for this service topology in my website colors. Keep the SVG editable and check the rendered layout.",diagram-maker,true,diagram creation with house-style and editable SVG
+tr-36,"Map the data flow across these APIs, queues, and databases, with trust boundaries and labeled connectors.",diagram-maker,true,explicit system flow and boundary diagram
+tr-37,"What is Mermaid syntax and when would I use it?",none,false,negative control: conceptual question without diagram creation

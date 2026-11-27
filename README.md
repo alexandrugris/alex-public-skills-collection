@@ -1,6 +1,6 @@
 # alex-public-skills-collection
 
-Portable, self-contained skills for AI-assisted writing, prose auditing, and personal brand styling. Each top-level folder holds one skill: a `SKILL.md` manifest, on-demand references, mechanical Python tools, and bidirectional tests.
+Portable, self-contained skills for AI-assisted writing, prose auditing, personal brand styling, and source-editable system diagrams. Each top-level folder holds one skill with a `SKILL.md` manifest and on-demand references; executable tools and deterministic tests are included where the workflow benefits from them.
 
 Core linters, draft gates, the corrections database, and unit tests run offline with plain Python stdlib (no accounts, no telemetry). Optional PDF, screenshot, and PPTX rendering under `alexandru-style/brand/` uses Playwright, `python-pptx`, Poppler (`pdftoppm`), and LibreOffice (`soffice`).
 
@@ -12,10 +12,11 @@ Core linters, draft gates, the corrections database, and unit tests run offline 
 | [blog-writer](./blog-writer/) | Six-pass article pipeline: brief, multi-round deep research (10-15+ opened sources), developmental edit, copy edit in voice, fact-check loop, optional deep source audit prompt, human review gate | `python3 blog-writer/tests/validate_draft.py <draft.md>` |
 | [source-verifier](./source-verifier/) | Standalone adversarial citation, quotation, DOI/Crossref, and concept verifier (max 2 loops) with anti-collapse heading/opening and diff-budget guardrails (`audit_sources.py` + `guardrails.py`) | `python3 source-verifier/scripts/audit_sources.py <draft.md>` |
 | [alexandru-style](./alexandru-style/) | AG Style v1.0 design system from alexandrugris.ro (`design-system.md`) plus the merged production toolkit in `brand/` (`tokens.css`, templates, render scripts) | `python3 alexandru-style/tests/check_styled.py <file>` |
+| [diagram-maker](./diagram-maker/) | Architecture and system diagrams in house style, with editable Mermaid or SVG source, semantic flow labels, and visual QA | Skill workflow + visual review |
 
 ## Architecture
 
-Each skill follows the Agent Skills open specification: one thin `SKILL.md` manifest stays in context for routing, `references/` loads on demand, Python scripts handle deterministic checks, and `tests/` enforces controls in both directions (cases that must pass and cases that must fail).
+Each skill follows the Agent Skills open specification: a thin `SKILL.md` manifest handles routing and `references/` loads on demand. Python scripts and deterministic tests support workflows that can be checked mechanically; `evals/` covers routing and generation tasks that need model or visual review.
 
 ```mermaid
 flowchart TB
@@ -24,6 +25,8 @@ flowchart TB
     AG -->|"Write / revise / fact-check article"| BW["blog-writer/<br/>SKILL.md · 4 pass references<br/>tests/validate_draft.py"]
     AG -->|"Audit quotes, DOIs, concepts"| SV["source-verifier/<br/>SKILL.md · verifier & custodian protocols<br/>scripts/audit_sources.py · guardrails.py"]
     AG -->|"Style HTML, PDF, Marp, PPTX, table"| AS["alexandru-style/<br/>SKILL.md · design-system.md<br/>brand/tokens.css · render scripts"]
+    AG -->|"Create architecture / system diagrams"| DM["diagram-maker/<br/>SKILL.md · diagram patterns<br/>editable Mermaid / SVG"]
+    DM -->|"house palette & typography"| AS
 
     BW <-->|"few-shot query + lint gate"| AA
     BW -.->|"optional pre-publish audit (asks user)"| SV
@@ -36,7 +39,7 @@ flowchart TB
     AS --> GATE
 ```
 
-Symlink all four skill folders into any agent's global skills directory (such as `~/.codex/skills/` or `~/.claude/skills/`) to run them on drafts anywhere on disk: each `SKILL.md` resolves its scripts via `<SKILL_DIR>` and sibling skills via `<SKILLS_DIR>`, with no dependency on this repository as the working directory.
+Symlink all five skill folders into an agent's global skills directory (such as `~/.codex/skills/` or `~/.claude/skills/`) to make them available for relevant tasks from any working directory. Skills that call scripts resolve them from their own folder rather than assuming this repository is the current directory.
 
 ## Execution flow: writing an article end to end
 

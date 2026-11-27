@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-EXPECTED_SKILLS = {"anti-ai", "blog-writer", "source-verifier", "alexandru-style"}
+EXPECTED_SKILLS = {"anti-ai", "blog-writer", "source-verifier", "alexandru-style", "diagram-maker"}
 NAME_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 LOCAL_REF_RE = re.compile(
     r"`((?:references|tests|scripts|examples|brand)/[A-Za-z0-9_./-]+|(?:design-system\.md|patterns\.json|check_tells\.py))`"

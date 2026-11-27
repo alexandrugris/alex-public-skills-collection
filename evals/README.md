@@ -6,8 +6,8 @@ the LLM-in-the-loop eval assets for Tiers 3 and 4.
 
 ## Tier 3: Trigger & routing evals (`triggers.csv`)
 
-34 prompts across all four skills, multi-skill chains (`blog-writer+alexandru-style`,
-`blog-writer+source-verifier`), and 10 negative controls (`should_trigger=false`). Run these prompts against your target
+37 prompts across all five skills, multi-skill chains (`blog-writer+alexandru-style`,
+`blog-writer+source-verifier`), and 11 negative controls (`should_trigger=false`). Run these prompts against your target
 model/harness (Vibe, Claude Code, Codex, Antigravity) whenever you edit a `SKILL.md`
 `description` field. Target: >= 95% trigger recall on positive prompts and <= 5% false
 triggers on negative controls.
